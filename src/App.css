@@ -1,6 +1,11 @@
 @import "tailwindcss";
 @config "../tailwind.config.cjs";
 
-* {
-  font-family: "Inter";
+body {
+  font-family: "Inter", sans-serif;
+  color: #333333;
+}
+
+input:focus-visible {
+  outline: none;
 }

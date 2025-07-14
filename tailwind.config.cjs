@@ -3,6 +3,13 @@ const plugin = require("tailwindcss/plugin");
 module.exports = {
   theme: {
     extend: {
+      colors: {
+        green: "#076536",
+        "light-gray": "#E5E7EB"
+      },
+      textColor: {
+        green: "#076536",
+      },
       screens: {
         "max-main": { max: "1440.9999px" },
         "max-lg": { max: "1024.9999px" },
