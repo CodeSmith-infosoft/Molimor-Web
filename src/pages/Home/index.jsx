@@ -14,9 +14,9 @@ const Home = () => {
   // }, []);
   return (
     <div className="bg-[#F3F4F6]">
-      <SubHeader heading={"Combo"} />
+      {/* <SubHeader heading={"Combo"} />
       <HorizontalCard  />
-      <BorderCard />
+      <BorderCard /> */}
     </div>
   );
 };

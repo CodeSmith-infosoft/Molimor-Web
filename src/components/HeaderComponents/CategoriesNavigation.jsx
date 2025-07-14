@@ -16,8 +16,8 @@ export default function CategoriesNavigation() {
       id: "home-care",
       name: "Home & Care",
       subcategories: [
-        { id: "cleaning", name: "Cleaning Supplies" },
-        { id: "laundry", name: "Laundry" },
+        { id: "cleaning", name: "Cleaning Supplies", icon: "/images/dummy/khichadi.png", },
+        { id: "laundry", name: "Laundry", icon: "/images/dummy/khichadi.png", },
       ],
     },
     {
@@ -27,52 +27,52 @@ export default function CategoriesNavigation() {
         {
           id: "peanut-butter",
           name: "Peanut Butter",
-          icon: "/placeholder.svg?height=20&width=20",
+          icon: "/images/dummy/khichadi.png",
         },
         {
           id: "honey",
           name: "Honey",
-          icon: "/placeholder.svg?height=20&width=20",
+          icon: "/images/dummy/khichadi.png",
         },
         {
           id: "tea",
           name: "Tea",
-          icon: "/placeholder.svg?height=20&width=20",
+          icon: "/images/dummy/khichadi.png",
         },
         {
           id: "green-tea",
           name: "Green Tea",
-          icon: "/placeholder.svg?height=20&width=20",
+          icon: "/images/dummy/khichadi.png",
         },
         {
           id: "groundnut-oil",
           name: "Groundnut Oil",
-          icon: "/placeholder.svg?height=20&width=20",
+          icon: "/images/dummy/khichadi.png",
         },
         {
           id: "cottonseed-oil",
           name: "Cottonseed Oil",
-          icon: "/placeholder.svg?height=20&width=20",
+          icon: "/images/dummy/khichadi.png",
         },
         {
           id: "ghee",
           name: "Ghee",
-          icon: "/placeholder.svg?height=20&width=20",
+          icon: "/images/dummy/khichadi.png",
         },
         {
           id: "masala-khichdi",
           name: "Masala Khichdi",
-          icon: "/placeholder.svg?height=20&width=20",
+          icon: "/images/dummy/khichadi.png",
         },
         {
           id: "sunflower",
           name: "Sunflower",
-          icon: "/placeholder.svg?height=20&width=20",
+          icon: "/images/dummy/khichadi.png",
         },
         {
           id: "gujarati-kadhi",
           name: "Gujarati Kadhi",
-          icon: "/placeholder.svg?height=20&width=20",
+          icon: "/images/dummy/khichadi.png",
         },
       ],
     },

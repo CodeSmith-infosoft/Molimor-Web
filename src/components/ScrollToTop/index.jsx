@@ -33,11 +33,11 @@ const ScrollToTopButton = () => {
       <div
         className="w-full h-full rounded-full flex items-center justify-center relative"
         style={{
-          background: `conic-gradient(#273974 ${scrollProgress}%, #e6e6e6 ${scrollProgress}%)`,
+          background: `conic-gradient(#076536 ${scrollProgress}%, #e6e6e6 ${scrollProgress}%)`,
         }}
       >
         <div className="absolute w-[85%] h-[85%] bg-white rounded-full flex items-center justify-center">
-          <span className="absolute text-[#273974] text-xl">
+          <span className="absolute text-green text-xl">
             <GoArrowUp className="stroke-1" />
           </span>
         </div>

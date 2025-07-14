@@ -3,6 +3,7 @@ import { Search, MapPin, User, Heart, ShoppingCart } from "lucide-react";
 import CountdownTimer from "../HeaderComponents/CountdownTimer";
 import Dropdown from "../HeaderComponents/Dropdown";
 import CategoriesNavigation from "../HeaderComponents/CategoriesNavigation";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   // const [language, setLanguage] = useState("English");
@@ -13,7 +14,7 @@ export default function Header() {
   const currencyOptions = ["USD", "EUR", "GBP", "JPY", "CAD"];
 
   return (
-    <div className="w-full bg-white fixed top-0">
+    <div className="w-full bg-white fixed z-9999 top-0">
       {/* Green countdown banner */}
       <div className="bg-green px-4 py-[9px] text-center">
         <CountdownTimer
@@ -28,12 +29,12 @@ export default function Header() {
       <div className="bg-white mt-5">
         <div className="max-w-[1576px] px-10 mx-auto flex justify-between items-center text-sm">
           <div className="flex items-center gap-5">
-            <a href="#" className="text-xs font-medium">
-              My account
-            </a>
-            <a href="#" className="text-xs font-medium">
+            <Link to={"/"} className="text-xs font-medium">
+              My Account
+            </Link>
+            <Link to={"/wishlist"} className="text-xs font-medium">
               Wishlist
-            </a>
+            </Link>
             <span className="text-xs border-l pl-5 border-[#E5E7EB]">
               We deliver to you every day from{" "}
               <span className="font-bold">7:00 to 23:00</span>
@@ -51,9 +52,9 @@ export default function Header() {
               defaultValue={currency}
               onChange={setCurrency}
             />
-            <a href="#" className="text-xs font-medium">
+            <Link to={"/"} className="text-xs font-medium">
               Order Tracking
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -100,7 +101,7 @@ export default function Header() {
                 placeholderColor="#333333"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green focus:border-transparent"
+                className="w-full px-4 py-3 text-sm border border-[#E5E7EB] rounded-lg focus:outline-none focus:ring-2 focus:ring-green focus:border-transparent"
               />
               <button className="absolute right-3 top-1/2 transform -translate-y-1/2">
                 <svg
@@ -142,22 +143,24 @@ export default function Header() {
             </div>
 
             <div className="relative">
-              <svg
-                width="33"
-                height="26"
-                viewBox="0 0 33 26"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M11.5 5.566C10.72 5.566 9.99633 5.761 9.329 6.151C8.66167 6.541 8.133 7.06967 7.743 7.737C7.353 8.40433 7.158 9.128 7.158 9.908C7.158 11.6933 7.66933 13.392 8.692 15.004C9.524 16.356 10.6853 17.6213 12.176 18.8C13.5107 19.892 15.0447 20.854 16.778 21.686L16.908 21.738C18.6933 20.8887 20.288 19.9007 21.692 18.774L21.64 18.8C23.1307 17.6213 24.292 16.356 25.124 15.004C26.1467 13.392 26.658 11.6933 26.658 9.908C26.658 9.128 26.463 8.40433 26.073 7.737C25.683 7.06967 25.1543 6.541 24.487 6.151C23.8197 5.761 23.096 5.566 22.316 5.566C21.6227 5.566 20.9683 5.71767 20.353 6.021C19.7377 6.32433 19.2177 6.74033 18.793 7.269C18.3683 7.79767 18.0953 8.39133 17.974 9.05C17.922 9.29267 17.7963 9.49633 17.597 9.661C17.3977 9.82567 17.168 9.908 16.908 9.908C16.648 9.908 16.4183 9.82567 16.219 9.661C16.0197 9.49633 15.894 9.29267 15.842 9.05C15.7207 8.39133 15.4477 7.79767 15.023 7.269C14.5983 6.74033 14.0783 6.32433 13.463 6.021C12.8477 5.71767 12.1933 5.566 11.5 5.566ZM16.908 24C16.752 23.9827 16.596 23.948 16.44 23.896C16.3533 23.8613 16.206 23.792 15.998 23.688C14.0913 22.7867 12.3493 21.7033 10.772 20.438L10.824 20.49C9.14267 19.1727 7.81667 17.734 6.846 16.174C5.61533 14.198 5 12.1093 5 9.908C5 8.72933 5.29033 7.64167 5.871 6.645C6.45167 5.64833 7.24033 4.85967 8.237 4.279C9.23367 3.69833 10.3213 3.408 11.5 3.408C12.592 3.408 13.6103 3.655 14.555 4.149C15.4997 4.643 16.284 5.31467 16.908 6.164V6.19C17.532 5.32333 18.3163 4.643 19.261 4.149C20.2057 3.655 21.224 3.408 22.316 3.408C23.4947 3.408 24.5823 3.69833 25.579 4.279C26.5757 4.85967 27.3643 5.64833 27.945 6.645C28.5257 7.64167 28.816 8.72933 28.816 9.908C28.816 12.1093 28.2007 14.198 26.97 16.174C25.9993 17.734 24.6733 19.1727 22.992 20.49C21.4493 21.7033 19.7767 22.752 17.974 23.636L17.818 23.688C17.402 23.896 17.0987 24 16.908 24Z"
-                  fill="#333333"
-                />
-              </svg>
+              <Link to={'/wishlist'}>
+                <svg
+                  width="33"
+                  height="26"
+                  viewBox="0 0 33 26"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M11.5 5.566C10.72 5.566 9.99633 5.761 9.329 6.151C8.66167 6.541 8.133 7.06967 7.743 7.737C7.353 8.40433 7.158 9.128 7.158 9.908C7.158 11.6933 7.66933 13.392 8.692 15.004C9.524 16.356 10.6853 17.6213 12.176 18.8C13.5107 19.892 15.0447 20.854 16.778 21.686L16.908 21.738C18.6933 20.8887 20.288 19.9007 21.692 18.774L21.64 18.8C23.1307 17.6213 24.292 16.356 25.124 15.004C26.1467 13.392 26.658 11.6933 26.658 9.908C26.658 9.128 26.463 8.40433 26.073 7.737C25.683 7.06967 25.1543 6.541 24.487 6.151C23.8197 5.761 23.096 5.566 22.316 5.566C21.6227 5.566 20.9683 5.71767 20.353 6.021C19.7377 6.32433 19.2177 6.74033 18.793 7.269C18.3683 7.79767 18.0953 8.39133 17.974 9.05C17.922 9.29267 17.7963 9.49633 17.597 9.661C17.3977 9.82567 17.168 9.908 16.908 9.908C16.648 9.908 16.4183 9.82567 16.219 9.661C16.0197 9.49633 15.894 9.29267 15.842 9.05C15.7207 8.39133 15.4477 7.79767 15.023 7.269C14.5983 6.74033 14.0783 6.32433 13.463 6.021C12.8477 5.71767 12.1933 5.566 11.5 5.566ZM16.908 24C16.752 23.9827 16.596 23.948 16.44 23.896C16.3533 23.8613 16.206 23.792 15.998 23.688C14.0913 22.7867 12.3493 21.7033 10.772 20.438L10.824 20.49C9.14267 19.1727 7.81667 17.734 6.846 16.174C5.61533 14.198 5 12.1093 5 9.908C5 8.72933 5.29033 7.64167 5.871 6.645C6.45167 5.64833 7.24033 4.85967 8.237 4.279C9.23367 3.69833 10.3213 3.408 11.5 3.408C12.592 3.408 13.6103 3.655 14.555 4.149C15.4997 4.643 16.284 5.31467 16.908 6.164V6.19C17.532 5.32333 18.3163 4.643 19.261 4.149C20.2057 3.655 21.224 3.408 22.316 3.408C23.4947 3.408 24.5823 3.69833 25.579 4.279C26.5757 4.85967 27.3643 5.64833 27.945 6.645C28.5257 7.64167 28.816 8.72933 28.816 9.908C28.816 12.1093 28.2007 14.198 26.97 16.174C25.9993 17.734 24.6733 19.1727 22.992 20.49C21.4493 21.7033 19.7767 22.752 17.974 23.636L17.818 23.688C17.402 23.896 17.0987 24 16.908 24Z"
+                    fill="#333333"
+                  />
+                </svg>
 
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-semibold rounded-full w-5 h-5 flex items-center justify-center">
-                1
-              </span>
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-semibold rounded-full w-5 h-5 flex items-center justify-center">
+                  1
+                </span>
+              </Link>
             </div>
 
             <div className="relative">
