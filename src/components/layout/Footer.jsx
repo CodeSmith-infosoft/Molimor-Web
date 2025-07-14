@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Footer() {
   const social = [
     {
@@ -68,49 +70,49 @@ export default function Footer() {
             </h3>
             <ul className="space-y-[10px]">
               <li>
-                <a href="#" className="text-sm text-[#333333]">
+                <Link to={"/"} className="text-sm text-[#333333]">
                   Your Account
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-sm text-[#333333]">
+                <Link to={"/"} className="text-sm text-[#333333]">
                   Your Orders
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-sm text-[#333333]">
+                <Link to={"/"} className="text-sm text-[#333333]">
                   Returns & Replacements
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-sm text-[#333333]">
+                <Link to={"/"} className="text-sm text-[#333333]">
                   Shipping Rates & Policies
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-sm text-[#333333]">
+                <Link to={"/"} className="text-sm text-[#333333]">
                   Refund and Returns Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-sm text-[#333333]">
+                <Link to={"/"} className="text-sm text-[#333333]">
                   Privacy Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-sm text-[#333333]">
+                <Link to={"/"} className="text-sm text-[#333333]">
                   Terms and Conditions
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-sm text-[#333333]">
+                <Link to={"/"} className="text-sm text-[#333333]">
                   Cookie Settings
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-sm text-[#333333]">
+                <Link to={"/"} className="text-sm text-[#333333]">
                   Help Center
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -120,24 +122,24 @@ export default function Footer() {
             <h3 className="text-lg font-bold text-[#333333]">Get to Know Us</h3>
             <ul className="space-y-[10px]">
               <li>
-                <a href="#" className="text-sm text-[#333333]">
+                <Link to={"/"} className="text-sm text-[#333333]">
                   About Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-sm text-[#333333]">
+                <Link to={"/"} className="text-sm text-[#333333]">
                   Career
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-sm text-[#333333]">
+                <Link to={"/"} className="text-sm text-[#333333]">
                   Returns & Replacements
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-sm text-[#333333]">
+                <Link to={"/"} className="text-sm text-[#333333]">
                   Distributor
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
       <div className="flex justify-center">
         <Header />
       </div>
-      <div className="mt-[240px] w-full">{children}</div>
+      <div className="mt-[250px] w-full">{children}</div>
       <div className="max-w-[1536px] mx-auto">
         <Footer />
       </div>
