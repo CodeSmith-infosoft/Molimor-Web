@@ -1,5 +1,3 @@
-import { Phone, Mail } from "lucide-react";
-
 export default function Footer() {
   const social = [
     {

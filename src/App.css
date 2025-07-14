@@ -9,3 +9,11 @@ body {
 input:focus-visible {
   outline: none;
 }
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
