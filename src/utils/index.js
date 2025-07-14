@@ -62,7 +62,7 @@ export function getTimeLeft(type) {
   };
 }
 
-export const getParamString = (object) => {
+export const getParamString = (object = {}) => {
   const params = new URLSearchParams();
 
   Object.entries(object).forEach(([key, value]) => {

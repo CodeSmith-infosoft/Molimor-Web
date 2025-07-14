@@ -1,4 +1,4 @@
-import { getParamString } from "@/utils";
+import { getParamString } from "@/utils/index.js";
 import api from "../api";
 
 export async function getAllProduct(payload) {

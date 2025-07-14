@@ -5,7 +5,7 @@ import SignIn from "../pages/sign-in";
 export const ROUTES = [{ path: "/", exact: true, component: <Home /> }];
 
 export const REJECT_ROUTES = [
-  // { path: "/login", exact: true, component: <SignIn /> },
+  { path: "/login", exact: true, component: <SignIn /> },
   { path: "/sign-up", exact: true, component: <SignUp /> },
 ];
 

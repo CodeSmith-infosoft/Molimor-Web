@@ -1,14 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { signupSchema } from "@/utils/yupSchema";
-import {
-  getGoogleLogin,
-  getGoogleURL,
-  register,
-} from "@/service/action/register.action";
 import { ValidationError } from "yup";
-import ErrorComponent from "../ErrorComponent";
+import ErrorComponent from "../Common/ErrorComponent";
 import toast from "react-hot-toast";
+import useAxios from "../../customHook/fetch-hook";
 
 const initialValue = {
   fname: "",
@@ -25,13 +21,25 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { fetchData: register } = useAxios({
+    method: "POST",
+    url: "/user/register",
+  });
+  const { fetchData: getGoogleLogin } = useAxios({
+    method: "POST",
+    url: "/user/googleOAuthLogin",
+  });
+  const { fetchData: getGoogleURL } = useAxios({
+    method: "GET",
+    url: "/user/getGoogleOAuthUrl",
+  });
 
   useEffect(() => {
     if (location.search.includes("code")) {
       const params = new URL(window.location.href).searchParams;
       const code = params.get("code");
       if (code) {
-        getGoogleLogin(code).then((res) => {
+        getGoogleLogin({ data: code }).then((res) => {
           const toast2 = res.success ? toast.success : toast.error;
           toast2(res.message);
           if (res.success) {
@@ -60,7 +68,7 @@ const SignUp = () => {
       const payload = { ...validatedData };
       delete payload.confirmPassword;
 
-      const res = await register(payload);
+      const res = await register({ data: payload });
       const toast2 = res.success ? toast.success : toast.error;
       toast2(res.message);
 
@@ -103,7 +111,7 @@ const SignUp = () => {
   const handleGoogleLogIn = (e) => {
     e.preventDefault();
     getGoogleURL().then((res) => {
-      window.location.replace(res.data.url);
+      window.location.replace(res.url);
     });
   };
 
@@ -148,7 +156,7 @@ const SignUp = () => {
                     errors.fname ? "border-red-500" : "border-light-gray"
                   } ${
                     formData.fname
-                      ? "opacity-100"
+                      ? "opacity-100 !border-[#333333] "
                       : "opacity-50 focus:opacity-100"
                   }`}
                 />
@@ -176,7 +184,7 @@ const SignUp = () => {
                     errors.email ? "border-red-500" : "border-light-gray"
                   } ${
                     formData.email
-                      ? "opacity-100"
+                      ? "opacity-100 !border-[#333333] "
                       : "opacity-50 focus:opacity-100"
                   }`}
                 />
@@ -205,7 +213,7 @@ const SignUp = () => {
                       errors.password ? "border-red-500" : "border-light-gray"
                     } ${
                       formData.password
-                        ? "opacity-100"
+                        ? "opacity-100 !border-[#333333] "
                         : "opacity-50 focus:opacity-100"
                     }`}
                   />
@@ -251,7 +259,7 @@ const SignUp = () => {
                         : "border-light-gray"
                     } ${
                       formData.confirmPassword
-                        ? "opacity-100"
+                        ? "opacity-100 !border-[#333333] "
                         : "opacity-50 focus:opacity-100"
                     }`}
                   />

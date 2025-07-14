@@ -1,14 +1,9 @@
-import {
-  getGoogleLogin,
-  getGoogleURL,
-  login as loginUser,
-} from "@/service/action/register.action";
 import { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { ValidationError } from "yup";
 import { loginSchema } from "@/utils/yupSchema";
-import ErrorComponent from "../ErrorComponent";
+import ErrorComponent from "../Common/ErrorComponent";
 import { addToCart } from "@/service/action/cart.action";
 import {
   removeCartFromLocalstorage,
@@ -16,6 +11,7 @@ import {
 } from "@/utils";
 import { addWishlist } from "@/service/action/wishlist.action";
 import MainContext from "../../context/MainContext";
+import useAxios from "../../customHook/fetch-hook";
 
 const initialValue = {
   email: "",
@@ -31,13 +27,25 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [rememberMe, setRememberMe] = useState(false);
+  const { fetchData: loginUser } = useAxios({
+    method: "POST",
+    url: "/user/login",
+  });
+  const { fetchData: getGoogleLogin } = useAxios({
+    method: "POST",
+    url: "/user/googleOAuthLogin",
+  });
+  const { fetchData: getGoogleURL } = useAxios({
+    method: "GET",
+    url: "/user/getGoogleOAuthUrl",
+  });
 
   useEffect(() => {
     if (location.search.includes("code")) {
       const params = new URL(window.location.href).searchParams;
       const code = params.get("code");
       if (code) {
-        getGoogleLogin(code).then((res) => {
+        getGoogleLogin({ data: code }).then((res) => {
           const toast2 = res.success ? toast.success : toast.error;
           toast2(res.message);
           if (res.success) {
@@ -69,7 +77,7 @@ const Login = () => {
       });
       setErrors({});
       const payload = { ...validatedData };
-      await loginUser(payload).then(async (res) => {
+      await loginUser({ data: payload }).then(async (res) => {
         const toast2 = res.success ? toast.success : toast.error;
         toast2(res.message);
         if (res.success) {
@@ -134,7 +142,7 @@ const Login = () => {
 
   const handleGoogleLogIn = (e) => {
     e.preventDefault();
-    getGoogleURL().then((res) => window.location.replace(res.data.url));
+    getGoogleURL().then((res) => window.location.replace(res.url));
   };
 
   return (
@@ -148,101 +156,132 @@ const Login = () => {
           />
         </div>
         <div className="flex-1">
-          <div className="max-w-md mx-auto border-none">
-            <p className="text-center text-green-900 text-xs font-normal">
-              WELCOME BACK
-            </p>
-            <h2 className="text-2xl font-extrabold text-green-900 mb-4">
+          <div className="max-w-[500px] w-full mx-auto border-none px-5">
+            <p className="text-center text-green text-xs">WELCOME BACK</p>
+            <h2 className="text-green text-center text-[26px] font-extrabold mb-[25px]">
               Login your Account
             </h2>
-            <form onSubmit={onSubmit} className="pt-10">
-              <label className="block text-sm text-gray-700 mb-2">Email</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                placeholder="Example@email.com"
-                onChange={handleChange}
-                className={`w-full p-4 rounded-lg border ${
-                  errors.email ? "border-red-500" : "border-gray-300"
-                }`}
-              />
-              {errors.email && <ErrorComponent message={errors.email} />}
-
-              <label className="block text-sm text-gray-700 mb-2 mt-5">
-                Password
-              </label>
-              <div className="relative">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  value={formData.password}
-                  placeholder="At least 8 characters"
-                  onChange={handleChange}
-                  className={`w-full p-4 rounded-lg border ${
-                    errors.password ? "border-red-500" : "border-gray-300"
-                  } pr-12`}
-                />
-                <span
-                  onClick={togglePassword}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
+            <form onSubmit={onSubmit} className="">
+              {/* Email */}
+              <div className="mb-[22px] group">
+                <label
+                  className={`block text-mid-gray text-sm pb-2 transition-opacity duration-300 ${
+                    formData.email
+                      ? "opacity-100"
+                      : "opacity-50 group-focus-within:opacity-100"
+                  }`}
                 >
-                  <img
-                    src={
-                      showPassword
-                        ? "/images/login/eyeCrossed.svg"
-                        : "/images/login/eyeOpen.svg"
-                    }
-                  />
-                </span>
+                  Email
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  placeholder="Example@email.com"
+                  onChange={handleChange}
+                  className={`w-full px-4 py-[15px] rounded-lg border text-base transition-opacity duration-300 ${
+                    errors.email ? "border-red-500" : "border-light-gray"
+                  } ${
+                    formData.email
+                      ? "opacity-100 !border-[#333333]"
+                      : "opacity-50 focus:opacity-100"
+                  }`}
+                />
+                {errors.email && <ErrorComponent message={errors.email} />}
               </div>
-              {errors.password && <ErrorComponent message={errors.password} />}
 
-              <div className="flex justify-between items-center mt-4">
-                <label className="flex items-center gap-2 text-sm">
+              {/* Password */}
+              <div className="mb-[22px] group">
+                <label
+                  className={`block text-mid-gray text-sm pb-2 transition-opacity duration-300 ${
+                    formData.password
+                      ? "opacity-100"
+                      : "opacity-50 group-focus-within:opacity-100"
+                  }`}
+                >
+                  Password
+                </label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={formData.password}
+                    placeholder="At least 8 characters"
+                    onChange={handleChange}
+                    className={`w-full px-4 py-[15px] pr-12 rounded-lg border text-base transition-opacity duration-300 ${
+                      errors.password ? "border-red-500" : "border-light-gray"
+                    } ${
+                      formData.password
+                        ? "opacity-100 !border-[#333333]"
+                        : "opacity-50 focus:opacity-100"
+                    }`}
+                  />
+                  <span
+                    onClick={togglePassword}
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                  >
+                    <img
+                      src={
+                        showPassword
+                          ? "/images/login/eyeCrossed.svg"
+                          : "/images/login/eyeOpen.svg"
+                      }
+                    />
+                  </span>
+                </div>
+                {errors.password && (
+                  <ErrorComponent message={errors.password} />
+                )}
+              </div>
+              <div className="flex justify-between items-center mt-[25px]">
+                <label className="flex items-center gap-2 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
-                    className="w-4 h-4"
+                    className="peer hidden"
                   />
-                  Remember me
+                  <div className="w-[22px] h-[22px] rounded-[2px] border border-[#E5E7EB] flex items-center justify-center peer-checked:bg-[#076536] peer-checked:border-[#076536] transition-colors duration-200">
+                    <img src={"/images/login/checked.svg"} />
+                  </div>
+                  <span className="text-[#333333] text-sm">Remember me</span>
                 </label>
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full mt-6 py-3 bg-red-600 text-white font-bold rounded-lg text-sm uppercase"
+                className="w-full mt-[25px] py-3 bg-red-600 text-white font-bold rounded-lg text-sm uppercase"
               >
                 {loading ? "Loading..." : "Continue"}
               </button>
             </form>
 
-            <div className="flex items-center my-6">
-              <div className="flex-1 border-t"></div>
-              <span className="px-4 text-sm text-gray-500">Or</span>
-              <div className="flex-1 border-t"></div>
+            <div className="pt-[25px] flex items-center">
+              <div className="line border-t border-light-gray w-1/2"></div>
+              <div className="px-[10px] text-xs font-bold">Or</div>
+              <div className="line border-t border-light-gray w-1/2"></div>
             </div>
 
-            <div className="space-y-2">
+            <div className="other-icon pt-[25px]">
               <div
+                className="cursor-pointer border border-[#E5E7EB] bg-[#FAFAFA] py-[15px] px-10 rounded-lg flex items-center justify-center gap-4"
                 onClick={handleGoogleLogIn}
-                className="flex items-center justify-center gap-4 bg-gray-200 py-3 rounded-lg cursor-pointer"
               >
                 <img src={"/images/login/google.svg"} />
-                <span className="text-gray-700 text-sm">
-                  Sign in with Google
-                </span>
+                <span className="text-sm opacity-50">Sign up with Google</span>
               </div>
             </div>
 
-            <p className="text-center text-sm text-gray-700 mt-6">
+            <div className="text-center pt-10 text-sm text-[#000]">
               New User?{" "}
-              <Link to="/sign-up" className="font-bold text-green-800">
-                Sign Up Here
+              <Link
+                to="/sign-up"
+                className="font-bold text-green hover:underline"
+              >
+                SIGN UP HERE
               </Link>
-            </p>
+            </div>
           </div>
         </div>
       </div>

@@ -9,3 +9,13 @@ body {
 input:focus-visible {
   outline: none;
 }
+
+@layer utilities {
+  .section-top-spacing {
+    margin-top: 70px;
+  }
+
+  .sub-bottom-spacing {
+    margin-bottom: 26px;
+  }
+}
