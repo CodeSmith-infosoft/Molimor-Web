@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import CategoryDropdown from "./CategoryDropdown";
 
 export default function CategoriesNavigation() {
@@ -78,30 +79,30 @@ export default function CategoriesNavigation() {
   ];
 
   const navigationItems = [
-    "Home",
-    "Popular Products",
-    "Home & Kitchen",
-    "Home & Care",
-    "Food",
-    "Combo",
-    "Deals",
+    { label: "Home", link: "" },
+    { label: "Popular Products", link: "/products" },
+    { label: "Home & Kitchen", link: "" },
+    { label: "Home & Care", link: "" },
+    { label: "Food", link: "" },
+    { label: "Combo", link: "" },
+    { label: "Deals", link: "" },
   ];
 
   return (
     <nav className="bg-white">
-      <div className="max-w-[1536px] mx-auto mt-[30px]">
+      <div className="max-w-[1576px] px-10 mx-auto mt-[30px]">
         <div className="flex items-center gap-[32px]">
-          <CategoryDropdown categoriesData={categoriesData} /> 
+          <CategoryDropdown categoriesData={categoriesData} />
 
           <div className="flex items-center gap-[30px]">
             {navigationItems.map((item, index) => (
-              <a
+              <Link
                 key={index}
-                href="#"
+                to={item.link}
                 className="px-2 py-3 text-gray-700 hover:text-green font-semibold text-[15px] transition-colors duration-200"
               >
-                {item}
-              </a>
+                {item.label}
+              </Link>
             ))}
           </div>
         </div>

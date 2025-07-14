@@ -1,8 +1,12 @@
 import SignUp from "../components/signUp-components/SignUp";
 import Home from "../pages/Home";
+import Products from "../pages/Products";
 import SignIn from "../pages/sign-in";
 
-export const ROUTES = [{ path: "/", exact: true, component: <Home /> }];
+export const ROUTES = [
+  { path: "/", exact: true, component: <Home /> },
+  { path: "/products", exact: true, component: <Products /> },
+];
 
 export const REJECT_ROUTES = [
   { path: "/login", exact: true, component: <SignIn /> },

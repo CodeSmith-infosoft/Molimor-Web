@@ -3,10 +3,10 @@ import StarRating from "../Common/StarRating";
 
 const HorizontalCard = ({ isOffer = true }) => {
   return (
-    <div className="bg-[#ffff] max-h-[102px] rounded-[6px] h-full flex items-center group cursor-pointer">
+    <div className="bg-[#ffff] max-h-[120px] rounded-[6px] h-full flex items-center group cursor-pointer">
       <img
         src="/images/dummy/khichadi.png"
-        className="w-[102px] h-[102px] object-contain group-hover:scale-[1.05] transition-transform duration-300 ease-in-out"
+        className="w-[102px] h-[120px] object-contain group-hover:scale-[1.05] transition-transform duration-300 ease-in-out"
       />
       <div className="space-y-[10px] pl-3">
         <label className="capitalize text-sm block">classic tea</label>

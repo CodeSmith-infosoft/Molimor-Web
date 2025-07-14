@@ -1,5 +1,5 @@
-import SubHeader from "../../components/HomeComponents/SubHeader";import BorderCard from "../../components/ProductCard/BorderCard";
-BorderCard
+import SubHeader from "../../components/HomeComponents/SubHeader";
+import BorderCard from "../../components/ProductCard/BorderCard";
 import FillCard from "../../components/ProductCard/FillCard";
 import HorizontalCard from "../../components/ProductCard/HorizontalCard";
 
