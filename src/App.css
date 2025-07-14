@@ -19,3 +19,12 @@ input:focus-visible {
     margin-bottom: 26px;
   }
 }
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
