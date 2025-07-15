@@ -1,3 +1,4 @@
+import ProductDetail from "@/pages/ProductDetail";
 import SignUp from "../components/signUp-components/SignUp";
 import Home from "../pages/Home";
 import Products from "../pages/Products";
@@ -8,6 +9,7 @@ export const ROUTES = [
   { path: "/", exact: true, component: <Home /> },
   { path: "/products", exact: true, component: <Products /> },
   { path: "/wishlist", exact: true, component: <Wishlist /> },
+  { path: "/products/:id", exact: true, component: <ProductDetail /> },
 ];
 
 export const REJECT_ROUTES = [

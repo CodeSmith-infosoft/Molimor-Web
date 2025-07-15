@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { X } from "lucide-react";
 
 import {
@@ -20,6 +20,9 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import MainContext from "@/context/MainContext";
+import { formatCurrency, isDateNotPast } from "@/utils";
+import useAxios from "@/customHook/fetch-hook";
 
 const wishlistItems = [
   {
@@ -34,7 +37,7 @@ const wishlistItems = [
     image: "/images/dummy/khichadi.png",
     name: "Rose Gold Earring",
     price: "$80",
-    stockStatus: "In Stock",
+    stockStatus: "Out of Stock",
   },
   {
     id: "3",
@@ -97,17 +100,37 @@ const wishlistItems = [
 const ITEMS_PER_PAGE = 5;
 
 const Wishlist = () => {
+  const { data, fetchData } = useAxios({
+    method: "GET",
+    url: "/wishlist/getWishlist",
+  });
+
+  useEffect(() => {
+    fetchData();
+  }, []);
   const [currentPage, setCurrentPage] = useState(1);
 
   const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
   const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
-  const currentItems = wishlistItems.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem);
 
   const totalPages = Math.ceil(wishlistItems.length / ITEMS_PER_PAGE);
+
+  const { langauge, currency } = useContext(MainContext);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+
+  const getStockStatusStyle = (status) => {
+    switch (status) {
+      case "In Stock":
+        return "bg-green border-green";
+      case "Out of Stock":
+        return "bg-[#DC2626] text-white border-[#DC2626]";
+    }
+  };
+
   return (
     <>
       <section className="py-[70px] bg-[#f3f4f6]">
@@ -132,38 +155,92 @@ const Wishlist = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {currentItems.map((item) => (
+                  {currentItems?.map((item) => (
                     <TableRow key={item.id}>
                       <TableCell className="flex items-center gap-4 py-4">
                         <img
                           src={item.image || "/placeholder.svg"}
                           alt={item.name}
-                          width={40}
-                          height={40}
+                          width={60}
+                          height={50}
                           className="rounded-md object-cover"
                         />
                         <span>{item.name}</span>
                       </TableCell>
-                      <TableCell>{item.price}</TableCell>
+                      <TableCell className={"text-[15px] font-medium"}>
+                        {formatCurrency(
+                          isDateNotPast(
+                            item.variants[0].endSaleOn,
+                            item.variants[0].discountPrice,
+                            item.variants[0].price,
+                            item.variants[0].saleStatus
+                          ),
+                          currency,
+                          langauge
+                        )}
+                      </TableCell>
                       <TableCell>
-                        <span className="inline-flex items-center rounded-xs bg-green px-2 py-1 text-xs font-medium text-white ring-1 ring-inset ring-green">
+                        <span
+                          className={`inline-flex items-center rounded-sm ${getStockStatusStyle(
+                            item.stockStatus
+                          )} px-2 py-1 text-sm font-medium text-white`}
+                        >
                           {item.stockStatus}
                         </span>
                       </TableCell>
                       <TableCell className="">
                         <div className="flex items-center justify-center gap-2">
-                          <Button
-                            className="bg-green hover:bg-green-800 text-white rounded-full px-4 py-2"
+                          <button
+                            className="bg-green hover:bg-green-800 cursor-pointer text-white rounded-[43px] px-8 py-[14px]"
                             size="sm"
                           >
                             Add to Cart
-                          </Button>
+                          </button>
                           <Button
                             variant="ghost"
                             size="icon"
                             className="rounded-full w-8 h-8"
                           >
-                            <X className="h-4 w-4" />
+                            <svg
+                              width="25"
+                              height="24"
+                              viewBox="0 0 25 24"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <g clip-path="url(#clip0_76_208)">
+                                <path
+                                  d="M12.1665 23C18.2413 23 23.1665 18.0748 23.1665 12C23.1665 5.92525 18.2413 1 12.1665 1C6.09175 1 1.1665 5.92525 1.1665 12C1.1665 18.0748 6.09175 23 12.1665 23Z"
+                                  stroke="#E5E7EB"
+                                  stroke-miterlimit="10"
+                                />
+                                <path
+                                  d="M16.1665 8L8.1665 16"
+                                  stroke="#333333"
+                                  stroke-width="1.5"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                                <path
+                                  d="M16.1665 16L8.1665 8"
+                                  stroke="#333333"
+                                  stroke-width="1.5"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_76_208">
+                                  <rect
+                                    width="24"
+                                    height="24"
+                                    fill="white"
+                                    transform="translate(0.166504)"
+                                  />
+                                </clipPath>
+                              </defs>
+                            </svg>
+
                             <span className="sr-only">Remove item</span>
                           </Button>
                         </div>
@@ -200,7 +277,7 @@ const Wishlist = () => {
                           onClick={() => handlePageChange(index + 1)}
                           className={`px-3 py-1 text-sm rounded ${
                             currentPage === index + 1
-                              ? "bg-gray-900 text-white"
+                              ? "bg-green text-white"
                               : "bg-gray-100 hover:bg-gray-200"
                           }`}
                         >
