@@ -4,7 +4,7 @@ import ProductList from "../../components/ProductListComponent/ProductList";
 
 const Products = () => {
   return (
-    <div>
+    <div className="max-w-[1576px] mx-auto px-10">
       <Banner />
       <div className="section-top-spacing flex gap-10">
         <Filter />

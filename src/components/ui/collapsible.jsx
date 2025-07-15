@@ -9,7 +9,7 @@ function Collapsible({
 function CollapsibleTrigger({
   ...props
 }) {
-  return (<CollapsiblePrimitive.CollapsibleTrigger data-slot="collapsible-trigger" {...props} className="w-full !block !px-0" />);
+  return (<CollapsiblePrimitive.CollapsibleTrigger data-slot="collapsible-trigger" {...props} className="w-full !px-0" />);
 }
 
 function CollapsibleContent({
