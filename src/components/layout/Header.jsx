@@ -3,15 +3,18 @@ import { Search, MapPin, User, Heart, ShoppingCart } from "lucide-react";
 import CountdownTimer from "../HeaderComponents/CountdownTimer";
 import Dropdown from "../HeaderComponents/Dropdown";
 import CategoriesNavigation from "../HeaderComponents/CategoriesNavigation";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Header() {
   // const [language, setLanguage] = useState("English");
   const [currency, setCurrency] = useState("USD");
   const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate()
 
   // const languageOptions = ["English", "Spanish", "French", "German", "Italian"];
   const currencyOptions = ["USD", "EUR", "GBP", "JPY", "CAD"];
+
+  
 
   return (
     <div className="w-full bg-white fixed z-9999 top-0">
@@ -64,7 +67,7 @@ export default function Header() {
         <div className="max-w-[1576px] px-10 mx-auto flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <img src="/images/logo.png" className="h-[66px]" alt="" />
+            <img src="/images/logo.png" className="h-[66px] cursor-pointer" alt="" onClick={()=>navigate('/')} />
           </div>
 
           {/* Location */}

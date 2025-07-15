@@ -181,6 +181,14 @@ const Filter = () => {
           )}
         </div>
       </div>
+      <div className="h-[350px] w-full rounded-[5px] bg-[#FAE7C8] p-[30px]">
+        <div className="">
+          <p className="text-[22px] font-semibold mb-[34px]">Our Top Most Products Check It Now</p>
+          <button className="bg-white px-4 py-2 text-sm font-medium rounded-[5px]">
+            Shop Now
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

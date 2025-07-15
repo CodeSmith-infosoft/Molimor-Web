@@ -13,12 +13,14 @@ export default function CategoryDropdown({ categoriesData }) {
   useEffect(() => {
     if (isHomePage) {
       setIsMainOpen(true);
+    } else {
+      setIsMainOpen(false);
     }
     // Ensure there's always a category open when component mounts
     if (categoriesData && categoriesData.length > 0 && !expandedCategory) {
-      setExpandedCategory(categoriesData[0].id);
+      setExpandedCategory(categoriesData[0].categoryId);
     }
-  }, [isHomePage, categoriesData, expandedCategory]);
+  }, [isHomePage, categoriesData, expandedCategory, location.pathname]);
 
   const toggleCategory = (categoryId) => {
     setExpandedCategory((prev) => {
@@ -51,28 +53,32 @@ export default function CategoryDropdown({ categoriesData }) {
 
   const renderCategoryItem = (item, level = 0) => {
     const hasSubcategories =
-      item.subcategories && item.subcategories.length > 0;
-    const isExpanded = expandedCategory === item.id;
+      item?.subCategories && item?.subCategories?.length > 0;
+    const isExpanded = expandedCategory === item?.categoryId;
     const paddingLeft = level * 16 + 16;
 
     return (
-      <div key={item.id}>
+      <div key={item?.categoryId}>
         <div
           className={`flex cursor-pointer items-center justify-between px-[18px] py-[13px] transition-colors duration-500`}
           style={{ paddingLeft: `${paddingLeft}px` }}
-          onClick={() => (hasSubcategories ? toggleCategory(item.id) : null)}
+          onClick={() =>
+            hasSubcategories ? toggleCategory(item?.categoryId) : null
+          }
         >
           <div className="flex items-center gap-3">
-            {item.icon && (
+            {item?.image && (
               <div className="w-5 h-5 flex-shrink-0">
                 <img
-                  src={item.icon || "/placeholder.svg"}
-                  alt={item.name}
+                  src={item?.image || "/placeholder.svg"}
+                  alt={item?.name}
                   className="w-full h-full object-contain"
                 />
               </div>
             )}
-            <span className="text-sm font-medium">{item.name}</span>
+            <span className="text-sm font-medium">
+              {item?.categoryName || item?.name}
+            </span>
           </div>
 
           {hasSubcategories && (
@@ -93,7 +99,7 @@ export default function CategoryDropdown({ categoriesData }) {
             }`}
           >
             <div className="transform transition-transform duration-300 ease-in-out">
-              {item.subcategories.map((subItem) =>
+              {item.subCategories?.map((subItem) =>
                 renderCategoryItem(subItem, level + 1)
               )}
             </div>
@@ -149,7 +155,7 @@ export default function CategoryDropdown({ categoriesData }) {
         onMouseLeave={handleMouseLeave}
       >
         <div className="py-2">
-          {categoriesData.map((category) => renderCategoryItem(category))}
+          {categoriesData?.map((category) => renderCategoryItem(category))}
         </div>
       </div>
     </div>
