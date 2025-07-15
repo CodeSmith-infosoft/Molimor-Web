@@ -22,7 +22,7 @@ function useAxios(initialConfig) {
       try {
         const response = await api(config);
         setData(response.data.data);
-        return response.data.data;
+        return response.data;
       } catch (err) {
         setError(err.response?.data?.message || err.message || "Unknown error");
         return err.response?.data;
