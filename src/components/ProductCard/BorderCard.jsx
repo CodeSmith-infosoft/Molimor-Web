@@ -2,12 +2,19 @@ import { formatCurrency, getPercent, isDateNotPast, isDateNotPastBoolean } from 
 import StarRating from "../Common/StarRating";
 import MainContext from "@/context/MainContext";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 const BorderCard = ({ product }) => {
+  const navigate = useNavigate()
   const { language, currency } = useContext(MainContext);
   let isDeal = isDateNotPastBoolean(product.variants)
   return (
-    <div className="bg-[#FFFFFF] border border-[#E5E7EB] rounded-[10px] px-5 py-[27px] group cursor-pointer w-full h-full">
+    <div
+      className="bg-[#FFFFFF] border border-[#E5E7EB] rounded-[10px] px-5 py-[27px] group cursor-pointer w-full h-full"
+      onClick={() => {
+        navigate(`/products/${product?._id}`);
+      }}
+    >
       <div className="max-w-[200px] mx-auto relative">
         <img
           src={product?.mainImage}
