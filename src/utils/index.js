@@ -161,8 +161,29 @@ export const removeWishlistFromLocalstorage = () => {
   localStorage.removeItem("wishlistData");
 };
 
-export function isDateNotPast(dateString, salePrice, price, saleStatus) {
+export function isDateNotPast(item) {
+  const saleItem = item.length && item?.find((i) => i.saleStatus);
   const now = new Date();
-  const targetDate = new Date(dateString);
-  return targetDate.getTime() > now.getTime() && saleStatus ? salePrice : price;
+  const targetDate = new Date(saleItem?.endSaleOn);
+  if (targetDate.getTime() > now.getTime() && saleItem.saleStatus) {
+    return saleItem?.discountPrice;
+  }
+  return item[0].price;
+}
+
+export function isDateNotPastBoolean(item) {
+  const saleItem = item.find((i) => i.saleStatus);
+  const now = new Date();
+  const targetDate = new Date(saleItem?.endSaleOn);
+  return targetDate.getTime() > now.getTime() && saleItem?.saleStatus;
+}
+
+export function getPercent(items) {
+  let saleItem = items.find((i) => i.saleStatus);
+  const now = new Date();
+  const targetDate = new Date(saleItem?.endSaleOn);
+  if (targetDate.getTime() > now.getTime() && saleItem?.saleStatus) {
+    return Math.round((saleItem?.discountPrice * 100) / saleItem?.mrp);
+  }
+  return (items[0].price * 100) / items[0].mrp;
 }

@@ -4,11 +4,11 @@ const MainProvider = ({ children }) => {
   const [cartCount, setCartCount] = useState(0);
   const [categoryChange, setCategoryChange] = useState(true);
   const [language, setLanguage] = useState("en");
-  const [currency, setCurrency] = useState("INR");
+  const [currency, setCurrency] = useState("USD");
 
   useEffect(() => {
     localStorage.setItem("lang", language || "en");
-    localStorage.setItem("currency", currency || "INR");
+    localStorage.setItem("currency", currency || "USD");
   }, [language, currency]);
 
   return (

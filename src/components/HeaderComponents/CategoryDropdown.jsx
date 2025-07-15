@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { ChevronDown, ChevronRight, ChevronUp } from "lucide-react";
 
 export default function CategoryDropdown({ categoriesData }) {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
-
+  const buttonRef = useRef();
   const [isMainOpen, setIsMainOpen] = useState(isHomePage);
   const [expandedCategory, setExpandedCategory] = useState(null); // Will be set in useEffect
 
@@ -16,11 +16,25 @@ export default function CategoryDropdown({ categoriesData }) {
     } else {
       setIsMainOpen(false);
     }
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (buttonRef.current && !buttonRef.current.contains(event.target)) {
+        setIsMainOpen(false); // trigger when clicked outside
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [handleMainToggle]);
+
+  useEffect(() => {
     // Ensure there's always a category open when component mounts
     if (categoriesData && categoriesData.length > 0 && !expandedCategory) {
       setExpandedCategory(categoriesData[0].categoryId);
     }
-  }, [isHomePage, categoriesData, expandedCategory, location.pathname]);
+  }, [isHomePage, categoriesData, expandedCategory]);
 
   const toggleCategory = (categoryId) => {
     setExpandedCategory((prev) => {
@@ -33,23 +47,12 @@ export default function CategoryDropdown({ categoriesData }) {
     });
   };
 
-  const handleMainToggle = () => {
+  function handleMainToggle() {
     // Only allow toggling if not on home page
     if (!isHomePage) {
       setIsMainOpen(!isMainOpen);
     }
-  };
-
-  const handleMouseEnter = () => {
-    setIsMainOpen(true);
-  };
-
-  const handleMouseLeave = () => {
-    // Only close on mouse leave if not on home page
-    if (!isHomePage) {
-      setIsMainOpen(false);
-    }
-  };
+  }
 
   const renderCategoryItem = (item, level = 0) => {
     const hasSubcategories =
@@ -112,9 +115,8 @@ export default function CategoryDropdown({ categoriesData }) {
   return (
     <div className="relative">
       <button
+        ref={buttonRef}
         onClick={handleMainToggle}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
         className={`flex items-center gap-2 text-[15px] px-[18px] py-[14px] w-[298px] justify-between ${
           isHomePage ? "text-green" : ""
         } hover:text-green transition-all ease-in-out duration-200 ${
@@ -140,24 +142,24 @@ export default function CategoryDropdown({ categoriesData }) {
         </div>
         <ChevronDown
           className={`w-4 h-4 transition-transform duration-200 ${
-            isMainOpen ? "rotate-180" : ""
+            isMainOpen || location.pathname === "/" ? "rotate-180" : ""
           }`}
         />
       </button>
 
-      <div
-        className={`absolute hide-scrollbar max-h-[601px] top-11 left-0 mt-1 bg-white max-w-[298px] z-20 w-80 overflow-y-auto transition-all duration-300 ease-in-out transform ${
-          isMainOpen
-            ? "opacity-100 scale-100 translate-y-0"
-            : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
-        }`}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
-        <div className="py-2">
-          {categoriesData?.map((category) => renderCategoryItem(category))}
+      {location.pathname !== "/" && (
+        <div
+          className={`absolute hide-scrollbar max-h-[601px] top-11 left-0 mt-1 bg-white max-w-[298px] z-20 w-80 overflow-y-auto transition-all duration-300 ease-in-out transform ${
+            isMainOpen
+              ? "opacity-100 scale-100 translate-y-0"
+              : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+          }`}
+        >
+          <div className="py-2">
+            {categoriesData?.map((category) => renderCategoryItem(category))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

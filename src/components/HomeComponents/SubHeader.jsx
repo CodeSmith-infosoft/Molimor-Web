@@ -5,7 +5,7 @@ const SubHeader = ({ heading, link }) => {
   return (
     <div className="flex justify-between w-full items-center sub-bottom-spacing">
       <label className="capitalize text-2xl font-medium ">{heading}</label>
-      <span className="flex" onClick={() => navigate(link)}>
+      <span className="flex font-bold text-xl cursor-pointer" onClick={() => navigate(link)}>
         View All <img src="/images/common/rightArrow.svg" className="ml-3" />
       </span>
     </div>

@@ -116,7 +116,7 @@ const Wishlist = () => {
 
   const totalPages = Math.ceil(wishlistItems.length / ITEMS_PER_PAGE);
 
-  const { langauge, currency } = useContext(MainContext);
+  const { language, currency } = useContext(MainContext);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -170,13 +170,10 @@ const Wishlist = () => {
                       <TableCell className={"text-[15px] font-medium"}>
                         {formatCurrency(
                           isDateNotPast(
-                            item.variants[0].endSaleOn,
-                            item.variants[0].discountPrice,
-                            item.variants[0].price,
-                            item.variants[0].saleStatus
+                            item.variants
                           ),
                           currency,
-                          langauge
+                          language
                         )}
                       </TableCell>
                       <TableCell>

@@ -1,20 +1,18 @@
-import { useState } from "react";
-import { Search, MapPin, User, Heart, ShoppingCart } from "lucide-react";
+import { useContext, useState } from "react";
 import CountdownTimer from "../HeaderComponents/CountdownTimer";
 import Dropdown from "../HeaderComponents/Dropdown";
 import CategoriesNavigation from "../HeaderComponents/CategoriesNavigation";
 import { Link, useNavigate } from "react-router-dom";
+import MainContext from "@/context/MainContext";
 
 export default function Header() {
   // const [language, setLanguage] = useState("English");
-  const [currency, setCurrency] = useState("USD");
+  const { currency, setCurrency } = useContext(MainContext);
   const [searchQuery, setSearchQuery] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // const languageOptions = ["English", "Spanish", "French", "German", "Italian"];
-  const currencyOptions = ["USD", "EUR", "GBP", "JPY", "CAD"];
-
-  
+  const currencyOptions = ["USD", "EUR", "INR"];
 
   return (
     <div className="w-full bg-white fixed z-9999 top-0">
@@ -67,7 +65,12 @@ export default function Header() {
         <div className="max-w-[1576px] px-10 mx-auto flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <img src="/images/logo.png" className="h-[66px] cursor-pointer" alt="" onClick={()=>navigate('/')} />
+            <img
+              src="/images/logo.png"
+              className="h-[66px] cursor-pointer"
+              alt=""
+              onClick={() => navigate("/")}
+            />
           </div>
 
           {/* Location */}
@@ -145,7 +148,7 @@ export default function Header() {
             </div>
 
             <div className="relative">
-              <Link to={'/wishlist'}>
+              <Link to={"/wishlist"}>
                 <svg
                   width="33"
                   height="26"
