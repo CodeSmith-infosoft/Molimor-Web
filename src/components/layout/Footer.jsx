@@ -48,10 +48,11 @@ export default function Footer() {
               </p>
               <div className="flex gap-[10px]">
                 {social &&
-                  social.map((item) => {
+                  social.map((item, index) => {
                     return (
                       <a
                         href={item.link}
+                        key={index}
                         target="_blank"
                         className="p-[10px] h-[36px] border bg-white border-[#E5E7EB] rounded-[6px]"
                       >

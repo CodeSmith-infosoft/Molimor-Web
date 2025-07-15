@@ -75,12 +75,14 @@ const Login = () => {
       const validatedData = await loginSchema.validate(formData, {
         abortEarly: false,
       });
+
       setErrors({});
       const payload = { ...validatedData };
       await loginUser({ data: payload }).then(async (res) => {
-        const toast2 = res.success ? toast.success : toast.error;
-        toast2(res.message);
-        if (res.success) {
+        console.log(res)
+        const toast2 = res.token ? toast.success : toast.error;
+        toast2(res.message);    
+        if (res.token) {
           rememberMe
             ? localStorage.setItem("login", JSON.stringify(payload))
             : localStorage.removeItem("login");
