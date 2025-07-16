@@ -1,4 +1,6 @@
 import { toast } from "react-hot-toast";
+const STORAGE_KEY = "recent_items";
+const EXPIRY_DAYS = 7;
 
 export function timeAgo(dateString) {
   const now = new Date();
@@ -162,28 +164,73 @@ export const removeWishlistFromLocalstorage = () => {
 };
 
 export function isDateNotPast(item) {
-  const saleItem = item.length && item?.find((i) => i.saleStatus);
+  const saleItem = item?.length && item?.find((i) => i?.saleStatus);
   const now = new Date();
   const targetDate = new Date(saleItem?.endSaleOn);
   if (targetDate.getTime() > now.getTime() && saleItem.saleStatus) {
     return saleItem?.discountPrice;
   }
-  return item[0].price;
+  return item[0]?.price;
 }
 
 export function isDateNotPastBoolean(item) {
-  const saleItem = item.find((i) => i.saleStatus);
+  const saleItem = item?.length && item?.find((i) => i?.saleStatus);
   const now = new Date();
   const targetDate = new Date(saleItem?.endSaleOn);
   return targetDate.getTime() > now.getTime() && saleItem?.saleStatus;
 }
 
 export function getPercent(items) {
-  let saleItem = items.find((i) => i.saleStatus);
+  let saleItem = items?.length && items?.find((i) => i?.saleStatus);
   const now = new Date();
   const targetDate = new Date(saleItem?.endSaleOn);
   if (targetDate.getTime() > now.getTime() && saleItem?.saleStatus) {
     return Math.round((saleItem?.discountPrice * 100) / saleItem?.mrp);
   }
   return (items[0].price * 100) / items[0].mrp;
+}
+
+export function addRecentItems(newItems) {
+  const recentItems = getRecentItemsRaw();
+  const timestamp = Date.now();
+
+  // Filter out duplicates based on `id` from existing + new items
+  const combined = [
+    ...newItems.map((item) => ({ value: item, timestamp })),
+    ...recentItems,
+  ];
+
+  const uniqueMap = new Map();
+  for (const { value, timestamp } of combined) {
+    // Always keep latest occurrence (new items overwrite old ones)
+    uniqueMap.set(value._id, { value, timestamp });
+  }
+
+  const uniqueItems = Array.from(uniqueMap.values());
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(uniqueItems));
+}
+
+export function getRecentItems() {
+  return getRecentItemsRaw().map((i) => i.value);
+}
+
+function getRecentItemsRaw() {
+  const data = localStorage.getItem(STORAGE_KEY);
+  if (!data) return [];
+
+  const now = Date.now();
+  const expiryMs = EXPIRY_DAYS * 24 * 60 * 60 * 1000;
+
+  const parsed = JSON.parse(data) || [];
+  const valid = parsed.filter(({ timestamp }) => now - timestamp <= expiryMs);
+
+  // Clean expired
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(valid));
+
+  return valid;
+}
+
+export function clearRecentItems() {
+  localStorage.removeItem(STORAGE_KEY);
 }

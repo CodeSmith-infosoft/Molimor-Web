@@ -6,7 +6,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 
-export function FilterCollapse({ data }) {
+export function FilterCollapse({ data, filter, setFilter }) {
   const [isOpen, setIsOpen] = React.useState(true);
 
   return (
@@ -17,13 +17,22 @@ export function FilterCollapse({ data }) {
     >
       <CollapsibleTrigger asChild>
         <div className="flex justify-between items-center cursor-pointer">
-          <div className="flex justify-between items-center">
-            <label className="flex items-center gap-2 ">
+          <div className="flex justify-between cursor-pointer items-center">
+            <label className="flex items-center cursor-pointer gap-2 ">
               <input
                 type="checkbox"
-                //   checked={rememberMe}
+                checked={
+                  filter.category === data?.categoryName ||
+                  data?.subCategories.some(
+                    (item) => item._id === filter.subCategory
+                  )
+                }
                 onChange={(e) => {
                   e.stopPropagation();
+                  setFilter({
+                    category: e.target.checked ? data?.categoryName : "",
+                    subCategory: "",
+                  });
                 }}
                 onClick={(e) => {
                   e.stopPropagation();
@@ -53,8 +62,14 @@ export function FilterCollapse({ data }) {
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
-                  //   checked={rememberMe}
-                  //   onChange={(e) => setRememberMe(e.target.checked)}
+                  checked={filter.subCategory === sub?._id}
+                  onChange={(e) => {
+                    e.stopPropagation();
+                    setFilter({
+                      subCategory: e.target.checked ? sub?._id : "",
+                      category: "",
+                    });
+                  }}
                   className="peer hidden"
                 />
                 <div className="w-[16px] h-[16px] rounded-[4px] border border-[#E5E7EB] flex items-center justify-center peer-checked:bg-[#076536] peer-checked:border-[#076536] transition-colors duration-200">

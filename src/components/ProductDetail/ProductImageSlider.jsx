@@ -10,20 +10,7 @@ import {
 } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
 
-export default function ProductImageSlider() {
-  const images = [
-    { src: "/images/dummy/detox.png", alt: "Detox Green Tea Main" },
-    { src: "/images/dummy/khichadi.png", alt: "Detox Green Tea Side View" },
-    { src: "/images/dummy/khichadi.png", alt: "Detox Green Tea Packaging" },
-    { src: "/images/dummy/khichadi.png", alt: "Detox Green Tea Ingredients" },
-    { src: "/images/dummy/khichadi.png", alt: "Detox Green Tea Ingredients" },
-    { src: "/images/dummy/khichadi.png", alt: "Detox Green Tea Ingredients" },
-    { src: "/images/dummy/khichadi.png", alt: "Detox Green Tea Ingredients" },
-    { src: "/images/dummy/khichadi.png", alt: "Detox Green Tea Ingredients" },
-    { src: "/images/dummy/khichadi.png", alt: "Detox Green Tea Ingredients" },
-    { src: "/images/dummy/khichadi.png", alt: "Detox Green Tea Ingredients" },
-  ];
-
+export default function ProductImageSlider({data}) {
   const [mainApi, setMainApi] = useState();
   const [thumbnailApi, setThumbnailApi] = useState();
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -68,16 +55,15 @@ export default function ProductImageSlider() {
 
   return (
     <div className="flex gap-[10px]">
-      <div className="grid gap-4">
-        {/* Main Product Image Carousel */}
-        <Carousel setApi={setMainApi} className="w-full !h-[660px] relative">
+      <div className="flex flex-col gap-4">
+        <Carousel setApi={setMainApi} className="w-full !max-h-[660px] relative">
           <CarouselContent>
-            {images.map((image, index) => (
+            {data?.image?.map((image, index) => (
               <CarouselItem key={index}>
                 <div className="relative w-full flex justify-center aspect-square overflow-hidden">
                   <img
-                    src={image.src || "/placeholder.svg"}
-                    alt={image.alt}
+                    src={image || "/placeholder.svg"}
+                    alt={image}
                     className="object-cover w-full !h-full"
                   />
                 </div>
@@ -94,8 +80,8 @@ export default function ProductImageSlider() {
         {/* Thumbnail Carousel */}
         <Carousel setApi={setThumbnailApi} className="w-full">
           <CarouselContent className="-ml-2">
-            {images.map((image, index) => (
-              <CarouselItem key={index} className="basis-1/8 pl-2">
+            {data?.image?.map((image, index) => (
+              <CarouselItem key={index} className="pl-2">
                 <div
                   className={cn(
                     "relative overflow-hidden cursor-pointer border-1 transition-all",
@@ -106,9 +92,9 @@ export default function ProductImageSlider() {
                   onClick={() => mainApi && mainApi.scrollTo(index)}
                 >
                   <img
-                    src={image.src || "/placeholder.svg"}
+                    src={image || "/placeholder.svg"}
                     alt={`Thumbnail ${index + 1}`}
-                    className="object-cover h-[80px]"
+                    className="object-contain w-20 h-[80px] "
                   />
                 </div>
               </CarouselItem>

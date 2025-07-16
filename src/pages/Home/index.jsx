@@ -3,6 +3,9 @@ import Deals from "@/components/HomeComponents/Deals";
 import CategoryProduct from "@/components/HomeComponents/CategoryProduct";
 import Popular from "@/components/HomeComponents/Popular";
 import BestSeller from "@/components/HomeComponents/BestSeller";
+import RecentView from "@/components/HomeComponents/RecentView";
+import Certificate from "@/components/HomeComponents/Certificate";
+import SocialPlatform from "@/components/HomeComponents/SocialPlatform";
 
 const Home = () => {
   return (
@@ -14,8 +17,10 @@ const Home = () => {
         <Popular />
         <BestSeller />
       </div>
-      <div className=" mt-[38px]">
-        
+      <div className="mt-[38px]">
+        <RecentView />
+        <Certificate />
+        <SocialPlatform />
       </div>
     </>
   );

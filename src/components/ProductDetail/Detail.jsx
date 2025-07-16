@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   StarIcon,
@@ -11,8 +11,11 @@ import {
   PlusIcon,
 } from "lucide-react";
 import { useTimer } from "react-timer-hook";
+import { formatCurrency, isDateNotPast, isDateNotPastBoolean } from "@/utils";
+import MainContext from "@/context/MainContext";
 
-export default function Detail() {
+export default function Detail({ data }) {
+  const { language, currency } = useContext(MainContext);
   const productData = {
     title:
       "MOLIMOR Detox Green Tea for Weight Loss, Immunity & Metabolism Boost – 30 Tea Bags per Box (Pack of 3)",
@@ -39,9 +42,14 @@ export default function Detail() {
   tomorrow.setHours(24, 0, 0, 0);
   const { hours, seconds, minutes } = useTimer({ expiryTimestamp: tomorrow });
   const format = (num) => String(num).padStart(2, "0");
-
   const [quantity, setQuantity] = useState(1);
-  const [selectedWeight, setSelectedWeight] = useState(productData.weights[0]); // Default to the first weight
+  const [selectedWeight, setSelectedWeight] = useState(null); // Default to the first weight
+
+  useEffect(() => {
+    if (data?.variants.length) {
+      setSelectedWeight(data?.variants[0]);
+    }
+  }, [data]);
 
   const handleQuantityChange = (amount) => {
     setQuantity((prev) => Math.max(1, prev + amount));
@@ -51,19 +59,19 @@ export default function Detail() {
     <div className="">
       <div className="bg-white">
         <h1 className="text-[22px] font-medium text-gray-800 mb-[14px]">
-          {productData.title}
+          {data?.title}
         </h1>
         <div className="flex items-center pb-[14px] border-b mb-[14px]">
           <span className="text-xs font-semibold py-[6px] px-[7px] rounded-sm mr-[10px] border-[0.5px]">
-            {productData.rating}
+            {data?.ratingCount}
           </span>
           <div className="flex items-center space-x-0.5">
             {/* Render stars based on rating */}
-            {[...Array(5)].map((_, i) => (
+            {[...Array(Number(data?.ratingCount || 5))].map((_, i) => (
               <StarIcon
                 key={i}
                 className={`w-4 h-4 ${
-                  i < Math.floor(productData.rating)
+                  i < Math.floor(Number(data?.ratingCount || 5))
                     ? "fill-yellow-400 text-yellow-400"
                     : "fill-gray-300 text-gray-300"
                 }`}
@@ -76,71 +84,65 @@ export default function Detail() {
           <p className="text-sm font-bold mb-4">Special Price:-</p>
           <div className="flex items-baseline">
             <span className="text-3xl font-semibold mr-[6px]">
-              ${productData.specialPrice.toFixed(2)}
+              {formatCurrency(
+                isDateNotPast([selectedWeight]),
+                currency,
+                language
+              )}
             </span>
             <span className="text-lg line-through">
-              ${productData.originalPrice.toFixed(2)}
+              {formatCurrency(
+                selectedWeight?.mrp,
+                currency,
+                language
+              )}
             </span>
           </div>
         </div>
 
-        {/* <div className="bg-orange-50 border border-orange-200 text-orange-800 p-3 rounded-md flex items-center gap-3 mb-[14px]">
-          <span className="font-medium text-sm">Special Offer :</span>
-          <div className="flex items-center gap-1">
-            <span className="bg-orange-200 text-orange-800 px-2 py-1 rounded text-sm font-semibold">
-              {countdown.hours}
-            </span>
-            <span className="text-orange-800">:</span>
-            <span className="bg-orange-200 text-orange-800 px-2 py-1 rounded text-sm font-semibold">
-              {countdown.minutes}
-            </span>
-            <span className="text-orange-800">:</span>
-            <span className="bg-orange-200 text-orange-800 px-2 py-1 rounded text-sm font-semibold">
-              {countdown.seconds}
+        {isDateNotPastBoolean(data?.variants) && (
+          <div className="flex items-center px-[16px] py-[14px] gap-4 border mb-[14px] rounded-md border-[#FFEDD5] bg-[#FFF7ED]">
+            <label className="text-[#C2410C] text-[13px] font-bold ">
+              Special Offer :
+            </label>
+            <div className="flex gap-[5px] items-center">
+              <div className="border border-[#FED7AA] font-semibold p-[9px] rounded-[6px] text-[13px] text-[#C2410C] bg-[#FFEDD5]  ">
+                {format(hours)}
+              </div>
+              <span className="">:</span>
+              <div className="border border-[#FED7AA] font-semibold p-[9px] rounded-[6px] text-[13px] text-[#C2410C] bg-[#FFEDD5]   ">
+                {format(minutes)}
+              </div>
+              <span className="">:</span>
+              <div className="border border-[#FED7AA] font-semibold p-[9px] rounded-[6px] text-[13px] text-[#C2410C] bg-[#FFEDD5]  ">
+                {format(seconds)}
+              </div>
+            </div>
+            <span className="text-[11px]">
+              Remains until the end of the offer.
             </span>
           </div>
-          <span className="text-sm text-gray-700">
-            Remains until the end of the offer.
-          </span>
-        </div> */}
-
-        <div className="flex items-center px-[16px] py-[14px] gap-4 border mb-[14px] rounded-md border-[#FFEDD5] bg-[#FFF7ED]">
-          <label className="text-[#C2410C] text-[13px] font-bold ">
-            Special Offer :
-          </label>
-          <div className="flex gap-[5px] items-center">
-            <div className="border border-[#FED7AA] font-semibold p-[9px] rounded-[6px] text-[13px] text-[#C2410C] bg-[#FFEDD5]  ">
-              {format(hours)}
-            </div>
-            <span className="">:</span>
-            <div className="border border-[#FED7AA] font-semibold p-[9px] rounded-[6px] text-[13px] text-[#C2410C] bg-[#FFEDD5]   ">
-              {format(minutes)}
-            </div>
-            <span className="">:</span>
-            <div className="border border-[#FED7AA] font-semibold p-[9px] rounded-[6px] text-[13px] text-[#C2410C] bg-[#FFEDD5]  ">
-              {format(seconds)}
-            </div>
-          </div>
-          <span className="text-[11px]">
-            Remains until the end of the offer.
-          </span>
-        </div>
+        )}
 
         <div className="mb-[14px]">
           <p className="text-sm font-bold mb-4">Weight:-</p>
           <div className="flex space-x-4">
-            {productData.weights.map((weight) => (
+            {data?.variants?.map((weight) => (
               <Button
-                key={weight}
-                variant={selectedWeight === weight ? "default" : "outline"}
+                key={weight.weight}
+                variant={
+                  selectedWeight?.weight === weight.weight
+                    ? "default"
+                    : "outline"
+                }
                 className={
-                  selectedWeight === weight
+                  selectedWeight?.weight === weight.weight
                     ? "bg-green text-white hover:bg-green rounded-[6px]"
                     : "text-gray-700 border-0 rounded-[6px]"
                 }
                 onClick={() => setSelectedWeight(weight)}
               >
-                {weight}
+                {weight.weight}
               </Button>
             ))}
           </div>
@@ -171,7 +173,7 @@ export default function Detail() {
             <Button
               variant="ghost"
               size="icon"
-              className="text-xs"
+              className="text-xl "
               onClick={() => handleQuantityChange(-1)}
             >
               -
@@ -180,7 +182,7 @@ export default function Detail() {
             <Button
               variant="ghost"
               size="icon"
-              className="text-xs"
+              className="text-xl"
               onClick={() => handleQuantityChange(1)}
             >
               +
@@ -203,7 +205,7 @@ export default function Detail() {
             </div>
             Add to cart
           </button>
-          <button className="!p-[17px] border-[1.3px] cursor-pointer border-[#E5E7EB] rounded-[6.62px] bg-transparent">
+          <button className=" h-[52px] w-[52px] flex justify-center items-center border-[1.3px] cursor-pointer border-[#E5E7EB] rounded-[6.62px] bg-transparent">
             <svg
               width="24"
               height="24"

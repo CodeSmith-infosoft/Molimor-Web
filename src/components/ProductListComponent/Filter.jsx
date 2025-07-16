@@ -4,7 +4,7 @@ import { useState } from "react";
 import { FilterCollapse } from "./FilterCollapse";
 import StarRating from "../Common/StarRating";
 
-const Filter = () => {
+const Filter = ({ filter, setFilter }) => {
   const [openFilter, setOpenFilter] = useState({
     category: true,
     price: true,
@@ -77,11 +77,13 @@ const Filter = () => {
           }`}
         >
           {data?.length ? (
-            data.map((category) => (
-              <div>
-                <FilterCollapse data={category} />
-              </div>
-            ))
+            data
+              .filter((d) => d.categoryId !== "6875f522af9999b125a58ff2")
+              .map((category) => (
+                <div>
+                  <FilterCollapse data={category} setFilter={setFilter} filter={filter} />
+                </div>
+              ))
           ) : (
             <></>
           )}
@@ -183,7 +185,9 @@ const Filter = () => {
       </div>
       <div className="h-[350px] w-full rounded-[5px] bg-[#FAE7C8] p-[30px]">
         <div className="">
-          <p className="text-[22px] font-semibold mb-[34px]">Our Top Most Products Check It Now</p>
+          <p className="text-[22px] font-semibold mb-[34px]">
+            Our Top Most Products Check It Now
+          </p>
           <button className="bg-white px-4 py-2 text-sm font-medium rounded-[5px]">
             Shop Now
           </button>
