@@ -6,6 +6,9 @@ import SignIn from "../pages/sign-in";
 import Wishlist from "../pages/Wishlist";
 import Combo from "@/pages/Combo";
 import Cart from "@/pages/Cart";
+import ForgotPassword from "@/pages/ForgotPassword";
+import Order from "@/pages/Order";
+import Profile from "@/pages/Profile";
 
 export const ROUTES = [
   { path: "/", exact: true, component: <Home /> },
@@ -14,10 +17,13 @@ export const ROUTES = [
   { path: "/products/:id", exact: true, component: <ProductDetail /> },
   { path: "/deals", exact: true, component: <Combo /> },
   { path: "/cart", exact: true, component: <Cart /> },
+  { path: "/order", exact: true, component: <Order /> },
+  { path: "/profile", exact: true, component: <Profile /> },
 ];
 
 export const REJECT_ROUTES = [
   { path: "/login", exact: true, component: <SignIn /> },
+  { path: "/forgot-password", exact: true, component: <ForgotPassword /> },
   { path: "/sign-up", exact: true, component: <SignUp /> },
 ];
 
