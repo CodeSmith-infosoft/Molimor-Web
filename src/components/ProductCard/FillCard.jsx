@@ -1,10 +1,15 @@
 import { getPercent, isDateNotPastBoolean } from "@/utils";
 import StarRating from "../Common/StarRating";
+import { useNavigate } from "react-router-dom";
 
 const FillCard = ({ data }) => {
 
+  const navigate = useNavigate()
+
   return (
-    <div className="bg-[#FFFFFF] rounded-[10px] py-[27px] group cursor-pointer w-full">
+    <div className="bg-[#FFFFFF] rounded-[10px] py-[27px] group cursor-pointer w-full" onClick={() => {
+      navigate(`/products/${data._id}`)
+    }}>
       <div className="max-w-[200px] mx-auto relative">
         <img
           src="/images/dummy/khichadi.png"
