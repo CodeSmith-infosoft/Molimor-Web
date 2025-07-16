@@ -54,7 +54,7 @@ export default function Footer() {
                         href={item.link}
                         key={index}
                         target="_blank"
-                        className="p-[10px] h-[36px] border bg-white border-[#E5E7EB] rounded-[6px]"
+                        className="flex justify-center items-center w-9 h-[36px] border bg-white border-[#E5E7EB] rounded-[6px]"
                       >
                         <img src={item.image} className="h-4" alt="" />
                       </a>

@@ -1,13 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Banner from "../../components/ProductListComponent/Banner";
 import Filter from "../../components/ProductListComponent/Filter";
 import ProductList from "../../components/ProductListComponent/ProductList";
+import { useSearchParams } from "react-router-dom";
 
 const Products = () => {
+  const [searchParams] = useSearchParams();
+  const categoryQuery = searchParams.get("category") || "";
+  const subcategoryIdQuery = searchParams.get("subcategoryId") || "";
   const [filter, setFilter] = useState({
     category: "",
-    subCategory: "",
+    subcategoryId: "",
+    minPrice: "",
+    maxPrice: "",
+    review: "",
   });
+
+  useEffect(() => {
+    if (categoryQuery || subcategoryIdQuery) {
+      let newCategory = null;
+      if (categoryQuery.split("-").length > 1) {
+        newCategory = categoryQuery.split("-").join(" & ");
+      }
+      setFilter({
+        ...filter,
+        category: newCategory || categoryQuery,
+        subcategoryId: subcategoryIdQuery,
+      });
+    }
+  }, [categoryQuery, subcategoryIdQuery]);
+
   return (
     <div className="max-w-[1576px] mx-auto px-10">
       <Banner />

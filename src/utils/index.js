@@ -68,7 +68,7 @@ export const getParamString = (object = {}) => {
   const params = new URLSearchParams();
 
   Object.entries(object).forEach(([key, value]) => {
-    if (value !== undefined && value !== null) {
+    if (value !== undefined && value !== null && value) {
       params.append(key, value);
     }
   });

@@ -1,8 +1,10 @@
 import useAxios from "@/customHook/fetch-hook";
 import { ChevronRight } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Banner = () => {
+  const navigate = useNavigate();
   const [expandedCategory, setExpandedCategory] = useState(null);
   const { data, fetchData } = useAxios({
     method: "GET",
@@ -31,9 +33,12 @@ const Banner = () => {
         <div
           className={`flex cursor-pointer items-center justify-between px-[18px] py-[13px] transition-colors duration-500`}
           style={{ paddingLeft: `${paddingLeft}px` }}
-          onClick={() =>
-            hasSubcategories ? toggleCategory(item?.categoryId) : null
-          }
+          onClick={() => {
+            hasSubcategories ? toggleCategory(item?.categoryId) : null;
+            level === 1
+              ? navigate(`/products?subcategoryId=${item._id}`)
+              : null;
+          }}
         >
           <div className="flex items-center gap-3">
             {item?.image && (
@@ -97,16 +102,27 @@ const Banner = () => {
             className={`hide-scrollbar max-h-[601px] mt-[1px] bg-white max-w-[298px] z-20 w-80 overflow-y-auto transition-all duration-300 ease-in-out transform opacity-100 scale-100 translate-y-0`}
           >
             <div className="py-2">
-              {data?.map((category) => renderCategoryItem(category))}
+              {data
+                ?.filter((d) => d.categoryName !== "Combo")
+                ?.map((category) => renderCategoryItem(category))}
             </div>
           </div>
         </div>
         <img src="/images/dummy/homeMainBanner.svg" />
       </div>
       <div className="section-top-spacing grid grid-cols-3 gap-[70px] overflow-hidden">
-        <img src="/images/dummy/Rectangle1442.svg" className="max-h-[200px] w-auto" />
-        <img src="/images/dummy/Rectangle1443.svg" className="max-h-[200px] w-auto" />
-        <img src="/images/dummy/Rectangle1444.svg" className="max-h-[200px] w-auto" />
+        <img
+          src="/images/dummy/Rectangle1442.svg"
+          className="max-h-[200px] w-auto"
+        />
+        <img
+          src="/images/dummy/Rectangle1443.svg"
+          className="max-h-[200px] w-auto"
+        />
+        <img
+          src="/images/dummy/Rectangle1444.svg"
+          className="max-h-[200px] w-auto"
+        />
       </div>
     </div>
   );

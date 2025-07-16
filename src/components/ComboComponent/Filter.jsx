@@ -1,22 +1,41 @@
-import React, { useContext, useEffect } from "react";
-import useAxios from "../../customHook/fetch-hook";
+import React, { useContext } from "react";
 import { useState } from "react";
-import { FilterCollapse } from "../ProductListComponent/FilterCollapse";
+import { FilterCollapse } from "./FilterCollapse";
 import StarRating from "../Common/StarRating";
-import MainContext from "@/context/MainContext";
 import { formatCurrency } from "@/utils";
+import MainContext from "@/context/MainContext";
 
-const Filter = ({ filter, setFilter }) => {
+const Filter = ({ filter, setFilter, categoryFilter, setCategory }) => {
+  const { language, currency } = useContext(MainContext);
   const [openFilter, setOpenFilter] = useState({
     category: true,
     price: true,
     rating: true,
   });
-  const { language, currency } = useContext(MainContext);
-  const { data, fetchData } = useAxios({
-    method: "GET",
-    url: "/subCategory/getActiveSubCategoryList",
-  });
+  const data = [
+    {
+      label: "Deals",
+      value: ["crazyDeal", "dealOfTheDay", "dealOfTheWeek"],
+      subItem: [
+        {
+          label: "Deal Of The Day",
+          value: ["dealOfTheDay"],
+        },
+        {
+          label: "Deal Of The Week",
+          value: ["dealOfTheWeek"],
+        },
+        {
+          label: "Crazy Deal",
+          value: ["crazyDeal"],
+        },
+      ],
+    },
+    {
+      label: "Combo",
+      value: ["combo"],
+    },
+  ];
   const priceRanges = [
     {
       id: "under-50",
@@ -80,10 +99,6 @@ const Filter = ({ filter, setFilter }) => {
     },
   ];
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   return (
     <div className="overflow-auto max-w-[376px] w-full space-y-6 ">
       <div className="border border-[#E5E7EB] rounded-[5px] py-5 px-4 ">
@@ -109,17 +124,15 @@ const Filter = ({ filter, setFilter }) => {
           }`}
         >
           {data?.length ? (
-            data
-              .filter((d) => d.categoryName !== "Combo")
-              .map((category) => (
-                <div>
-                  <FilterCollapse
-                    data={category}
-                    setFilter={setFilter}
-                    filter={filter}
-                  />
-                </div>
-              ))
+            data.map((category) => (
+              <div>
+                <FilterCollapse
+                  data={category}
+                  category={categoryFilter}
+                  setCategory={setCategory}
+                />
+              </div>
+            ))
           ) : (
             <></>
           )}

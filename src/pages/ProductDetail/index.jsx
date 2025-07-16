@@ -34,7 +34,7 @@ const ProductDetail = () => {
       <div className="max-w-[1576px] px-10 mx-auto py-[70px]">
         <div className="grid grid-cols-2 gap-[100px]">
           <ProductImageSlider data={data} />
-          <Detail data={data} />
+          <Detail data={data} getProduct={fetchData} />
         </div>
         <div className="py-[70px]">
           <BuyMore />
@@ -78,9 +78,9 @@ const ProductDetail = () => {
                     <path
                       d="M14.5 7L8.3125 13L5.5 10.2727"
                       stroke="white"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                   </svg>
 

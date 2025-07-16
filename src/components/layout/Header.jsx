@@ -1,18 +1,51 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CountdownTimer from "../HeaderComponents/CountdownTimer";
 import Dropdown from "../HeaderComponents/Dropdown";
 import CategoriesNavigation from "../HeaderComponents/CategoriesNavigation";
 import { Link, useNavigate } from "react-router-dom";
 import MainContext from "@/context/MainContext";
+import useAxios from "@/customHook/fetch-hook";
 
 export default function Header() {
   // const [language, setLanguage] = useState("English");
-  const { currency, setCurrency } = useContext(MainContext);
+  const { currency, setCurrency, cartCount } = useContext(MainContext);
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
+  const [activeCart, setActiveCart] = useState({
+    cart: 0,
+    wishlist: 0,
+  });
+  const { fetchData: getUserCartAndWishListCount } = useAxios({
+    method: "GET",
+    url: `/cart/getUserCartAndWishListCount`,
+  });
 
   // const languageOptions = ["English", "Spanish", "French", "German", "Italian"];
   const currencyOptions = ["USD", "EUR", "INR"];
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      getUserCartAndWishListCount().then((res) => {
+        const result = res.data;
+
+        setActiveCart({
+          cart: result.cart,
+          wishlist: result.wishList,
+        });
+      });
+    } else {
+      let cartLength =
+        JSON.parse(localStorage.getItem("cartData"))?.length || 0;
+      let wishlistLength =
+        JSON.parse(localStorage.getItem("wishlistData"))?.length || 0;
+
+      setActiveCart({
+        cart: cartLength,
+        wishlist: wishlistLength,
+      });
+    }
+  }, [cartCount]);
 
   return (
     <div className="w-full bg-white fixed z-9999 top-0">
@@ -43,11 +76,6 @@ export default function Header() {
           </div>
 
           <div className="flex items-center gap-[13px]">
-            {/* <Dropdown
-              options={languageOptions}
-              defaultValue={language}
-              onChange={setLanguage}
-            /> */}
             <Dropdown
               options={currencyOptions}
               defaultValue={currency}
@@ -163,7 +191,7 @@ export default function Header() {
                 </svg>
 
                 <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-semibold rounded-full w-5 h-5 flex items-center justify-center">
-                  1
+                  {activeCart.wishlist}
                 </span>
               </Link>
             </div>
@@ -183,7 +211,7 @@ export default function Header() {
               </svg>
 
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-semibold rounded-full w-5 h-5 flex items-center justify-center">
-                0
+                {activeCart.cart}
               </span>
             </div>
           </div>

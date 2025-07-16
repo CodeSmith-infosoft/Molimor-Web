@@ -2,11 +2,11 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Layout from "./components/layout";
 import { REJECT_ROUTES, ROUTES } from "./routes";
-// import ScrollToTop from "./components/AutoScroll/ScrollToTop";
 import { Toaster } from "react-hot-toast";
 import ScrollToTopButton from "./components/ScrollToTop";
 import MainProvider from "./context/MainProvider";
 import RejectAuth from "./routes/RejectAuth";
+import SmartScrollManager from "./components/AutoScroll/SmartScrollManager";
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
       <MainProvider>
         <ScrollToTopButton />
         <BrowserRouter>
-          {/* <ScrollToTop /> */}
+          <SmartScrollManager />
           <Routes>
             {ROUTES.map(({ path, component }) => (
               <Route path={path} element={<Layout>{component}</Layout>} />

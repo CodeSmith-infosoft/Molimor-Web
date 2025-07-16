@@ -9,14 +9,8 @@ const Deals = () => {
     url: "/product/getBigSalesProducts",
   });
 
-  const { data: combo, fetchData: comboFetch } = useAxios({
-    method: "GET",
-    url: `/product/getAllProductsList?category=Combo`,
-  });
-
   useEffect(() => {
     fetchData();
-    comboFetch();
   }, []);
 
   return (
@@ -37,8 +31,8 @@ const Deals = () => {
         <div className="col-span-2">
           <SubHeader heading={"Combo"} />
           <div className="gap-5 grid grid-cols-2">
-            {combo?.products?.length ? (
-              combo?.products
+            {data?.combo?.length ? (
+              data?.combo
                 ?.slice(0, 3)
                 ?.map((deal) => <HorizontalCard data={deal} />)
             ) : (

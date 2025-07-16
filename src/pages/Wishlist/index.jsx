@@ -169,9 +169,7 @@ const Wishlist = () => {
                       </TableCell>
                       <TableCell className={"text-[15px] font-medium"}>
                         {formatCurrency(
-                          isDateNotPast(
-                            item.variants
-                          ),
+                          isDateNotPast(item.variants),
                           currency,
                           language
                         )}
@@ -214,16 +212,16 @@ const Wishlist = () => {
                                 <path
                                   d="M16.1665 8L8.1665 16"
                                   stroke="#333333"
-                                  stroke-width="1.5"
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
+                                  strokeWidth="1.5"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
                                 />
                                 <path
                                   d="M16.1665 16L8.1665 8"
                                   stroke="#333333"
-                                  stroke-width="1.5"
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
+                                  strokeWidth="1.5"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
                                 />
                               </g>
                               <defs>

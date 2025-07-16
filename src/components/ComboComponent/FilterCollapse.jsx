@@ -6,8 +6,23 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 
-export function FilterCollapse({ data, filter, setFilter }) {
+export function FilterCollapse({ data, category, setCategory }) {
   const [isOpen, setIsOpen] = React.useState(true);
+
+  function checkArrayMatch(baseArray, other) {
+    // Check exact match
+    const isExactMatch =
+      Array.isArray(other) &&
+      other.length === baseArray.length &&
+      other.every((val) => baseArray.includes(val)) &&
+      baseArray.every((val) => other.includes(val));
+
+    // Check if at least one element matches
+    const hasAnyMatch =
+      Array.isArray(other) && other.some((val) => baseArray.includes(val));
+
+    return isExactMatch || hasAnyMatch;
+  }
 
   return (
     <Collapsible
@@ -21,19 +36,10 @@ export function FilterCollapse({ data, filter, setFilter }) {
             <label className="flex items-center cursor-pointer gap-2 ">
               <input
                 type="checkbox"
-                checked={
-                  filter.category === data?.categoryName ||
-                  data?.subCategories.some(
-                    (item) => item._id === filter.subcategoryId
-                  )
-                }
+                checked={checkArrayMatch(data.value, category)}
                 onChange={(e) => {
                   e.stopPropagation();
-                  setFilter({
-                    ...filter,
-                    category: e.target.checked ? data?.categoryName : "",
-                    subcategoryId: "",
-                  });
+                  setCategory(checkArrayMatch(data.value, category) ? [] :data.value);
                 }}
                 onClick={(e) => {
                   e.stopPropagation();
@@ -46,31 +52,33 @@ export function FilterCollapse({ data, filter, setFilter }) {
                   className="w-[12px] h-[8px]"
                 />
               </div>
-              <span className="text-[#333333] font-bold">
-                {data?.categoryName}
-              </span>
+              <span className="text-[#333333] font-bold">{data?.label}</span>
             </label>
           </div>
-          <span className="text-2xl text-[#636363] leading-[normal] ">
-            {isOpen ? "-" : "+"}
-          </span>
+          {data?.subItem?.length && (
+            <span className="text-2xl text-[#636363] leading-[normal] ">
+              {isOpen ? "-" : "+"}
+            </span>
+          )}
         </div>
       </CollapsibleTrigger>
       <CollapsibleContent className="CollapsibleContent space-y-4">
-        {data?.subCategories?.length ? (
-          data?.subCategories?.map((sub) => (
+        {data?.subItem?.length ? (
+          data?.subItem?.map((sub) => (
             <div className="flex justify-between items-center pl-5">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
-                  checked={filter.subcategoryId === sub?._id}
+                  checked={
+                    category?.[0] === sub?.value[0] && category.length === 1
+                  }
                   onChange={(e) => {
                     e.stopPropagation();
-                    setFilter({
-                      ...filter,
-                      subcategoryId: e.target.checked ? sub?._id : "",
-                      category: "",
-                    });
+                    setCategory(
+                      category.length === 1 && category[0] === sub?.value[0]
+                        ? []
+                        : sub?.value
+                    );
                   }}
                   className="peer hidden"
                 />
@@ -80,7 +88,7 @@ export function FilterCollapse({ data, filter, setFilter }) {
                     className="w-[12px] h-[8px]"
                   />
                 </div>
-                <span className="text-[#333333] text-sm">{sub?.name}</span>
+                <span className="text-[#333333] text-sm">{sub?.label}</span>
               </label>
             </div>
           ))

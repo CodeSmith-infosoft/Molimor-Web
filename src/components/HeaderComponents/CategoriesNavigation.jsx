@@ -12,11 +12,11 @@ export default function CategoriesNavigation() {
   const navigationItems = [
     { label: "Home", link: "/" },
     { label: "Popular Products", link: "/products" },
-    { label: "Home & Kitchen", link: "" },
-    { label: "Home & Care", link: "" },
-    { label: "Food", link: "" },
-    { label: "Combo", link: "" },
-    { label: "Deals", link: "" },
+    { label: "Home & Kitchen", link: "/products?category=Home-Kitchen" },
+    { label: "Home & Care", link: "/products?category=Home-Care" },
+    { label: "Food", link: "/products?category=Food" },
+    { label: "Combo", link: "/deals?category=combo" },
+    { label: "Deals", link: "/deals?category=Deals" },
   ];
 
   useEffect(() => {

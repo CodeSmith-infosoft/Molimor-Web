@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ChevronDown, ChevronRight, ChevronUp } from "lucide-react";
 
 export default function CategoryDropdown({ categoriesData }) {
+  const navigate = useNavigate();
   const location = useLocation();
   const isHomePage = location.pathname === "/";
   const buttonRef = useRef();
@@ -47,7 +48,8 @@ export default function CategoryDropdown({ categoriesData }) {
     });
   };
 
-  function handleMainToggle() {
+  function handleMainToggle(e) {
+    e.stopPropagation();
     // Only allow toggling if not on home page
     if (!isHomePage) {
       setIsMainOpen(!isMainOpen);
@@ -65,9 +67,13 @@ export default function CategoryDropdown({ categoriesData }) {
         <div
           className={`flex cursor-pointer items-center justify-between px-[18px] py-[13px] transition-colors duration-500`}
           style={{ paddingLeft: `${paddingLeft}px` }}
-          onClick={() =>
-            hasSubcategories ? toggleCategory(item?.categoryId) : null
-          }
+          onClick={(e) => {
+            e.stopPropagation();
+            hasSubcategories ? toggleCategory(item?.categoryId) : null;
+            level === 1
+              ? navigate(`/products?subcategoryId=${item._id}`)
+              : null;
+          }}
         >
           <div className="flex items-center gap-3">
             {item?.image && (
@@ -113,9 +119,8 @@ export default function CategoryDropdown({ categoriesData }) {
   };
 
   return (
-    <div className="relative">
+    <div className="relative" ref={buttonRef}>
       <button
-        ref={buttonRef}
         onClick={handleMainToggle}
         className={`flex items-center gap-2 text-[15px] px-[18px] py-[14px] w-[298px] justify-between ${
           isHomePage ? "text-green" : ""
@@ -156,7 +161,9 @@ export default function CategoryDropdown({ categoriesData }) {
           }`}
         >
           <div className="py-2">
-            {categoriesData?.map((category) => renderCategoryItem(category))}
+            {categoriesData
+              ?.filter((d) => d.categoryName !== "Combo")
+              ?.map((category) => renderCategoryItem(category))}
           </div>
         </div>
       )}
