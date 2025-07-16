@@ -9,8 +9,9 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
+import { getPercent } from "@/utils";
 
-export default function ProductImageSlider({data}) {
+export default function ProductImageSlider({ data, selectedWeight }) {
   const [mainApi, setMainApi] = useState();
   const [thumbnailApi, setThumbnailApi] = useState();
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -55,11 +56,14 @@ export default function ProductImageSlider({data}) {
 
   return (
     <div className="flex gap-[10px]">
-      <div className="flex flex-col gap-4">
-        <Carousel setApi={setMainApi} className="w-full !max-h-[660px] relative">
+      <div className="flex flex-col gap-4 w-full">
+        <Carousel
+          setApi={setMainApi}
+          className="w-full h-full !max-h-[660px] relative"
+        >
           <CarouselContent>
             {data?.image?.map((image, index) => (
-              <CarouselItem key={index}>
+              <CarouselItem key={index} className={"w-full"}>
                 <div className="relative w-full flex justify-center aspect-square overflow-hidden">
                   <img
                     src={image || "/placeholder.svg"}
@@ -70,8 +74,8 @@ export default function ProductImageSlider({data}) {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <div className="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-md">
-            56%
+          <div className="absolute top-4 left-4 bg-[#DC2626] text-white text-xs font-bold px-2 py-1 rounded-md">
+            {getPercent([selectedWeight])}%
           </div>
           <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 z-10" />
           <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-10" />

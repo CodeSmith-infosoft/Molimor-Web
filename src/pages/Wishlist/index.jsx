@@ -19,81 +19,14 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import MainContext from "@/context/MainContext";
-import { formatCurrency, isDateNotPast } from "@/utils";
+import {
+  addCartToLocalstorage,
+  deleteWishlistItemFromLocalstorage,
+  formatCurrency,
+  isDateNotPast,
+} from "@/utils";
 import useAxios from "@/customHook/fetch-hook";
-
-const wishlistItems = [
-  {
-    id: "1",
-    image: "/images/dummy/khichadi.png",
-    name: "Women's wallet Hand Purse",
-    price: "$70",
-    stockStatus: "In Stock",
-  },
-  {
-    id: "2",
-    image: "/images/dummy/khichadi.png",
-    name: "Rose Gold Earring",
-    price: "$80",
-    stockStatus: "Out of Stock",
-  },
-  {
-    id: "3",
-    image: "/images/dummy/khichadi.png",
-    name: "Apple",
-    price: "$12",
-    stockStatus: "In Stock",
-  },
-  {
-    id: "4",
-    image: "/images/dummy/khichadi.png",
-    name: "Apple",
-    price: "$12",
-    stockStatus: "In Stock",
-  },
-  {
-    id: "5",
-    image: "/images/dummy/khichadi.png",
-    name: "Apple",
-    price: "$12",
-    stockStatus: "In Stock",
-  },
-  {
-    id: "6",
-    image: "/images/dummy/khichadi.png",
-    name: "Leather Backpack",
-    price: "$120",
-    stockStatus: "In Stock",
-  },
-  {
-    id: "7",
-    image: "/images/dummy/khichadi.png",
-    name: "Bluetooth Headphones",
-    price: "$99",
-    stockStatus: "In Stock",
-  },
-  {
-    id: "8",
-    image: "/images/dummy/khichadi.png",
-    name: "Smartwatch",
-    price: "$150",
-    stockStatus: "In Stock",
-  },
-  {
-    id: "9",
-    image: "/images/dummy/khichadi.png",
-    name: "Coffee Maker",
-    price: "$45",
-    stockStatus: "In Stock",
-  },
-  {
-    id: "10",
-    image: "/images/dummy/khichadi.png",
-    name: "Desk Lamp",
-    price: "$25",
-    stockStatus: "In Stock",
-  },
-];
+import { useNavigate } from "react-router-dom";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -103,22 +36,29 @@ const Wishlist = () => {
     url: "/wishlist/getWishlist",
   });
 
+  const { fetchData: addToCart } = useAxios({
+    method: "POST",
+    url: `/cart/addToCart`,
+  });
+
+  const { fetchData: removeFromWishlist } = useAxios({
+    method: "DELETE",
+    url: `/wishlist/removeFromWishlist`,
+  });
+
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const [buttonLoader, setButtonLoader] = useState(null);
   useEffect(() => {
     fetchData();
   }, []);
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
+  const { language, currency, setCartCount, cartCount } =
+    useContext(MainContext);
 
-  const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
-  const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
-  const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem);
-
-  const totalPages = Math.ceil(wishlistItems.length / ITEMS_PER_PAGE);
-
-  const { language, currency } = useContext(MainContext);
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
+  // const handlePageChange = (pageNumber) => {
+  //   setCurrentPage(pageNumber);
+  // };
 
   const getStockStatusStyle = (status) => {
     switch (status) {
@@ -126,6 +66,58 @@ const Wishlist = () => {
         return "bg-green border-green";
       case "Out of Stock":
         return "bg-[#DC2626] text-white border-[#DC2626]";
+    }
+  };
+
+  const AddtoCart = (item) => {
+    const payload = {
+      productId: item._id,
+      quantity: 1,
+      weight: item.variants[0]?.weight,
+      price: isDateNotPast([item.variants[0]]),
+      mrp: item.variants[0]?.mrp,
+    };
+    if (token) {
+      setButtonLoader(item._id);
+      addToCart({data: { items: [{ ...payload }] }})
+        .then((res) => {
+          if (res.success) {
+            fetchData();
+          }
+          if (res.success) {
+            setCartCount(cartCount + 1);
+          }
+        })
+        .finally(() => setButtonLoader(""));
+    } else {
+      addCartToLocalstorage({
+        productId: item._id,
+        quantity: 1,
+        weight: item.variants[0]?.weight,
+        price: isDateNotPast([item.variants[0]]),
+        mrp: item.variants[0]?.mrp,
+      });
+      setCartCount(cartCount + 1);
+    }
+  };
+
+  const removeWishlist = (id) => {
+    if (token) {
+      setButtonLoader(id);
+      removeFromWishlist({
+        url: `/wishlist/removeFromWishlist/${id}`,
+      })
+        .then((res) => {
+          if (res.success) {
+            fetchData();
+            setCartCount(cartCount + 1);
+          }
+        })
+        .finally(() => setButtonLoader(""));
+    } else {
+      deleteWishlistItemFromLocalstorage(id);
+      fetchData();
+      setCartCount(cartCount + 1);
     }
   };
 
@@ -153,101 +145,137 @@ const Wishlist = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {currentItems?.map((item) => (
-                    <TableRow key={item.id}>
-                      <TableCell className="flex items-center gap-4 py-4">
-                        <img
-                          src={item.image || "/placeholder.svg"}
-                          alt={item.name}
-                          width={60}
-                          height={50}
-                          className="rounded-md object-cover"
-                        />
-                        <span>{item.name}</span>
-                      </TableCell>
-                      <TableCell className={"text-[15px] font-medium"}>
-                        {formatCurrency(
-                          isDateNotPast(item.variants),
-                          currency,
-                          language
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        <span
-                          className={`inline-flex items-center rounded-sm ${getStockStatusStyle(
-                            item.stockStatus
-                          )} px-2 py-1 text-sm font-medium text-white`}
-                        >
-                          {item.stockStatus}
-                        </span>
-                      </TableCell>
-                      <TableCell className="">
-                        <div className="flex items-center justify-center gap-2">
-                          <button
-                            className="bg-green hover:bg-green-800 cursor-pointer text-white rounded-[43px] px-8 py-[14px]"
-                            size="sm"
+                  {data?.length ? (
+                    data?.map((item) => (
+                      <TableRow key={item.id}>
+                        <TableCell className="flex items-center gap-4 py-4">
+                          <img
+                            src={
+                              item?.productId?.mainImage[0] ||
+                              item?.productId?.mainImage ||
+                              "/placeholder.svg"
+                            }
+                            alt={item?.productId?.title}
+                            width={60}
+                            height={50}
+                            className="rounded-md object-cover"
+                          />
+                          <span>{item?.productId?.title}</span>
+                        </TableCell>
+                        <TableCell className={"text-[15px] font-medium"}>
+                          {formatCurrency(
+                            isDateNotPast(item?.productId?.variants),
+                            currency,
+                            language
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          <span
+                            className={`inline-flex items-center rounded-sm ${getStockStatusStyle(
+                              item?.productId?.stock
+                                ? "In Stock"
+                                : "Out of Stock"
+                            )} px-2 py-1 text-sm font-medium text-white`}
                           >
-                            Add to Cart
-                          </button>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="rounded-full w-8 h-8"
-                          >
-                            <svg
-                              width="25"
-                              height="24"
-                              viewBox="0 0 25 24"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
+                            {item?.productId?.stock
+                              ? "In Stock"
+                              : "Out of Stock"}
+                          </span>
+                        </TableCell>
+                        <TableCell className="">
+                          <div className="flex items-center justify-center gap-2">
+                            <button
+                              className="bg-green flex gap-2 hover:bg-green-800 cursor-pointer text-white rounded-[43px] px-8 py-[14px]"
+                              size="sm"
+                              disabled={buttonLoader === item?.productId?._id}
+                              onClick={() => AddtoCart(item?.productId)}
                             >
-                              <g clip-path="url(#clip0_76_208)">
-                                <path
-                                  d="M12.1665 23C18.2413 23 23.1665 18.0748 23.1665 12C23.1665 5.92525 18.2413 1 12.1665 1C6.09175 1 1.1665 5.92525 1.1665 12C1.1665 18.0748 6.09175 23 12.1665 23Z"
-                                  stroke="#E5E7EB"
-                                  stroke-miterlimit="10"
-                                />
-                                <path
-                                  d="M16.1665 8L8.1665 16"
-                                  stroke="#333333"
-                                  strokeWidth="1.5"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                                <path
-                                  d="M16.1665 16L8.1665 8"
-                                  stroke="#333333"
-                                  strokeWidth="1.5"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </g>
-                              <defs>
-                                <clipPath id="clip0_76_208">
-                                  <rect
-                                    width="24"
-                                    height="24"
-                                    fill="white"
-                                    transform="translate(0.166504)"
+                              {buttonLoader === item?.productId?._id && (
+                                <span className="w-4 h-4 block border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                              )}
+                              Add to Cart
+                            </button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="rounded-full w-8 h-8"
+                              disabled={buttonLoader === item?.productId?._id}
+                              onClick={() =>
+                                removeWishlist(item?.productId?._id)
+                              }
+                            >
+                              <svg
+                                width="25"
+                                height="24"
+                                viewBox="0 0 25 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <g clip-path="url(#clip0_76_208)">
+                                  <path
+                                    d="M12.1665 23C18.2413 23 23.1665 18.0748 23.1665 12C23.1665 5.92525 18.2413 1 12.1665 1C6.09175 1 1.1665 5.92525 1.1665 12C1.1665 18.0748 6.09175 23 12.1665 23Z"
+                                    stroke="#E5E7EB"
+                                    stroke-miterlimit="10"
                                   />
-                                </clipPath>
-                              </defs>
-                            </svg>
+                                  <path
+                                    d="M16.1665 8L8.1665 16"
+                                    stroke="#333333"
+                                    strokeWidth="1.5"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                  />
+                                  <path
+                                    d="M16.1665 16L8.1665 8"
+                                    stroke="#333333"
+                                    strokeWidth="1.5"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                  />
+                                </g>
+                                <defs>
+                                  <clipPath id="clip0_76_208">
+                                    <rect
+                                      width="24"
+                                      height="24"
+                                      fill="white"
+                                      transform="translate(0.166504)"
+                                    />
+                                  </clipPath>
+                                </defs>
+                              </svg>
 
-                            <span className="sr-only">Remove item</span>
-                          </Button>
-                        </div>
+                              <span className="sr-only">Remove item</span>
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colspan={4}>
+                        <h3 className="text-center pt-8 text-xl font-semibold">
+                          Your Whishlist Is Empty{" "}
+                          <span
+                            className="text-green underline cursor-pointer"
+                            onClick={() => navigate("/products")}
+                          >
+                            Go Shopping
+                          </span>
+                        </h3>
                       </TableCell>
                     </TableRow>
-                  ))}
+                  )}
                 </TableBody>
               </Table>
             </div>
             <div className="flex justify-between items-center mt-10">
-              <a href="#" className=" text-sm">
+              <button
+                className=" text-sm"
+                onClick={() => navigate("/products")}
+              >
                 Continue Shopping
-              </a>
-              <div>
+              </button>
+              {/* <div>
                 <Pagination>
                   <PaginationContent>
                     <PaginationItem>
@@ -294,7 +322,7 @@ const Wishlist = () => {
                     </PaginationItem>
                   </PaginationContent>
                 </Pagination>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

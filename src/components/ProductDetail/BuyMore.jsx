@@ -1,22 +1,12 @@
-import useAxios from "@/customHook/fetch-hook";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { formatCurrency, isDateNotPast } from "@/utils";
 import MainContext from "@/context/MainContext";
 import { ShoppingCart } from "lucide-react";
 import SelectCard from "./SelectCard";
 
-const BuyMore = () => {
+const BuyMore = ({ data = [] }) => {
   const { language, currency } = useContext(MainContext);
   const [selectedProducts, setSelectedProducts] = useState([]);
-
-  const { data, fetchData } = useAxios({
-    method: "GET",
-    url: "/product/getAllProductsList",
-  });
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const handleProductSelect = (product) => {
     setSelectedProducts((prev) => {
@@ -53,8 +43,8 @@ const BuyMore = () => {
       <div className="grid grid-cols-5 gap-6">
         <div className="col-span-4">
           <div className="grid grid-cols-4 gap-5">
-            {data?.products?.length ? (
-              data.products.map((product) => (
+            {data?.length ? (
+              data.map((product) => (
                 <SelectCard
                   key={product._id}
                   product={product}
