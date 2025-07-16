@@ -46,6 +46,9 @@ export const loginSchema = object().shape({
   password: string()
     .required('Password is required'),
 });
+export const forgotSchema = object().shape({
+  email: string().email('Invalid email format').required('Email is required'),
+});
 
 export const billingSchema = object().shape({
   fname: string().required('First name is required'),
