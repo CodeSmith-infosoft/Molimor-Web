@@ -1,9 +1,14 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Star } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { useState } from "react";
+import { Star } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 // Dummy data for reviews
 const initialReviews = [
@@ -47,24 +52,26 @@ const initialReviews = [
     content:
       "Not what I was hoping for. The product felt cheap and broke after a few uses. I would not recommend this to others. Very disappointed with the quality.",
   },
-]
+];
 
 // Helper to calculate review statistics
 const calculateReviewStats = (reviews) => {
-  const totalReviews = reviews.length
-  let totalRatingSum = 0
-  const ratingCounts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 }
+  const totalReviews = reviews.length;
+  let totalRatingSum = 0;
+  const ratingCounts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
 
   reviews.forEach((review) => {
-    totalRatingSum += review.rating
-    ratingCounts[review.rating]++
-  })
+    totalRatingSum += review.rating;
+    ratingCounts[review.rating]++;
+  });
 
-  const averageRating = totalReviews > 0 ? (totalRatingSum / totalReviews).toFixed(1) : "0.0"
+  const averageRating =
+    totalReviews > 0 ? (totalRatingSum / totalReviews).toFixed(1) : "0.0";
 
-  const ratingPercentages = {}
+  const ratingPercentages = {};
   for (let i = 1; i <= 5; i++) {
-    ratingPercentages[i] = totalReviews > 0 ? (ratingCounts[i] / totalReviews) * 100 : 0
+    ratingPercentages[i] =
+      totalReviews > 0 ? (ratingCounts[i] / totalReviews) * 100 : 0;
   }
 
   return {
@@ -72,39 +79,41 @@ const calculateReviewStats = (reviews) => {
     totalReviews,
     ratingCounts,
     ratingPercentages,
-  }
-}
+  };
+};
 
 // StarRatingInput component for the popup
 const StarRatingInput = ({ rating, onRatingChange }) => {
-  const stars = [1, 2, 3, 4, 5]
+  const stars = [1, 2, 3, 4, 5];
   return (
     <div className="flex items-center gap-1">
       {stars.map((star) => (
         <Star
           key={star}
           className={`w-6 h-6 cursor-pointer ${
-            star <= rating ? "fill-yellow-400 text-yellow-400" : "fill-gray-300 text-gray-300"
+            star <= rating
+              ? "fill-yellow-400 text-yellow-400"
+              : "fill-gray-300 text-gray-300"
           }`}
           onClick={() => onRatingChange(star)}
         />
       ))}
     </div>
-  )
-}
+  );
+};
 
 // ReviewStatistics component
 const ReviewStatistics = ({ stats }) => {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col">
       <h2 className="text-[22px] font-medium">Customer Reviews</h2>
-      <p className="text-gray-500 dark:text-gray-400">
+      <p className="text-sm font-medium mb-[30px]">
         Average rating: {stats.averageRating} ({stats.totalReviews})
       </p>
       <div className="grid gap-2">
         {[5, 4, 3, 2, 1].map((star) => (
-          <div key={star} className="flex items-center gap-2">
-            <div className="flex items-center gap-0.5">
+          <div key={star} className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
               <span>{star}</span>
               <Star className="w-4 h-4 stroke-gray-700 fill-transparent" />
             </div>
@@ -123,111 +132,113 @@ const ReviewStatistics = ({ stats }) => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
 // CustomerReviewCard component
 const CustomerReviewCard = ({ review }) => {
   return (
     <div className="grid gap-2">
-      <h3 className="font-bold">{review.title}</h3>
+      <h3 className="font-medium text-sm">{review.title}</h3>
       <div className="flex items-center gap-0.5">
         {[1, 2, 3, 4, 5].map((star) => (
           <Star
             key={star}
             className={`w-4 h-4 ${
-              star <= review.rating ? "fill-[#FF8A00] text-[#FF8A00]" : "fill-gray-300 text-gray-300"
+              star <= review.rating
+                ? "fill-[#FF8A00] text-[#FF8A00]"
+                : "fill-gray-300 text-gray-300"
             }`}
           />
         ))}
       </div>
-      <p className="text-sm text-gray-600 dark:text-gray-300">{review.content}</p>
+      <p className="text-sm">{review.content}</p>
     </div>
-  )
-}
+  );
+};
 
 // ErrorComponent for validation messages
 const ErrorComponent = ({ message, id }) => (
   <p id={id} className="text-red-500 text-sm mt-1">
     {message}
   </p>
-)
+);
 
 export default function CustomerReviews() {
-  const [reviews, setReviews] = useState(initialReviews)
-  const [showAllReviews, setShowAllReviews] = useState(false)
-  const [isPopupOpen, setIsPopupOpen] = useState(false)
+  const [reviews, setReviews] = useState(initialReviews);
+  const [showAllReviews, setShowAllReviews] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const [newReview, setNewReview] = useState({
     name: "",
     email: "",
     content: "",
     rating: 0,
-  })
-  const [errors, setErrors] = useState({})
+  });
+  const [errors, setErrors] = useState({});
 
   const handleInputChange = (e) => {
-    const { id, value } = e.target
-    setNewReview((prev) => ({ ...prev, [id]: value }))
-    setErrors((prev) => ({ ...prev, [id]: "" })) // Clear error when input changes
-  }
+    const { id, value } = e.target;
+    setNewReview((prev) => ({ ...prev, [id]: value }));
+    setErrors((prev) => ({ ...prev, [id]: "" })); // Clear error when input changes
+  };
 
   const handleRatingChange = (rating) => {
-    setNewReview((prev) => ({ ...prev, rating }))
-    setErrors((prev) => ({ ...prev, rating: "" })) // Clear error when rating changes
-  }
+    setNewReview((prev) => ({ ...prev, rating }));
+    setErrors((prev) => ({ ...prev, rating: "" })); // Clear error when rating changes
+  };
 
   const handleSubmitReview = (e) => {
-    e.preventDefault()
-    const newErrors = {}
-    let isValid = true
+    e.preventDefault();
+    const newErrors = {};
+    let isValid = true;
 
     if (!newReview.name.trim()) {
-      newErrors.name = "Name is required."
-      isValid = false
+      newErrors.name = "Name is required.";
+      isValid = false;
     } else if (newReview.name.trim().length < 2) {
-      newErrors.name = "Name must be at least 2 characters."
-      isValid = false
+      newErrors.name = "Name must be at least 2 characters.";
+      isValid = false;
     }
 
     if (!newReview.email.trim()) {
-      newErrors.email = "Email is required."
-      isValid = false
+      newErrors.email = "Email is required.";
+      isValid = false;
     } else if (!/\S+@\S+\.\S+/.test(newReview.email)) {
-      newErrors.email = "Invalid email format."
-      isValid = false
+      newErrors.email = "Invalid email format.";
+      isValid = false;
     }
 
     if (!newReview.content.trim()) {
-      newErrors.content = "Review content is required."
-      isValid = false
+      newErrors.content = "Review content is required.";
+      isValid = false;
     } else if (newReview.content.trim().length < 10) {
-      newErrors.content = "Review content must be at least 10 characters."
-      isValid = false
+      newErrors.content = "Review content must be at least 10 characters.";
+      isValid = false;
     }
 
     if (newReview.rating === 0) {
-      newErrors.rating = "Please select a star rating."
-      isValid = false
+      newErrors.rating = "Please select a star rating.";
+      isValid = false;
     }
 
-    setErrors(newErrors)
+    setErrors(newErrors);
 
     if (isValid) {
       const reviewToAdd = {
         id: reviews.length + 1,
         ...newReview,
         title: `Review by ${newReview.name}`,
-      }
-      setReviews((prev) => [reviewToAdd, ...prev])
-      setNewReview({ name: "", email: "", content: "", rating: 0 })
-      setErrors({}) // Clear all errors on successful submission
-      setIsPopupOpen(false)
+      };
+      setReviews((prev) => [reviewToAdd, ...prev]);
+      setNewReview({ name: "", email: "", content: "", rating: 0 });
+      setErrors({}); // Clear all errors on successful submission
+      setIsPopupOpen(false);
     }
-  }
+  };
 
-  const reviewStats = calculateReviewStats(reviews)
-  const displayedReviews = showAllReviews ? reviews : reviews.slice(0, 2) // Show first 2 or all
+  const reviewStats = calculateReviewStats(reviews);
+  const displayedReviews = showAllReviews ? reviews : reviews.slice(0, 2); // Show first 2 or all
 
   return (
     <div className="grid grid-cols-3 gap-[64px]">
@@ -236,7 +247,9 @@ export default function CustomerReviews() {
         <ReviewStatistics stats={reviewStats} />
         <Dialog open={isPopupOpen} onOpenChange={setIsPopupOpen}>
           <DialogTrigger asChild>
-            <Button className="w-fit bg-gray-800 text-white hover:bg-gray-700">Write A Product Review</Button>
+            <button className="w-fit cursor-pointer rounded-[6.62px] bg-[#333333] text-white text-lg py-[15px] px-[30px]">
+              Write A Product Review
+            </button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
@@ -262,13 +275,18 @@ export default function CustomerReviews() {
                   placeholder="Your Name"
                   onChange={handleInputChange}
                   className={`w-full px-4 py-[15px] rounded-lg border text-base transition-opacity duration-300 ${
-                    errors.name ? "border-red-500" : "border-[#D1D5DB]"
-                  } ${newReview.name ? "opacity-100 !border-[#333333]" : "opacity-50 focus:opacity-100"}
-                  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
+                    errors.name ? "border-red-500" : "border-light-gray"
+                  } ${
+                    newReview.name
+                      ? "opacity-100 !border-[#333333]"
+                      : "opacity-50 focus:opacity-100"
+                  }`}
                   aria-invalid={!!errors.name}
                   aria-describedby="name-error"
                 />
-                {errors.name && <ErrorComponent message={errors.name} id="name-error" />}
+                {errors.name && (
+                  <ErrorComponent message={errors.name} id="name-error" />
+                )}
               </div>
 
               {/* Email Field */}
@@ -290,13 +308,18 @@ export default function CustomerReviews() {
                   placeholder="Example@email.com"
                   onChange={handleInputChange}
                   className={`w-full px-4 py-[15px] rounded-lg border text-base transition-opacity duration-300 ${
-                    errors.email ? "border-red-500" : "border-[#D1D5DB]"
-                  } ${newReview.email ? "opacity-100 !border-[#333333]" : "opacity-50 focus:opacity-100"}
-                  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
+                    errors.email ? "border-red-500" : "border-light-gray"
+                  } ${
+                    newReview.email
+                      ? "opacity-100 !border-[#333333]"
+                      : "opacity-50 focus:opacity-100"
+                  }`}
                   aria-invalid={!!errors.email}
                   aria-describedby="email-error"
                 />
-                {errors.email && <ErrorComponent message={errors.email} id="email-error" />}
+                {errors.email && (
+                  <ErrorComponent message={errors.email} id="email-error" />
+                )}
               </div>
 
               {/* Content Field */}
@@ -317,13 +340,17 @@ export default function CustomerReviews() {
                   placeholder="Write your review here..."
                   onChange={handleInputChange}
                   className={`w-full px-4 py-[15px] rounded-lg border text-base transition-opacity duration-300 min-h-[100px] ${
-                    errors.content ? "border-red-500" : "border-[#D1D5DB]"
-                  } ${newReview.content ? "opacity-100 !border-[#333333]" : "opacity-50 focus:opacity-100"}
-                  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
-                  aria-invalid={!!errors.content}
+                    errors.content ? "border-red-500" : "border-light-gray"
+                  } ${
+                    newReview.content
+                      ? "opacity-100 !border-[#333333]"
+                      : "opacity-50 focus:opacity-100"
+                  }`}
                   aria-describedby="content-error"
                 />
-                {errors.content && <ErrorComponent message={errors.content} id="content-error" />}
+                {errors.content && (
+                  <ErrorComponent message={errors.content} id="content-error" />
+                )}
               </div>
 
               {/* Rating Field */}
@@ -338,14 +365,22 @@ export default function CustomerReviews() {
                   Rating
                 </label>
                 <div className="flex items-center">
-                  <StarRatingInput rating={newReview.rating} onRatingChange={handleRatingChange} />
+                  <StarRatingInput
+                    rating={newReview.rating}
+                    onRatingChange={handleRatingChange}
+                  />
                 </div>
-                {errors.rating && <ErrorComponent message={errors.rating} id="rating-error" />}
+                {errors.rating && (
+                  <ErrorComponent message={errors.rating} id="rating-error" />
+                )}
               </div>
 
-              <Button type="submit" className="w-full mt-4 bg-gray-800 text-white hover:bg-gray-700">
+              <button
+                type="submit"
+                className="w-full py-4 px-5 rounded-[6px] cursor-pointer mt-4 bg-green text-white"
+              >
                 Submit Review
-              </Button>
+              </button>
             </form>
           </DialogContent>
         </Dialog>
@@ -362,12 +397,12 @@ export default function CustomerReviews() {
         {reviews.length > 2 && ( // Only show toggle if there are more than 2 reviews
           <button
             onClick={() => setShowAllReviews(!showAllReviews)}
-            className="underline text-left mt-4"
+            className="underline font-medium cursor-pointer text-left text-lg mt-4"
           >
             {showAllReviews ? "Show Less Reviews <" : "See All Reviews >"}
           </button>
         )}
       </div>
     </div>
-  )
+  );
 }

@@ -5,6 +5,7 @@ import Products from "../pages/Products";
 import SignIn from "../pages/sign-in";
 import Wishlist from "../pages/Wishlist";
 import Combo from "@/pages/Combo";
+import Cart from "@/pages/Cart";
 
 export const ROUTES = [
   { path: "/", exact: true, component: <Home /> },
@@ -12,6 +13,7 @@ export const ROUTES = [
   { path: "/wishlist", exact: true, component: <Wishlist /> },
   { path: "/products/:id", exact: true, component: <ProductDetail /> },
   { path: "/deals", exact: true, component: <Combo /> },
+  { path: "/cart", exact: true, component: <Cart /> },
 ];
 
 export const REJECT_ROUTES = [
