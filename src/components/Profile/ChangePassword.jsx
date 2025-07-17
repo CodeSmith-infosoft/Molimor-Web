@@ -116,7 +116,7 @@ export default function ChangePassword() {
               value={passwordData.currentPassword}
               placeholder="••••••••••••••"
               onChange={handleChange}
-              className={`w-full px-4 py-[15px] pr-12 rounded-lg border text-base transition-opacity duration-300 ${
+              className={`w-full px-4 py-[9px] pr-12 rounded-lg border text-base transition-opacity duration-300 ${
                 errors.currentPassword ? "border-red-500" : "border-gray-300"
               } ${
                 passwordData.currentPassword
@@ -171,7 +171,7 @@ export default function ChangePassword() {
           )}
         </div>
 
-        <div className="flex gap-4 mb-6">
+        <div className="flex gap-x-[10px] mb-6">
           {/* New Password */}
           <div className="flex-1 group">
             <label className="block text-gray-600 text-sm pb-2">
@@ -184,7 +184,7 @@ export default function ChangePassword() {
                 value={passwordData.newPassword}
                 placeholder="Password"
                 onChange={handleChange}
-                className={`w-full px-4 py-[15px] pr-12 rounded-lg border text-base transition-opacity duration-300 ${
+                className={`w-full px-4 py-[9px] pr-12 rounded-lg border text-base transition-opacity duration-300 ${
                   errors.newPassword ? "border-red-500" : "border-gray-300"
                 } ${
                   passwordData.newPassword
@@ -251,7 +251,7 @@ export default function ChangePassword() {
                 value={passwordData.confirmPassword}
                 placeholder="Password"
                 onChange={handleChange}
-                className={`w-full px-4 py-[15px] pr-12 rounded-lg border text-base transition-opacity duration-300 ${
+                className={`w-full px-4 py-[9px] pr-12 rounded-lg border text-base transition-opacity duration-300 ${
                   errors.confirmPassword ? "border-red-500" : "border-gray-300"
                 } ${
                   passwordData.confirmPassword

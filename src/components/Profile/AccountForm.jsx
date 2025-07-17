@@ -133,7 +133,7 @@ export default function AccountForm() {
               value={formData.firstName}
               placeholder="Enter your first name"
               onChange={handleChange}
-              className={`w-full px-4 py-[15px] rounded-lg border text-base transition-opacity duration-300 ${
+              className={`w-full px-4 py-[9px] rounded-lg border text-base transition-opacity duration-300 ${
                 errors.firstName ? "border-red-500" : "border-gray-300"
               }`}
             />
@@ -153,7 +153,7 @@ export default function AccountForm() {
               value={formData.lastName}
               placeholder="Enter your last name"
               onChange={handleChange}
-              className={`w-full px-4 py-[15px] rounded-lg border text-base transition-opacity duration-300 ${
+              className={`w-full px-4 py-[9px] rounded-lg border text-base transition-opacity duration-300 ${
                 errors.lastName ? "border-red-500" : "border-gray-300"
               } `}
             />
@@ -173,7 +173,7 @@ export default function AccountForm() {
               value={formData.email}
               placeholder="Example@email.com"
               onChange={handleChange}
-              className={`w-full px-4 py-[15px] rounded-lg border text-base transition-opacity duration-300 ${
+              className={`w-full px-4 py-[9px] rounded-lg border text-base transition-opacity duration-300 ${
                 errors.email ? "border-red-500" : "border-gray-300"
               }`}
             />
@@ -203,7 +203,8 @@ export default function AccountForm() {
                   }));
                 }
               }}
-              inputClass={`w-full flex px-4 py-[15px] rounded-lg border text-base transition-opacity duration-300 ${
+              inputClass="!w-full !py-[15px] !px-4 !text-base !border-none focus:!outline-none"
+              containerClass={`w-full border rounded-lg transition-opacity duration-300 ${
                 errors.phoneNumber ? "border-red-500" : "border-gray-300"
               }`}
             />
