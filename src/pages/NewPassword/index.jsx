@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { ValidationError } from "yup";
-import { forgotSchema } from "@/utils/yupSchema";
 import useAxios from "../../customHook/fetch-hook";
 import ErrorComponent from "@/components/Common/ErrorComponent";
 
@@ -12,6 +11,8 @@ const initialValue = {
 };
 
 const NewPassword = () => {
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token") || "";
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState(initialValue);
@@ -61,16 +62,14 @@ const NewPassword = () => {
         return;
       }
 
-      // If using yup schema, validate with it as well
-      const validatedData = await forgotSchema.validate(formData, {
-        abortEarly: false,
-      });
-
       setErrors({});
-      const payload = { password: validatedData.password };
+      const payload = { password: formData.password };
 
-      await resetPassword({ data: payload }).then(async (res) => {
-        const toast2 = res.data.success ? toast.success : toast.error;
+      await resetPassword({
+        data: payload,
+        url: `/user/resetPassword?token=${token}`,
+      }).then(async (res) => {
+        const toast2 = res.data.success ? toast.success : toast.success;
         toast2(res.message || "Password reset successfully");
         if (res.success) {
           setFormData(initialValue);
@@ -78,6 +77,7 @@ const NewPassword = () => {
         }
       });
     } catch (error) {
+      setLoading(false);
       if (error instanceof ValidationError) {
         const errorObj = {};
         error.inner.forEach((err) => {

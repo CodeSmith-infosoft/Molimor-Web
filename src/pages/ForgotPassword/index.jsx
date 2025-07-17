@@ -15,9 +15,9 @@ const ForgotPassword = () => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { fetchData: loginUser } = useAxios({
+  const { fetchData: forgetEmail } = useAxios({
     method: "POST",
-    url: "/user/login",
+    url: "/user/forgetEmail",
   });
 
   const onSubmit = async (e) => {
@@ -31,8 +31,8 @@ const ForgotPassword = () => {
 
       setErrors({});
       const payload = { ...validatedData };
-      await loginUser({ data: payload }).then(async (res) => {
-        const toast2 = res.data.token ? toast.success : toast.error;
+      await forgetEmail({ data: payload }).then(async (res) => {
+        const toast2 = res.data.token ? toast.success : toast.success;
         toast2(res.message);
         if (res.success) {
           setFormData(initialValue);

@@ -18,7 +18,7 @@ const BorderCard = ({ product }) => {
       <div className="max-w-[200px] mx-auto relative">
         <img
           src={product?.mainImage}
-          className="w-auto h-[220px] mb-4 group-hover:scale-[1.05] transition-transform duration-300 object-contain ease-in-out"
+          className="w-auto max-h-[220px] mb-4 group-hover:scale-[1.05] transition-transform duration-300 object-contain ease-in-out"
         />
         <div className="space-y-[12px]">
           <label className="capitalize opacity-50 text-sm block ">

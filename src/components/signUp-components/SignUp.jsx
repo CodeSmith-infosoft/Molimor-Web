@@ -64,12 +64,7 @@ const SignUp = () => {
         abortEarly: false,
       });
       setErrors({});
-      const name = validatedData.fname.split(" ");
-      const payload = {
-        ...validatedData,
-        fname: name[0],
-        lname: name?.[1] || "",
-      };
+      const payload = validatedData;
       delete payload.confirmPassword;
 
       const res = await register({ data: payload });
@@ -212,7 +207,7 @@ const SignUp = () => {
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    placeholder="At least 8 characters"
+                    placeholder="At least 6 characters"
                     className={`w-full px-4 py-[15px] pr-12 rounded-lg border text-base transition-opacity duration-300 ${
                       errors.password ? "border-red-500" : "border-light-gray"
                     } ${
@@ -256,7 +251,7 @@ const SignUp = () => {
                     name="confirmPassword"
                     value={formData.confirmPassword}
                     onChange={handleChange}
-                    placeholder="At least 8 characters"
+                    placeholder="At least 6 characters"
                     className={`w-full px-4 py-[15px] pr-12 rounded-lg border text-base transition-opacity duration-300 ${
                       errors.confirmPassword
                         ? "border-red-500"

@@ -248,6 +248,9 @@ const Login = () => {
                   </div>
                   <span className="text-[#333333] text-sm">Remember me</span>
                 </label>
+                <Link to={"/forgot-password"} className="text-sm font-medium">
+                  Forgot Password?
+                </Link>
               </div>
 
               <button

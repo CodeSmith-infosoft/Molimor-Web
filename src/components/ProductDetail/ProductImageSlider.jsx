@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -10,11 +10,25 @@ import {
 } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
 import { getPercent } from "@/utils";
+import toast from "react-hot-toast";
 
 export default function ProductImageSlider({ data, selectedWeight }) {
   const [mainApi, setMainApi] = useState();
   const [thumbnailApi, setThumbnailApi] = useState();
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false); // trigger when clicked outside
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [setIsOpen]);
 
   const onSelect = useCallback((api) => {
     if (!api) {
@@ -107,20 +121,96 @@ export default function ProductImageSlider({ data, selectedWeight }) {
         </Carousel>
       </div>
       <div>
-        <button className="p-2 border border-[#E5E7EB] rounded-[6px] cursor-pointer">
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 18 18"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+        <div
+          className="flex items-center text-sm text-gray-700 hover:text-gray-900 cursor-pointer relative"
+          ref={dropdownRef}
+        >
+          <div
+            onClick={() => setIsOpen(!isOpen)}
+            className="flex items-center space-x-[10px]"
           >
-            <path
-              d="M12.7203 12.1076C11.8579 12.1076 11.0809 12.48 10.5417 13.0725L5.69105 10.0683C5.82422 9.72786 5.89249 9.36552 5.89235 8.99998C5.89252 8.63444 5.82424 8.2721 5.69105 7.93169L10.5417 4.92735C11.0809 5.5198 11.8579 5.89239 12.7203 5.89239C14.345 5.89239 15.6666 4.57073 15.6666 2.94612C15.6666 1.32152 14.345 0 12.7203 0C11.0958 0 9.77412 1.32166 9.77412 2.94626C9.77405 3.31178 9.84233 3.67409 9.97543 4.01452L5.12496 7.01876C4.58567 6.4263 3.80868 6.05372 2.94626 6.05372C1.32166 6.05372 0 7.37552 0 8.99998C0 10.6245 1.32166 11.9462 2.94626 11.9462C3.80864 11.9462 4.5857 11.5738 5.12496 10.9812L9.97546 13.9854C9.84234 14.3259 9.77405 14.6883 9.77412 15.0538C9.77412 16.6783 11.0957 18 12.7203 18C14.345 18 15.6666 16.6783 15.6666 15.0539C15.6666 13.4292 14.345 12.1076 12.7203 12.1076ZM10.8484 2.94626C10.8484 1.91408 11.6882 1.07434 12.7203 1.07434C13.7525 1.07434 14.5923 1.91408 14.5923 2.94626C14.5923 3.97845 13.7525 4.81819 12.7203 4.81819C11.6882 4.81819 10.8484 3.97841 10.8484 2.94626ZM2.94626 10.8719C1.91394 10.8719 1.0742 10.0321 1.0742 8.99998C1.0742 7.96783 1.91394 7.12806 2.94626 7.12806C3.97845 7.12806 4.81805 7.96783 4.81805 8.99998C4.81805 10.0321 3.97841 10.8719 2.94626 10.8719ZM10.8484 15.0537C10.8484 14.0216 11.6882 13.1818 12.7203 13.1818C13.7525 13.1818 14.5923 14.0216 14.5923 15.0537C14.5923 16.0859 13.7525 16.9256 12.7203 16.9256C11.6882 16.9256 10.8484 16.0859 10.8484 15.0537V15.0537Z"
-              fill="#333333"
-            />
-          </svg>
-        </button>
+            <div className="border border-[#E5E7EB] rounded-[6px] py-[7px] px-2">
+              <svg
+                width="15"
+                height="18"
+                viewBox="0 0 15 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12.1791 12.1076C11.3534 12.1076 10.6094 12.48 10.0931 13.0725L5.44889 10.0683C5.5764 9.72787 5.64177 9.36554 5.64163 9C5.64179 8.63446 5.57642 8.27212 5.44889 7.93171L10.0931 4.92736C10.6095 5.51981 11.3534 5.8924 12.1791 5.8924C13.7346 5.8924 15 4.57073 15 2.94613C15 1.32152 13.7346 0 12.1791 0C10.6237 0 9.35823 1.32166 9.35823 2.94627C9.35817 3.31179 9.42354 3.6741 9.55097 4.01453L4.9069 7.01877C4.39055 6.42632 3.64662 6.05373 2.8209 6.05373C1.26542 6.05373 0 7.37554 0 9C0 10.6246 1.26542 11.9463 2.8209 11.9463C3.64659 11.9463 4.39058 11.5738 4.9069 10.9812L9.55101 13.9855C9.42355 14.3259 9.35816 14.6883 9.35823 15.0539C9.35823 16.6783 10.6236 18 12.1791 18C13.7346 18 15 16.6783 15 15.0539C15 13.4293 13.7346 12.1076 12.1791 12.1076ZM10.3868 2.94627C10.3868 1.91408 11.1909 1.07434 12.1791 1.07434C13.1673 1.07434 13.9714 1.91408 13.9714 2.94627C13.9714 3.97846 13.1674 4.8182 12.1791 4.8182C11.1908 4.8182 10.3868 3.97842 10.3868 2.94627ZM2.8209 10.8719C1.8325 10.8719 1.02849 10.0322 1.02849 9C1.02849 7.96785 1.8325 7.12807 2.8209 7.12807C3.80917 7.12807 4.61304 7.96785 4.61304 9C4.61304 10.0322 3.80913 10.8719 2.8209 10.8719ZM10.3868 15.0538C10.3868 14.0216 11.1909 13.1818 12.1791 13.1818C13.1673 13.1818 13.9714 14.0216 13.9714 15.0537C13.9714 16.0859 13.1674 16.9257 12.1791 16.9257C11.1908 16.9257 10.3868 16.0859 10.3868 15.0537V15.0538Z"
+                  fill="#333333"
+                />
+              </svg>
+            </div>
+          </div>
+          {isOpen && (
+            <div className="absolute top-full py-1 left-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-10 min-w-[182px]">
+              <button
+                onClick={() =>
+                  window.open(
+                    `https://wa.me/?text=${encodeURIComponent(
+                      window.location.href
+                    )}`,
+                    "_blank"
+                  )
+                }
+                className="flex gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 first:rounded-t-md"
+              >
+                <img
+                  src={"/images/footer/watsapp.svg"}
+                  className="h-4"
+                  alt=""
+                />{" "}
+                Share on WhatsApp
+              </button>
+              <button
+                onClick={() =>
+                  window.open(
+                    `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                      window.location.href
+                    )}`,
+                    "_blank"
+                  )
+                }
+                className="flex gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
+                <img
+                  src={"/images/footer/facebook.png"}
+                  className="h-4"
+                  alt=""
+                />{" "}
+                Share on Facebook
+              </button>
+
+              <button
+                onClick={() =>
+                  window.open(
+                    `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+                      window.location.href
+                    )}`,
+                    "_blank"
+                  )
+                }
+                className="flex gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
+                <img src={"/images/footer/x.png"} className="h-4" alt="" />{" "}
+                Share on Twitter
+              </button>
+
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(window.location.href);
+                  toast.success("Link copied to clipboard!");
+                }}
+                className="flex gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 last:rounded-b-md"
+              >
+                <img src={"/images/footer/link.svg"} className="h-4" alt="" />{" "}
+                Copy Link
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

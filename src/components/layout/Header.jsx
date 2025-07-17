@@ -1,16 +1,20 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import CountdownTimer from "../HeaderComponents/CountdownTimer";
 import Dropdown from "../HeaderComponents/Dropdown";
 import CategoriesNavigation from "../HeaderComponents/CategoriesNavigation";
 import { Link, useNavigate } from "react-router-dom";
 import MainContext from "@/context/MainContext";
 import useAxios from "@/customHook/fetch-hook";
+import { FaList, FaUser } from "react-icons/fa";
+import { GoHeartFill } from "react-icons/go";
+import { IoLogOut } from "react-icons/io5";
 
 export default function Header() {
   // const [language, setLanguage] = useState("English");
-  const { currency, setCurrency, cartCount } = useContext(MainContext);
+  const { currency, setCurrency, cartCount, setCartCount } = useContext(MainContext);
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
   const [activeCart, setActiveCart] = useState({
     cart: 0,
     wishlist: 0,
@@ -22,9 +26,21 @@ export default function Header() {
 
   // const languageOptions = ["English", "Spanish", "French", "German", "Italian"];
   const currencyOptions = ["USD", "EUR", "INR"];
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false); // trigger when clicked outside
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [setIsOpen]);
+
+  useEffect(() => {
     if (token) {
       getUserCartAndWishListCount().then((res) => {
         const result = res.data;
@@ -46,6 +62,13 @@ export default function Header() {
       });
     }
   }, [cartCount]);
+
+  const handleLogout = () => {
+    setCartCount((prev) => prev + 1);
+    localStorage.removeItem("token");
+    localStorage.removeItem("_id");
+    navigate("/login");
+  };
 
   return (
     <div className="w-full bg-white fixed z-20 top-0">
@@ -169,9 +192,54 @@ export default function Header() {
                 />
               </svg>
 
-              <div>
-                <div className="text-[11px] opacity-70">Sign in</div>
-                <div className="text-[13px] font-medium">Account</div>
+              <div
+                className="flex items-center text-sm text-gray-700 hover:text-gray-900 cursor-pointer relative"
+                ref={dropdownRef}
+              >
+                <div
+                  onClick={() =>
+                    token ? setIsOpen(!isOpen) : navigate("/login")
+                  }
+                  className="flex flex-col items-center space-x-[10px]"
+                >
+                  <div className="text-[11px] opacity-70">
+                    {token ? "Profile" : "Sign in"}
+                  </div>
+                  <div className="text-[13px] font-medium">Account</div>
+                </div>
+                {isOpen && token && (
+                  <>
+                    <div className="absolute p-2 top-full space-y-2 flex flex-col left-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-10 min-w-[120px]">
+                      <Link
+                        to={"/profile"}
+                        className="flex gap-2 cursor-pointer items-center border-b pb-1"
+                      >
+                        <FaUser />
+                        Profile
+                      </Link>
+                      <Link
+                        to={"/recent-order"}
+                        className="flex gap-2 cursor-pointer items-center border-b pb-1"
+                      >
+                        <FaList size={14} /> Orders
+                      </Link>
+                      <Link
+                        to={"/wishlist"}
+                        className="flex gap-2 cursor-pointer items-center border-b pb-1"
+                      >
+                        <GoHeartFill />
+                        Wishlist
+                      </Link>
+                      <button
+                        className="flex gap-2 cursor-pointer items-center"
+                        onClick={handleLogout}
+                      >
+                        <IoLogOut />
+                        Log Out
+                      </button>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
 

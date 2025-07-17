@@ -1,9 +1,10 @@
 import ErrorComponent from "@/components/Common/ErrorComponent";
-import { useState, useRef } from "react";
-import PhoneInput from "react-phone-input-2";
+import useAxios from "@/customHook/fetch-hook";
+import { useState, useRef, useEffect } from "react";
+import toast from "react-hot-toast";
 import "react-phone-input-2/lib/style.css";
 
-export default function AccountForm() {
+export default function AccountForm({ userData, getProfile }) {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -11,10 +12,25 @@ export default function AccountForm() {
     phoneNumber: "",
   });
 
+  const { fetchData: updateProfile } = useAxios({
+    method: "PUT",
+    url: "/user/updateProfile",
+  });
+
+  useEffect(() => {
+    if (userData?.isActive) {
+      setFormData({
+        email: userData?.email || "",
+        firstName: userData?.fname || "",
+        lastName: userData?.fname || "",
+        phoneNumber: userData?.mobile || "",
+      });
+      setProfileImage(userData?.profilePhoto || "");
+    }
+  }, [userData]);
+
   const [errors, setErrors] = useState({});
-  const [profileImage, setProfileImage] = useState(
-    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-  );
+  const [profileImage, setProfileImage] = useState("");
   const fileInputRef = useRef(null);
 
   const handleChange = (e) => {
@@ -54,15 +70,6 @@ export default function AccountForm() {
       newErrors.lastName = "Last name can only contain letters and spaces";
     }
 
-    // Email validation
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
-      newErrors.email = "Please enter a valid email address";
-    } else if (formData.email.trim().length > 254) {
-      newErrors.email = "Email address is too long";
-    }
-
     // Phone Number validation
     if (!formData.phoneNumber.trim()) {
       newErrors.phoneNumber = "Phone number is required";
@@ -77,9 +84,15 @@ export default function AccountForm() {
 
     if (Object.keys(newErrors).length === 0) {
       // Simulate API call
-      alert("Changes saved successfully!");
-      console.log("Form data:", formData);
-      console.log("Profile image:", profileImage);
+      const payloadData = new FormData();
+      payloadData.append("fname", formData.firstName);
+      payloadData.append("lname", formData.lastName);
+      payloadData.append("mobile", formData.phoneNumber);
+      updateProfile({ data: payloadData }).then((res) => {
+        const toast2 = res.success ? toast.success : toast.error;
+        toast2(res.message);
+        getProfile();
+      });
     }
   };
 
@@ -88,27 +101,15 @@ export default function AccountForm() {
   };
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      // Validate file type
-      if (!file.type.startsWith("image/")) {
-        alert("Please select an image file");
-        return;
-      }
-
-      // Validate file size (max 5MB)
-      if (file.size > 5 * 1024 * 1024) {
-        alert("Image size must be less than 5MB");
-        return;
-      }
-
-      // Create preview URL
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setProfileImage(e.target.result);
-      };
-      reader.readAsDataURL(file);
-    }
+    const file = e.target.files?.[0]; // Get the first file from the FileList
+    if (!file) return;
+    const formData = new FormData();
+    formData.append("profilePhoto", file);
+    updateProfile({ data: formData }).then((res) => {
+      const toast2 = res.success ? toast.success : toast.error;
+      toast2(res.message);
+      getProfile();
+    });
   };
 
   return (
@@ -171,6 +172,7 @@ export default function AccountForm() {
               type="email"
               name="email"
               value={formData.email}
+              readOnly
               placeholder="Example@email.com"
               onChange={handleChange}
               className={`w-full px-4 py-[9px] rounded-lg border text-base transition-opacity duration-300 ${
@@ -187,25 +189,14 @@ export default function AccountForm() {
             >
               Phone Number
             </label>
-            <PhoneInput
-              country={"in"}
+            <input
+              type="text"
+              name="phoneNumber"
               value={formData.phoneNumber}
-              onChange={(value) => {
-                setFormData((prev) => ({
-                  ...prev,
-                  phoneNumber: value,
-                }));
-
-                if (errors.phoneNumber) {
-                  setErrors((prev) => ({
-                    ...prev,
-                    phoneNumber: "",
-                  }));
-                }
-              }}
-              inputClass="!w-full !py-[15px] !px-4 !text-base !border-none focus:!outline-none"
-              containerClass={`w-full border rounded-lg transition-opacity duration-300 ${
-                errors.phoneNumber ? "border-red-500" : "border-gray-300"
+              placeholder="Enter your phone number"
+              onChange={handleChange}
+              className={`w-full px-4 py-[9px] rounded-lg border text-base transition-opacity duration-300 ${
+                errors.email ? "border-red-500" : "border-gray-300"
               }`}
             />
 
@@ -227,9 +218,9 @@ export default function AccountForm() {
         <div className="flex flex-col w-1/2 justify-center items-center">
           <div className="w-[224px] h-[224px] rounded-full overflow-hidden mb-4 bg-gray-200 border-2 border-gray-200 hover:border-gray-300 transition-colors duration-200">
             <img
-              src={profileImage}
+              src={profileImage || "/images/common/user.svg"}
               alt="Profile"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain"
               onError={(e) => {
                 e.target.src =
                   "https://via.placeholder.com/128x128/cccccc/666666?text=No+Image";

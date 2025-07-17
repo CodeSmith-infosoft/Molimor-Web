@@ -1,7 +1,14 @@
 import { useState } from "react";
 import ErrorComponent from "../Common/ErrorComponent";
+import useAxios from "@/customHook/fetch-hook";
+import toast from "react-hot-toast";
 
 export default function ChangePassword() {
+  const { fetchData: changePassword } = useAxios({
+    method: "PUT",
+    url: "/user/changePassword",
+  });
+
   const [passwordData, setPasswordData] = useState({
     currentPassword: "",
     newPassword: "",
@@ -50,14 +57,9 @@ export default function ChangePassword() {
     // New Password validation
     if (!passwordData.newPassword) {
       newErrors.newPassword = "New password is required";
-    } else if (passwordData.newPassword.length < 8) {
-      newErrors.newPassword = "Password must be at least 8 characters long";
-    } else if (
-      !/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(passwordData.newPassword)
-    ) {
-      newErrors.newPassword =
-        "Password must contain at least one uppercase letter, one lowercase letter, and one number";
-    }
+    } else if (passwordData.newPassword.length < 6) {
+      newErrors.newPassword = "Password must be at least 6 characters long";
+    } 
 
     // Confirm Password validation
     if (!passwordData.confirmPassword) {
@@ -85,15 +87,25 @@ export default function ChangePassword() {
 
     if (Object.keys(newErrors).length === 0) {
       // Simulate API call
-      alert("Password changed successfully!");
-      console.log("Password change requested");
+      let payload = {
+        oldPassword: passwordData.currentPassword,
+        newPassword: passwordData.newPassword,
+      };
+      changePassword({ data: payload }).then((res) => {
+        if (res.success) {
+          const toast2 = res.success ? toast.success : toast.error;
+          toast2(res.message);
+          setPasswordData({
+            currentPassword: "",
+            newPassword: "",
+            confirmPassword: "",
+          });
+        } else {
+          toast.error(res.message)
+        }
+      });
 
       // Clear form after successful change
-      setPasswordData({
-        currentPassword: "",
-        newPassword: "",
-        confirmPassword: "",
-      });
     }
   };
 

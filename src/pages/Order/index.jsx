@@ -63,18 +63,27 @@ export default function Order() {
   }, [data]);
 
   useEffect(() => {
-    getProfile()
+    getProfile();
     getCartData();
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (userData?.isActive) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        
-      }))
+        city: userData?.city || "",
+        country: userData?.country || "",
+        email: userData?.email || "",
+        firstName: userData?.fname || "",
+        lastName: userData?.fname || "",
+        phone: userData?.mobile || "",
+        zipCode: userData?.pincode || "",
+        state: userData?.state || "",
+        streetAddress: userData?.streetAddress?.[0] || "",
+        apartment: userData?.streetAddress?.[1] || "",
+      }));
     }
-  },[userData])
+  }, [userData]);
 
   function getCartData() {
     if (token) {
@@ -295,7 +304,9 @@ export default function Order() {
 
       placeOrder({ data: submissionData }).then((res) => {
         if (res.success) {
-          setCartCount((prev) => prev + 1);
+          setTimeout(() => {
+            setCartCount((prev) => prev + 1);
+          }, 3000);
           navigate("/products");
         }
       });

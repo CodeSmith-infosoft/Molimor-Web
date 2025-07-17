@@ -1,6 +1,8 @@
 import OrderProgressBar from "@/components/OrderDetails/OrderProgressBar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"; // Using shadcn/ui Card components
-import { Link } from "react-router-dom";
+import useAxios from "@/customHook/fetch-hook";
+import { useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 
 const orderData = {
   orderId: "#4152",
@@ -41,6 +43,16 @@ const orderData = {
 };
 
 export default function OrderDetail() {
+  const { id } = useParams();
+  const { data: orderList, fetchData: getAllUserOrders } = useAxios({
+    method: "GET",
+    url: `/order/getOrderById/${id}`,
+  });
+
+  useEffect(() => {
+    getAllUserOrders();
+  }, []);
+
   const orderStatuses = [
     { name: "Order received", key: "Order received" },
     { name: "Processing", key: "Processing" },
@@ -85,7 +97,10 @@ export default function OrderDetail() {
             <CardContent className="pt-[14px] !px-0 space-y-6">
               <div>
                 <p className="mb-[13px]">{orderData.billingAddress.name}</p>
-                <p>{orderData.billingAddress.street}{" "}{orderData.billingAddress.cityStateZip}</p>
+                <p>
+                  {orderData.billingAddress.street}{" "}
+                  {orderData.billingAddress.cityStateZip}
+                </p>
               </div>
               <div>
                 <p className="pt-2">Email</p>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { ChevronDown } from "lucide-react";
 import {
   Table,
@@ -9,66 +9,30 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { Link } from "react-router-dom";
-
-const ordersData = [
-  {
-    id: "738",
-    date: "8 Sep, 2020",
-    total: "$135.00 (5 Products)",
-    status: "Processing",
-  },
-  {
-    id: "739",
-    date: "9 Sep, 2020",
-    total: "$200.50 (2 Products)",
-    status: "Shipped",
-  },
-  {
-    id: "740",
-    date: "10 Sep, 2020",
-    total: "$50.00 (1 Product)",
-    status: "Delivered",
-  },
-  {
-    id: "741",
-    date: "11 Sep, 2020",
-    total: "$30.25 (3 Products)",
-    status: "Cancelled",
-  },
-  {
-    id: "742",
-    date: "12 Sep, 2020",
-    total: "$180.00 (4 Products)",
-    status: "Processing",
-  },
-  {
-    id: "743",
-    date: "13 Sep, 2020",
-    total: "$99.99 (1 Product)",
-    status: "Shipped",
-  },
-  {
-    id: "744",
-    date: "14 Sep, 2020",
-    total: "$15.00 (1 Product)",
-    status: "Delivered",
-  },
-];
+import useAxios from "@/customHook/fetch-hook";
+import { formatCurrency, formatted } from "@/utils";
+import MainContext from "@/context/MainContext";
 
 export default function RecentOrder() {
   const [filterStatus, setFilterStatus] = useState("All");
-  const [filteredOrders, setFilteredOrders] = useState(ordersData);
+  const [filteredOrders, setFilteredOrders] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { language, currency } = useContext(MainContext);
   const dropdownRef = useRef(null);
+  const { data: orderList, fetchData: getAllUserOrders } = useAxios({
+    method: "GET",
+    url: `/order/getAllUserOrders`,
+  });
+
   useEffect(() => {
     if (filterStatus === "All") {
-      setFilteredOrders(ordersData);
+      setFilteredOrders(orderList);
     } else {
       setFilteredOrders(
-        ordersData.filter((order) => order.status === filterStatus)
+        orderList.filter((order) => order.status === filterStatus)
       );
     }
-  }, [filterStatus]);
+  }, [filterStatus, orderList]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -77,6 +41,7 @@ export default function RecentOrder() {
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
+    getAllUserOrders();
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -84,7 +49,7 @@ export default function RecentOrder() {
 
   const uniqueStatuses = [
     "All",
-    ...new Set(ordersData.map((order) => order.status)),
+    ...new Set(orderList?.map((order) => order.status)),
   ];
 
   return (
@@ -151,7 +116,7 @@ export default function RecentOrder() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredOrders.map((order, index) => (
+                {filteredOrders?.map((order, index) => (
                   <TableRow
                     key={order.id}
                     className={
@@ -163,20 +128,20 @@ export default function RecentOrder() {
                     {" "}
                     {/* Subtle border between rows */}
                     <TableCell className="font-medium py-3 px-4 border-b-0">
-                      {order.id}
+                      {order?.orderId}
                     </TableCell>
                     <TableCell className="py-3 px-4 border-b-0">
-                      {order.date}
+                      {formatted(order?.createdAt)}
                     </TableCell>
                     <TableCell className="py-3 px-4 border-b-0">
-                      {order.total}
+                      {formatCurrency(order?.totalAmount, currency, language)}
                     </TableCell>
                     <TableCell className="py-3 px-4 border-b-0">
                       {order.status}
                     </TableCell>
                     <TableCell className="text-right py-3 px-4 border-b-0">
                       <Link
-                        to={`/recent-order/${order.id}`}
+                        to={`/recent-order/${order.orderId}`}
                         className="text-green text-sm font-medium"
                       >
                         View Details

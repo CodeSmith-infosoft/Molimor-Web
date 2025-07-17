@@ -425,14 +425,16 @@ const Cart = () => {
                   <Link to={"/products"} className=" text-sm underline">
                     Continue Shopping
                   </Link>
-                  <div>
-                    <button
-                      className="underline cursor-pointer text-[15px] font-medium py-[10px] px-5 bg-green rounded-[5px] text-white"
-                      onClick={handleCheckOut}
-                    >
-                      Check Out
-                    </button>
-                  </div>
+                  {cartData?.length && (
+                    <div>
+                      <button
+                        className="underline cursor-pointer text-[15px] font-medium py-[10px] px-5 bg-green rounded-[5px] text-white"
+                        onClick={handleCheckOut}
+                      >
+                        Check Out
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

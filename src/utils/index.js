@@ -234,3 +234,18 @@ function getRecentItemsRaw() {
 export function clearRecentItems() {
   localStorage.removeItem(STORAGE_KEY);
 }
+
+export const formatOptions = {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+};
+
+export const formatted = (date) => {
+  const d = new Date(date);
+  const day = d.getDate();
+  const month = d.toLocaleString("en-GB", { month: "short" });
+  const year = d.getFullYear();
+
+  return `${day} ${month}, ${year}`;
+};
