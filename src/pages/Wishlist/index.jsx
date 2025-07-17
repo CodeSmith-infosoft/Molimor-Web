@@ -31,6 +31,7 @@ import { useNavigate } from "react-router-dom";
 const ITEMS_PER_PAGE = 5;
 
 const Wishlist = () => {
+  const [wishlistData, setWishlistData] = useState([]);
   const { data, fetchData } = useAxios({
     method: "GET",
     url: "/wishlist/getWishlist",
@@ -50,8 +51,23 @@ const Wishlist = () => {
   const token = localStorage.getItem("token");
   const [buttonLoader, setButtonLoader] = useState(null);
   useEffect(() => {
-    fetchData();
+    getWishlistData();
   }, []);
+
+  useEffect(() => {
+    if (data?.length) {
+      setWishlistData(data);
+    }
+  }, [data]);
+
+  function getWishlistData() {
+    if (token) {
+      fetchData();
+    } else {
+      const localCartData = JSON.parse(localStorage.getItem("wishlistData"));
+      setWishlistData(localCartData);
+    }
+  }
   // const [currentPage, setCurrentPage] = useState(1);
   const { language, currency, setCartCount, cartCount } =
     useContext(MainContext);
@@ -79,24 +95,23 @@ const Wishlist = () => {
     };
     if (token) {
       setButtonLoader(item._id);
-      addToCart({data: { items: [{ ...payload }] }})
+      addToCart({ data: { items: [{ ...payload }] } })
         .then((res) => {
           if (res.success) {
-            fetchData();
-          }
-          if (res.success) {
+            getWishlistData();
             setCartCount(cartCount + 1);
           }
         })
         .finally(() => setButtonLoader(""));
     } else {
       addCartToLocalstorage({
-        productId: item._id,
+        productId: item,
         quantity: 1,
         weight: item.variants[0]?.weight,
         price: isDateNotPast([item.variants[0]]),
         mrp: item.variants[0]?.mrp,
       });
+      getWishlistData();
       setCartCount(cartCount + 1);
     }
   };
@@ -109,14 +124,14 @@ const Wishlist = () => {
       })
         .then((res) => {
           if (res.success) {
-            fetchData();
+            getWishlistData();
             setCartCount(cartCount + 1);
           }
         })
         .finally(() => setButtonLoader(""));
     } else {
       deleteWishlistItemFromLocalstorage(id);
-      fetchData();
+      getWishlistData();
       setCartCount(cartCount + 1);
     }
   };
@@ -145,8 +160,8 @@ const Wishlist = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {data?.length ? (
-                    data?.map((item) => (
+                  {wishlistData?.length ? (
+                    wishlistData?.map((item) => (
                       <TableRow key={item.id}>
                         <TableCell className="flex items-center gap-4 py-4">
                           <img
@@ -184,8 +199,8 @@ const Wishlist = () => {
                         </TableCell>
                         <TableCell className="">
                           <div className="flex items-center justify-center gap-2">
-                            <button
-                              className="bg-green flex gap-2 hover:bg-green-800 cursor-pointer text-white rounded-[43px] px-8 py-[14px]"
+                           {!item?.productId?.isCart && <button
+                              className="bg-green flex gap-2 hover:bg-green-800 cursor-pointer text-white rounded-[43px] px-8 py-[12px]"
                               size="sm"
                               disabled={buttonLoader === item?.productId?._id}
                               onClick={() => AddtoCart(item?.productId)}
@@ -194,11 +209,11 @@ const Wishlist = () => {
                                 <span className="w-4 h-4 block border-2 border-white border-t-transparent rounded-full animate-spin"></span>
                               )}
                               Add to Cart
-                            </button>
+                            </button>}
                             <Button
                               variant="ghost"
                               size="icon"
-                              className="rounded-full w-8 h-8"
+                              className="rounded-full cursor-pointer w-6 h-6"
                               disabled={buttonLoader === item?.productId?._id}
                               onClick={() =>
                                 removeWishlist(item?.productId?._id)
@@ -210,6 +225,7 @@ const Wishlist = () => {
                                 viewBox="0 0 25 24"
                                 fill="none"
                                 xmlns="http://www.w3.org/2000/svg"
+                                className="!w-6 !h-6"
                               >
                                 <g clip-path="url(#clip0_76_208)">
                                   <path
@@ -252,7 +268,7 @@ const Wishlist = () => {
                     ))
                   ) : (
                     <TableRow>
-                      <TableCell colspan={4}>
+                      <TableCell colSpan={4}>
                         <h3 className="text-center pt-8 text-xl font-semibold">
                           Your Whishlist Is Empty{" "}
                           <span

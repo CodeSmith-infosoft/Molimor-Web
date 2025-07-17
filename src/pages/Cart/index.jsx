@@ -22,6 +22,9 @@ import {
 const Cart = () => {
   const { setCartCount, currency, language } = useContext(MainContext);
   const token = localStorage.getItem("token");
+  const [cartData, setCartData] = useState([]);
+  const [buttonLoader, setButtonLoader] = useState(null);
+  const navigate = useNavigate();
   const { data, fetchData } = useAxios({
     method: "GET",
     url: "/cart/getUserCart",
@@ -38,10 +41,23 @@ const Cart = () => {
   });
 
   useEffect(() => {
-    fetchData();
+    if (data?.length) {
+      setCartData(data);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    getCartData();
   }, []);
-  const [buttonLoader, setButtonLoader] = useState(null);
-  const navigate = useNavigate();
+
+  function getCartData() {
+    if (token) {
+      fetchData();
+    } else {
+      const localCartData = JSON.parse(localStorage.getItem("cartData"));
+      setCartData(localCartData);
+    }
+  }
 
   const handleIncrement = (weight, quantity, id, price, mrp, productId) => {
     if (token) {
@@ -57,7 +73,7 @@ const Cart = () => {
       }).then((res) => {
         setButtonLoader(null);
         if (res.success) {
-          fetchData();
+          getCartData();
         }
       });
     } else {
@@ -68,7 +84,7 @@ const Cart = () => {
         mrp: mrp,
         productId,
       });
-      fetchData();
+      getCartData();
     }
   };
 
@@ -87,7 +103,7 @@ const Cart = () => {
       }).then((res) => {
         setButtonLoader(null);
         if (res.success) {
-          fetchData();
+          getCartData();
         }
       });
     } else {
@@ -98,7 +114,7 @@ const Cart = () => {
         mrp: mrp,
         productId,
       });
-      fetchData();
+      getCartData();
     }
   };
 
@@ -111,19 +127,19 @@ const Cart = () => {
         toast2(res.message);
         if (res.success) {
           setCartCount((prev) => prev + 1);
-          fetchData();
+          getCartData();
         }
       });
     } else {
       deleteCartItemFromLocalstorage(itemId);
-      fetchData();
+      getCartData();
       setCartCount((prev) => prev + 1);
     }
   };
 
   const { subTotal, deliveryCharges, totalAmount } = useMemo(() => {
-    if (data?.length) {
-      const calculatedSubTotal = data.reduce((sum, item) => {
+    if (cartData?.length) {
+      const calculatedSubTotal = cartData.reduce((sum, item) => {
         return sum + item.price * item.quantity;
       }, 0);
 
@@ -144,7 +160,16 @@ const Cart = () => {
         totalAmount: 0,
       };
     }
-  }, [data]);
+  }, [cartData]);
+
+  const handleCheckOut = () => {
+    if (token) {
+      navigate("/order");
+    } else {
+      toast.error("Please login for product purchase");
+      navigate("/login");
+    }
+  };
 
   return (
     <>
@@ -207,8 +232,8 @@ const Cart = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {data?.length ? (
-                        data?.map((item) => (
+                      {cartData?.length ? (
+                        cartData?.map((item) => (
                           <TableRow key={item?._id}>
                             <TableCell className="flex items-center gap-4 py-4 overflow-hidden">
                               <img
@@ -329,7 +354,7 @@ const Cart = () => {
                         ))
                       ) : (
                         <TableRow>
-                          <TableCell colspan={4}>
+                          <TableCell colSpan={4}>
                             <h3 className="text-center pt-8 text-xl font-semibold">
                               Your Cart Is Empty{" "}
                               <span
@@ -403,7 +428,7 @@ const Cart = () => {
                   <div>
                     <button
                       className="underline cursor-pointer text-[15px] font-medium py-[10px] px-5 bg-green rounded-[5px] text-white"
-                      onClick={() => navigate("/order")}
+                      onClick={handleCheckOut}
                     >
                       Check Out
                     </button>

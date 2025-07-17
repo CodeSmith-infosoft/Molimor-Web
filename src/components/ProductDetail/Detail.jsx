@@ -106,14 +106,9 @@ export default function Detail({ data, getProduct }) {
       } else {
         addCartToLocalstorage({
           quantity: quantity,
-          weight: data.weight,
-          price: isDateNotPast(
-            data?.endSaleOn,
-            data?.discountPrice,
-            data?.price,
-            data?.saleStatus
-          ),
-          mrp: data.mrp,
+          weight: selectedWeight.weight,
+          price: isDateNotPast([selectedWeight]),
+          mrp: selectedWeight.mrp,
           productId: data,
         });
         setCartCount(cartCount + 1);

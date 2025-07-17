@@ -64,8 +64,12 @@ const SignUp = () => {
         abortEarly: false,
       });
       setErrors({});
-
-      const payload = { ...validatedData };
+      const name = validatedData.fname.split(" ");
+      const payload = {
+        ...validatedData,
+        fname: name[0],
+        lname: name?.[1] || "",
+      };
       delete payload.confirmPassword;
 
       const res = await register({ data: payload });

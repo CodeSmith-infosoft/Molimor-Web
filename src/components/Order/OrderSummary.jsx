@@ -1,3 +1,7 @@
+import MainContext from "@/context/MainContext";
+import { formatCurrency } from "@/utils";
+import { useContext } from "react";
+
 const OrderSummary = ({
   cartItems,
   selectedShippingOption,
@@ -7,16 +11,18 @@ const OrderSummary = ({
   couponCode,
   setCouponCode,
   handleApplyCoupon,
-  discountAmount,
   handleSubmit,
+  isCouponActive,
+  removeCoupon,
 }) => {
-  const subtotal = cartItems.reduce(
+  const { language, currency } = useContext(MainContext);
+  const subtotal = cartItems?.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );
   const shippingCost = selectedShippingOption === "flatRate" ? 15.0 : 0.0;
   const totalBeforeDiscount = subtotal + shippingCost;
-  const finalTotal = totalBeforeDiscount - discountAmount;
+  const finalTotal = totalBeforeDiscount;
 
   return (
     <div className="bg-white p-[30px] border border-[#E5E7EB] rounded-lg">
@@ -26,23 +32,26 @@ const OrderSummary = ({
         <span className=" text-sm font-medium">Product</span>
         <span className=" text-sm font-medium">Subtotal</span>
       </div>
-      {cartItems.map((item) => (
+      {cartItems?.map((item) => (
         <div
-          key={item.productId}
+          key={item.productId?._id}
           className="flex justify-between items-center mb-[14px]"
         >
           <span className="text-sm max-w-[150px]">
-            {item.name} <span className="font-bold">× {item.quantity}</span>
+            {item?.productId?.title}{" "}
+            <span className="font-bold">× {item?.quantity}</span>
           </span>
           <span className="text-sm">
-            ${(item.price * item.quantity).toFixed(2)}
+            {formatCurrency(item?.price * item?.quantity, currency, language)}
           </span>
         </div>
       ))}
 
       <div className="flex justify-between items-center mb-[14px]">
         <span className="text-sm font-medium">Subtotal</span>
-        <span className="text-sm">${subtotal.toFixed(2)}</span>
+        <span className="text-sm">
+          {formatCurrency(subtotal, currency, language)}
+        </span>
       </div>
 
       <div className="flex justify-between items-center mb-[14px]">
@@ -57,8 +66,11 @@ const OrderSummary = ({
               onChange={handleShippingChange}
               className="hidden text-sm font-medium"
             />
+            <span className="text-sm font-medium mr-2">
+              Flat Rate: {formatCurrency(15, currency, language)}
+            </span>
             <span
-              className={`w-4 h-4 rounded-full border-2 flex items-center justify-center mr-2 ${
+              className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
                 selectedShippingOption === "flatRate"
                   ? "border-[#166534]"
                   : "border-gray-400"
@@ -68,7 +80,6 @@ const OrderSummary = ({
                 <span className="w-2 h-2 bg-[#166534] rounded-full"></span>
               )}
             </span>
-            <span className="text-sm font-medium">Flat Rate: $15.00</span>
           </label>
           <label className="flex items-center cursor-pointer">
             <input
@@ -79,8 +90,10 @@ const OrderSummary = ({
               onChange={handleShippingChange}
               className="hidden"
             />
+
+            <span className="text-sm font-medium mr-2">Local Pickup</span>
             <span
-              className={`w-4 h-4 rounded-full border-2 flex items-center justify-center mr-2 ${
+              className={`w-4 h-4 rounded-full border-2 flex items-center justify-center  ${
                 selectedShippingOption === "localPickup"
                   ? "border-[#166534]"
                   : "border-gray-400"
@@ -90,25 +103,19 @@ const OrderSummary = ({
                 <span className="w-2 h-2 bg-[#166534] rounded-full"></span>
               )}
             </span>
-            <span className="text-sm font-medium">Local Pickup</span>
           </label>
         </div>
       </div>
 
-      {discountAmount > 0 && (
-        <div className="flex justify-between items-center mb-[14px] text-[#166534]">
-          <span className="text-gray-700">Discount</span>
-          <span>-${discountAmount.toFixed(2)}</span>
-        </div>
-      )}
-
       <div className="flex justify-between items-center font-bold text-lg border-t pt-[14px]">
         <span className="text-sm font-medium">Total</span>
-        <span className="text-sm font-bold">${finalTotal.toFixed(2)}</span>
+        <span className="text-sm font-bold">
+          {formatCurrency(finalTotal, currency, language)}
+        </span>
       </div>
 
       <div className="mt-5">
-        <label className="flex items-center mb-5 cursor-pointer">
+        {/* <label className="flex items-center mb-5 cursor-pointer">
           <input
             type="radio"
             name="payment"
@@ -129,7 +136,7 @@ const OrderSummary = ({
             )}
           </span>
           <span className="text-sm font-semibold">Net Banking</span>
-        </label>
+        </label> */}
         <label className="flex items-center cursor-pointer">
           <input
             type="radio"
@@ -167,10 +174,12 @@ const OrderSummary = ({
             className=" px-4 py-[6px] w-full rounded-l-[5px] border border-[#D1D5DB] outline-none text-sm"
           />
           <button
-            onClick={handleApplyCoupon}
+            onClick={() =>
+              isCouponActive ? removeCoupon() : handleApplyCoupon()
+            }
             className="bg-[#166534] text-white text-sm font-bold px-6 py-[6px] rounded-r-[5px] hover:bg-green-700 transition-colors"
           >
-            Add
+            {isCouponActive ? "Remove" : "Add"}
           </button>
         </div>
       </div>
@@ -185,7 +194,7 @@ const OrderSummary = ({
         .
       </p>
 
-      <label className="flex items-center gap-2 mt-5 cursor-pointer">
+      {/* <label className="flex items-center gap-2 mt-5 cursor-pointer">
         <input type="checkbox" className="peer hidden" />
         <div className="w-4 shrink-0 h-4 rounded-[2.5px] border border-[#333333] flex items-center justify-center peer-checked:bg-[#076536] peer-checked:border-[#076536] transition-colors duration-200">
           <img src={"/images/login/checked.svg"} className="w-3 h-3" />
@@ -196,7 +205,7 @@ const OrderSummary = ({
             terms and conditions
           </a>
         </span>
-      </label>
+      </label> */}
 
       <button
         type="submit"

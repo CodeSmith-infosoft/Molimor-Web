@@ -94,7 +94,7 @@ export const formatCurrency = (amount, currency = "USD", locale = "en-US") => {
     style: "currency",
     currency,
     numberingSystem: numberingSystem,
-  }).format(amount);
+  }).format(isNaN(amount) ? 0 : amount);
 };
 
 export const getSellPercentage = (mrp, price) => {
@@ -170,7 +170,7 @@ export function isDateNotPast(item) {
   if (targetDate.getTime() > now.getTime() && saleItem.saleStatus) {
     return saleItem?.discountPrice;
   }
-  return item[0]?.price;
+  return item?.[0]?.price;
 }
 
 export function isDateNotPastBoolean(item) {

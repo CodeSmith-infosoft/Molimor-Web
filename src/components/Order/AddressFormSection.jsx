@@ -75,7 +75,7 @@ const AddressFormSection = ({
 
   const handleCountrySelect = (country) => {
     selectedCountryRef.current = country.isoCode;
-    setFormData((prev) => ({ ...prev, country: country.name, state: "" }));
+    setFormData((prev) => ({ ...prev, [getFieldName("country")]: country.name, [getFieldName("state")]: "" }));
 
     const countryStates = State.getStatesOfCountry(country.isoCode);
     setStates(countryStates);
@@ -86,7 +86,7 @@ const AddressFormSection = ({
   };
 
   const handleStateSelect = (state) => {
-    setFormData((prev) => ({ ...prev, state: state.name }));
+    setFormData((prev) => ({ ...prev, [getFieldName("state")]: state.name }));
     setIsStateOpen(false);
     setSearchState("");
   };
@@ -101,25 +101,29 @@ const AddressFormSection = ({
     setOpen,
     isOpen,
     setSearch,
-    search
+    search,
+    placeholder,
+    dropdownRef
   ) => (
-    <div className="mb-[22px] group relative">
+    <div className="mb-[22px] group relative" ref={dropdownRef}>
       <label
         htmlFor={name}
         className={`block text-sm pb-2 transition-opacity duration-300 `}
       >
         {label}
       </label>
-      <div className="relative" ref={countryDropdownRef}>
+      <div className="relative">
         <button
           type="button"
           onClick={() => setOpen(!isOpen)}
-          className="w-full px-3 py-2 text-left bg-white border rounded-[5px] border-gray-300 flex items-center justify-between"
+          className={`w-full px-3 py-[11px] text-sm font-normal text-left bg-white border rounded-[8px] border-gray-300 flex items-center justify-between ${
+            error ? "border-red-500" : "border-[#E5E7EB]"
+          }`}
         >
-          <span className={value ? "" : "text-gray-400"}>
-            {value || "Select Country"}
+          <span className={value ? "" : "text-[#9f9f9f] "}>
+            {value || placeholder || "Select Country"}
           </span>
-          <ChevronDown className="h-4 w-4 text-gray-400" />
+          <ChevronDown className="h-4 w-4 text-[#9f9f9f]" />
         </button>
 
         {isOpen && (
@@ -160,6 +164,7 @@ const AddressFormSection = ({
             value={formData[getFieldName("firstName")] || ""}
             onChange={handleChange}
             error={errors[getFieldName("firstName")]}
+            placeholder={"Your first name"}
           />
           <InputGroup
             label="Last name*"
@@ -167,6 +172,7 @@ const AddressFormSection = ({
             value={formData[getFieldName("lastName")] || ""}
             onChange={handleChange}
             error={errors[getFieldName("lastName")]}
+            placeholder={"Your last name"}
           />
           <InputGroup
             label="Phone*"
@@ -175,6 +181,7 @@ const AddressFormSection = ({
             value={formData[getFieldName("phone")] || ""}
             onChange={handleChange}
             error={errors[getFieldName("phone")]}
+            placeholder={"Your phone number"}
           />
           <InputGroup
             label="Email address*"
@@ -182,7 +189,7 @@ const AddressFormSection = ({
             name={getFieldName("email")}
             value={formData[getFieldName("email")] || ""}
             onChange={handleChange}
-            placeholder="Example@email.com"
+            placeholder="Your email address"
             error={errors[getFieldName("email")]}
           />
         </div>
@@ -198,7 +205,9 @@ const AddressFormSection = ({
         setIsCountryOpen,
         isCountryOpen,
         handleCountrySearch,
-        searchTerm
+        searchTerm,
+        "Select your country",
+        countryDropdownRef
       )}
 
       <InputGroup
@@ -215,6 +224,7 @@ const AddressFormSection = ({
         value={formData[getFieldName("apartment")] || ""}
         onChange={handleChange}
         error={errors[getFieldName("apartment")]}
+        placeholder={"Apartment, suite, unit, etc. (optional)"}
       />
       <InputGroup
         label="Town / City*"
@@ -222,6 +232,7 @@ const AddressFormSection = ({
         value={formData[getFieldName("city")] || ""}
         onChange={handleChange}
         error={errors[getFieldName("city")]}
+        placeholder={"Your City"}
       />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
@@ -235,7 +246,9 @@ const AddressFormSection = ({
           setIsStateOpen,
           isStateOpen,
           handleStateSearch,
-          searchState
+          searchState,
+          "Select your state",
+          stateDropdownRef
         )}
         <InputGroup
           label="ZIP Code*"
@@ -243,6 +256,7 @@ const AddressFormSection = ({
           value={formData[getFieldName("zipCode")] || ""}
           onChange={handleChange}
           error={errors["zipCode"]}
+          placeholder={"Your Zip Code"}
         />
       </div>
     </>

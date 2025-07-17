@@ -1,7 +1,10 @@
 import AddressFormSection from "@/components/Order/AddressFormSection";
 import InputGroup from "@/components/Order/InputGroup";
 import OrderSummary from "@/components/Order/OrderSummary";
-import { useState } from "react";
+import MainContext from "@/context/MainContext";
+import useAxios from "@/customHook/fetch-hook";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Order() {
   const [formData, setFormData] = useState({
@@ -15,7 +18,6 @@ export default function Order() {
     city: "",
     state: "",
     zipCode: "",
-    createAccount: false,
     shipToDifferentAddress: false,
     orderNotes: "",
     shippingCountry: "",
@@ -25,36 +27,79 @@ export default function Order() {
     shippingState: "",
     shippingZipCode: "",
   });
-
+  const navigate = useNavigate();
   const [errors, setErrors] = useState({});
+  const [cartData, setCartData] = useState([]);
   const [selectedShippingOption, setSelectedShippingOption] =
     useState("flatRate");
+  const { setCartCount } = useContext(MainContext);
   const [selectedPaymentMethod, setSelectedPaymentMethod] =
-    useState("netBanking");
+    useState("cashOnDelivery");
+  const [isCouponActive, setIsCouponActive] = useState(false);
   const [couponCode, setCouponCode] = useState("");
-  const [appliedCoupon, setAppliedCoupon] = useState(null);
-  const [discountAmount, setDiscountAmount] = useState(0);
+  const token = localStorage.getItem("token");
+  const { fetchData: placeOrder } = useAxios({
+    method: "POST",
+    url: `/order/placeOrder`,
+  });
+  const { data: couponData, fetchData: validateCoupon } = useAxios({
+    method: "POST",
+    url: `/coupon/validateCoupon`,
+  });
+  const { data, fetchData: getUserCart } = useAxios({
+    method: "GET",
+    url: "/cart/getUserCart",
+  });
 
-  const [cartItems] = useState([
-    {
-      productId: "682310b79d75afdbd4f743ed",
-      name: "Marketside Fresh Organic Bananas, Bunch",
-      quantity: 1,
-      price: 0.89,
-    },
-    {
-      productId: "some-other-product-id",
-      name: "Organic Avocados, 3 ct",
-      quantity: 2,
-      price: 3.5,
-    },
-  ]);
+  const { data: userData, fetchData: getProfile } = useAxios({
+    method: "GET",
+    url: "/user/profile",
+  });
+
+  useEffect(() => {
+    if (data?.length) {
+      setCartData(data);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    getProfile()
+    getCartData();
+  }, []);
+
+  useEffect(()=>{
+    if (userData?.isActive) {
+      setFormData(prev => ({
+        ...prev,
+        
+      }))
+    }
+  },[userData])
+
+  function getCartData() {
+    if (token) {
+      getUserCart();
+    } else {
+      const localCartData = JSON.parse(localStorage.getItem("cartData"));
+      setCartData(localCartData);
+    }
+  }
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
+    }));
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: null }));
+    }
+  };
+
+  const handleSelect = (name, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
     }));
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: null }));
@@ -70,32 +115,53 @@ export default function Order() {
   };
 
   const handleApplyCoupon = () => {
-    if (couponCode === "DISCOUNT10") {
-      const subtotal = cartItems.reduce(
-        (sum, item) => sum + item.price * item.quantity,
-        0
-      );
-      const discount = subtotal * 0.1;
-      setDiscountAmount(discount);
-      setAppliedCoupon({
-        id: "6841233b2bf972387e584102",
-        discountValue: discount,
-      });
-      alert(
-        `Coupon "${couponCode}" applied! You got $${discount.toFixed(2)} off.`
-      );
-    } else if (couponCode === "FREESHIP") {
-      setDiscountAmount(0);
-      setAppliedCoupon({ id: "freeship-coupon-id", discountValue: 0 });
-      setSelectedShippingOption("localPickup");
-      alert(
-        `Coupon "${couponCode}" applied! Shipping set to Local Pickup (Free).`
-      );
-    } else {
-      setDiscountAmount(0);
-      setAppliedCoupon(null);
-      alert("Invalid coupon code.");
-    }
+    const payload = {
+      code: couponCode.toUpperCase(),
+      item: cartData.reduce((acc, cur) => {
+        let obj = {
+          price: Number(cur.price),
+          productId: cur.productId._id,
+        };
+
+        return [...acc, obj];
+      }, []),
+    };
+    validateCoupon({ data: payload }).then((res) => {
+      if (res.success) {
+        const couponData = res.data.find((d) => d.isCoupon);
+        if (!couponData) return;
+        const updatedCart = cartData.map((cart) => {
+          const product = { ...cart.productId };
+          const productPrice = Number(cart.price);
+
+          if (productPrice >= couponData.minPurchase) {
+            product.discountValue = String(couponData.discountValue);
+            product.discountType = couponData.discountType;
+            product.newPrice =
+              couponData.discountType === "percentage"
+                ? productPrice - productPrice * (couponData.discountValue / 100)
+                : productPrice - couponData.discountValue;
+
+            cart.price =
+              couponData.discountType === "percentage"
+                ? productPrice - productPrice * (couponData.discountValue / 100)
+                : productPrice - couponData.discountValue;
+          }
+
+          return { ...cart, productId: product };
+        });
+        setCartData(updatedCart);
+        setIsCouponActive(true);
+      } else {
+        setIsCouponActive(false);
+      }
+    });
+  };
+
+  const removeCoupon = () => {
+    setIsCouponActive(false);
+    setCouponCode("");
+    getCartData();
   };
 
   const handleSubmit = (e) => {
@@ -165,6 +231,11 @@ export default function Order() {
         formData.shippingZipCode,
         "Shipping ZIP Code is required"
       );
+      validateField(
+        "shippingZipCode",
+        formData.shippingZipCode,
+        "Shipping ZIP Code is required"
+      );
       if (
         formData.shippingZipCode &&
         !/^\d{5,10}$/.test(formData.shippingZipCode)
@@ -180,12 +251,19 @@ export default function Order() {
       const submissionData = {
         fname: formData.firstName,
         lname: formData.lastName,
-        cartItems: cartItems.map((item) => ({
-          productId: item.productId,
-          quantity: item.quantity,
-          price: item.price,
-        })),
-        ...(appliedCoupon && { couponId: appliedCoupon.id }),
+        cartItems: cartData.map((cart) => {
+          const item = {
+            productId: cart.productId._id,
+            quantity: cart.quantity,
+            price: Number(cart.price),
+          };
+
+          if (isCouponActive) {
+            item.discountType = cart.productId.discountType;
+            item.discountValue = cart.productId.discountValue;
+          }
+          return item;
+        }),
         paymentMethod:
           selectedPaymentMethod === "netBanking" ? "ccavenue" : "cod",
         streetAddress: [formData.streetAddress, formData.apartment].filter(
@@ -193,7 +271,8 @@ export default function Order() {
         ),
         country: formData.country,
         state: formData.state,
-        pincode: formData.zipCode,
+        city: formData.city,
+        pincode: Number(formData.zipCode),
         ...(formData.shipToDifferentAddress && {
           shippingAddress: [
             formData.shippingStreetAddress,
@@ -202,6 +281,7 @@ export default function Order() {
           shippingCountry: formData.shippingCountry,
           shippingState: formData.shippingState,
           shippingPincode: formData.shippingZipCode,
+          shippingCity: formData.shippingCity,
         }),
         shippingCharge:
           selectedShippingOption === "flatRate" ? "15.00" : "free",
@@ -209,7 +289,16 @@ export default function Order() {
         email: formData.email,
         ...(formData.orderNotes && { orderNote: formData.orderNotes }),
       };
-      console.log("Submitting data:", submissionData);
+      if (isCouponActive) {
+        submissionData.couponId = couponData?.[0]?._id;
+      }
+
+      placeOrder({ data: submissionData }).then((res) => {
+        if (res.success) {
+          setCartCount((prev) => prev + 1);
+          navigate("/products");
+        }
+      });
     }
   };
 
@@ -227,28 +316,8 @@ export default function Order() {
                   errors={errors}
                   includeContactFields={true}
                   setFormData={setFormData}
+                  handleSelect={handleSelect}
                 />
-
-                <div className="mb-6">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      name="createAccount"
-                      checked={formData.createAccount}
-                      onChange={handleChange}
-                      className="peer hidden"
-                    />
-                    <div className="w-4 h-4 rounded-[2.5px] border border-[#333333] flex items-center justify-center peer-checked:bg-[#076536] peer-checked:border-[#076536] transition-colors duration-200">
-                      <img
-                        src={"/images/login/checked.svg"}
-                        className="w-3 h-3"
-                      />
-                    </div>
-                    <span className="text-[#333333] text-sm">
-                      Create an account?
-                    </span>
-                  </label>
-                </div>
 
                 <div className="mb-6">
                   <label className="flex items-center gap-2 cursor-pointer">
@@ -280,6 +349,8 @@ export default function Order() {
                       title="Shipping details"
                       prefix="shipping"
                       includeContactFields={false}
+                      setFormData={setFormData}
+                      handleSelect={handleSelect}
                     />
                   </div>
                 )}
@@ -299,7 +370,7 @@ export default function Order() {
 
             <div className="lg:col-span-1">
               <OrderSummary
-                cartItems={cartItems}
+                cartItems={cartData}
                 selectedShippingOption={selectedShippingOption}
                 handleShippingChange={handleShippingChange}
                 selectedPaymentMethod={selectedPaymentMethod}
@@ -307,8 +378,9 @@ export default function Order() {
                 couponCode={couponCode}
                 setCouponCode={setCouponCode}
                 handleApplyCoupon={handleApplyCoupon}
-                discountAmount={discountAmount}
                 handleSubmit={handleSubmit}
+                isCouponActive={isCouponActive}
+                removeCoupon={removeCoupon}
               />
             </div>
           </div>
