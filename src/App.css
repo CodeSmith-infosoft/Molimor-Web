@@ -8,6 +8,8 @@
 body {
   font-family: "Inter", sans-serif;
   color: #333333;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 input:focus-visible {
@@ -30,6 +32,10 @@ input:focus-visible {
 }
 
 .hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+::-webkit-scrollbar {
   display: none;
 }
 

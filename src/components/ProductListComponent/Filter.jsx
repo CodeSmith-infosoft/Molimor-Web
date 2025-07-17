@@ -85,7 +85,7 @@ const Filter = ({ filter, setFilter }) => {
   }, []);
 
   return (
-    <div className="overflow-auto max-w-[376px] w-full space-y-6 ">
+    <div className="overflow-auto max-lg:max-w-[300px] max-w-[376px] w-full space-y-6 ">
       <div className="border border-[#E5E7EB] rounded-[5px] py-5 px-4 ">
         <div
           className="flex justify-between cursor-pointer items-center pb-[26px] border-b border-[#E5E7EB] mb-[26px] "
