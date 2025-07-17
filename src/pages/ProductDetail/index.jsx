@@ -31,7 +31,7 @@ const ProductDetail = () => {
 
   return (
     <>
-      <div className="max-w-[1576px] px-10 mx-auto py-[70px]">
+      <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto py-[70px]">
         <Detail data={data} getProduct={fetchData} />
         <div className="py-[70px]">
           <BuyMore data={data?.buyItWith} />

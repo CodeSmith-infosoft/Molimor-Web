@@ -25,7 +25,7 @@ export default function CategoriesNavigation() {
 
   return (
     <nav className="bg-white">
-      <div className="max-w-[1576px] px-10 mx-auto mt-[30px]">
+      <div className="max-w-[1576px] max-lg:px-5 px-10 mx-auto mt-[30px]">
         <div className="flex items-center gap-[32px]">
           <CategoryDropdown categoriesData={data} />
 
@@ -34,7 +34,7 @@ export default function CategoriesNavigation() {
               <Link
                 key={index}
                 to={item.link}
-                className="px-2 py-3 text-gray-700 hover:text-green font-semibold text-[15px] transition-colors duration-200"
+                className="max-lg:p-0 px-2 py-3 whitespace-nowrap hover:text-green font-semibold max-lg:text-sm text-[15px] transition-colors duration-200"
               >
                 {item.label}
               </Link>

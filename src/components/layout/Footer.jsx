@@ -30,7 +30,7 @@ export default function Footer() {
   return (
     <footer className="py-[51px]">
       <div className="mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-[120px]">
+        <div className="grid max-mobile:grid-cols-1 max-lg:grid-cols-[auto_auto_auto_auto] grid-cols-4 max-lg:gap-10 gap-[120px]">
           {/* Logo and Description Section */}
           <div className="space-y-4">
             <div className="flex items-center mb-5">

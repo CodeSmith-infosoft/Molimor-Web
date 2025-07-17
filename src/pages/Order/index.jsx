@@ -316,7 +316,7 @@ export default function Order() {
   return (
     <div className="bg-[#f3f4f6] py-[70px]">
       <div className="bg-white py-[50px]">
-        <div className="max-w-[1576px] mx-auto px-10">
+        <div className="max-w-[1576px]  px-10 max-lg:px-5 mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-[100px]">
             <div className="lg:col-span-2">
               <h1 className="font-bold mb-6">Billing details</h1>

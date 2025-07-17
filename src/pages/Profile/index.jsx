@@ -17,8 +17,8 @@ const Profile = () => {
   return (
     <>
       <div className="py-[70px]">
-        <div className="max-w-[1576px] px-10 mx-auto">
-          <AccountForm userData={userData} getProfile={getProfile} />
+        <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto">
+          <AccountForm />
           <div className="my-[70px]">
             <Address userData={userData} getProfile={getProfile} />
           </div>

@@ -140,7 +140,7 @@ const Wishlist = () => {
     <>
       <section className="py-[70px] bg-[#f3f4f6]">
         <div className="bg-white py-[50px]">
-          <div className="max-w-[1576px] px-10 mx-auto">
+          <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto">
             <div className="overflow-hidden">
               <Table>
                 <TableHeader>

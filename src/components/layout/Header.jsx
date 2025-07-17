@@ -84,7 +84,7 @@ export default function Header() {
 
       {/* Top navigation bar */}
       <div className="bg-white mt-5">
-        <div className="max-w-[1576px] px-10 mx-auto flex justify-between items-center text-sm">
+        <div className="max-w-[1576px] max-lg:px-5 px-10 mx-auto flex justify-between items-center text-sm">
           <div className="flex items-center gap-5">
             <Link to={"/"} className="text-xs font-medium">
               My Account
@@ -113,7 +113,7 @@ export default function Header() {
 
       {/* Main header */}
       <div className="mt-5">
-        <div className="max-w-[1576px] px-10 mx-auto flex items-center justify-between">
+        <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
             <img
@@ -150,7 +150,7 @@ export default function Header() {
           </div>
 
           {/* Search bar */}
-          <div className="flex-1 max-w-[868px]">
+          <div className="flex-1 max-lg:max-w-[354px] max-w-[868px]">
             <div className="relative">
               <input
                 type="text"

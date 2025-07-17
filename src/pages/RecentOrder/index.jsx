@@ -98,19 +98,19 @@ export default function RecentOrder() {
                 <TableRow className="border-b border-[#E5E7EB] bg-[#F3F4F6]">
                   {" "}
                   {/* Table header row has a bottom border */}
-                  <TableHead className="text-gray-500 font-medium py-3 px-4 text-left">
+                  <TableHead className="font-bold py-3 px-4 pl-[36px] text-left">
                     Order ID
                   </TableHead>
-                  <TableHead className="text-gray-500 font-medium py-3 px-4 text-left">
+                  <TableHead className="font-bold py-3 px-4 text-left">
                     Date
                   </TableHead>
-                  <TableHead className="text-gray-500 font-medium py-3 px-4 text-left">
+                  <TableHead className="font-bold py-3 px-4 text-left">
                     Total
                   </TableHead>
-                  <TableHead className="text-gray-500 font-medium py-3 px-4 text-left">
+                  <TableHead className="font-bold py-3 px-4 text-left">
                     Status
                   </TableHead>
-                  <TableHead className="text-right text-gray-500 font-medium py-3 px-4">
+                  <TableHead className="text-right font-bold pr-[36px] py-3 px-4">
                     {" "}
                   </TableHead>{" "}
                 </TableRow>
@@ -120,9 +120,7 @@ export default function RecentOrder() {
                   <TableRow
                     key={order.id}
                     className={
-                      index < filteredOrders.length - 1
-                        ? "border-b border-gray-100"
-                        : ""
+                      index < filteredOrders.length - 1 ? "!border-b-0" : ""
                     }
                   >
                     {" "}
@@ -139,7 +137,7 @@ export default function RecentOrder() {
                     <TableCell className="py-3 px-4 border-b-0">
                       {order.status}
                     </TableCell>
-                    <TableCell className="text-right py-3 px-4 border-b-0">
+                    <TableCell className="text-right py-3 px-4 pr-[36px] border-b-0">
                       <Link
                         to={`/recent-order/${order.orderId}`}
                         className="text-green text-sm font-medium"
