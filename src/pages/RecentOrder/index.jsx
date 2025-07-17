@@ -125,7 +125,7 @@ export default function RecentOrder() {
                   >
                     {" "}
                     {/* Subtle border between rows */}
-                    <TableCell className="font-medium py-3 px-4 border-b-0">
+                    <TableCell className="font-medium py-3 px-4 pl-9 border-b-0">
                       {order?.orderId}
                     </TableCell>
                     <TableCell className="py-3 px-4 border-b-0">
@@ -137,7 +137,7 @@ export default function RecentOrder() {
                     <TableCell className="py-3 px-4 border-b-0">
                       {order.status}
                     </TableCell>
-                    <TableCell className="text-right py-3 px-4 pr-[36px] border-b-0">
+                    <TableCell className="text-right py-3 px-4 pr-9 border-b-0">
                       <Link
                         to={`/recent-order/${order.orderId}`}
                         className="text-green text-sm font-medium"
