@@ -18,7 +18,7 @@ const Profile = () => {
     <>
       <div className="py-[70px]">
         <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto">
-          <AccountForm />
+          <AccountForm userData={userData} getProfile={getProfile} />
           <div className="my-[70px]">
             <Address userData={userData} getProfile={getProfile} />
           </div>

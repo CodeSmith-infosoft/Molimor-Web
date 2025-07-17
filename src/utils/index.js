@@ -249,3 +249,16 @@ export const formatted = (date) => {
 
   return `${day} ${month}, ${year}`;
 };
+
+export function formatUserAddress(
+  address,
+  address2,
+  city,
+  state,
+  country,
+  pincode
+) {
+  return [address, address2, city, state, country, pincode]
+    .filter(Boolean)
+    .join(", ");
+}

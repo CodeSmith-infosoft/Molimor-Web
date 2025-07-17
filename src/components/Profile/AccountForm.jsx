@@ -22,7 +22,7 @@ export default function AccountForm({ userData, getProfile }) {
       setFormData({
         email: userData?.email || "",
         firstName: userData?.fname || "",
-        lastName: userData?.fname || "",
+        lastName: userData?.lname || "",
         phoneNumber: userData?.mobile || "",
       });
       setProfileImage(userData?.profilePhoto || "");

@@ -1,7 +1,9 @@
 import OrderProgressBar from "@/components/OrderDetails/OrderProgressBar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"; // Using shadcn/ui Card components
+import MainContext from "@/context/MainContext";
 import useAxios from "@/customHook/fetch-hook";
-import { useEffect } from "react";
+import { formatCurrency, formatUserAddress } from "@/utils";
+import { useContext, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 
 const orderData = {
@@ -51,6 +53,7 @@ const orderData = {
 };
 
 export default function OrderDetail() {
+  const { language, currency } = useContext(MainContext);
   const { id } = useParams();
   const { data: orderList, fetchData: getAllUserOrders } = useAxios({
     method: "GET",
@@ -69,7 +72,7 @@ export default function OrderDetail() {
   ];
 
   const currentStatusIndex = orderStatuses.findIndex(
-    (status) => status.key === orderData.orderStatus
+    (status) => status.key === orderList?.status
   );
 
   return (
@@ -104,19 +107,27 @@ export default function OrderDetail() {
             </CardHeader>
             <CardContent className="pt-[14px] !px-0 space-y-6">
               <div>
-                <p className="mb-[13px]">{orderData.billingAddress.name}</p>
+                <p className="mb-[13px]">
+                  {orderList?.fname} {orderList?.lname}
+                </p>
                 <p>
-                  {orderData.billingAddress.street}{" "}
-                  {orderData.billingAddress.cityStateZip}
+                  {formatUserAddress(
+                    orderList?.streetAddress?.[0],
+                    orderList?.streetAddress?.[1],
+                    orderList?.city,
+                    orderList?.state,
+                    orderList?.country,
+                    orderList?.pincode
+                  )}
                 </p>
               </div>
               <div>
                 <p className="pt-2">Email</p>
-                <p>{orderData.billingAddress.email}</p>
+                <p>{orderList?.email}</p>
               </div>
               <div>
                 <p className="pt-2">Phone</p>
-                <p>{orderData.billingAddress.phone}</p>
+                <p>{orderList?.mobile}</p>
               </div>
             </CardContent>
           </Card>
@@ -128,57 +139,78 @@ export default function OrderDetail() {
             </CardHeader>
             <CardContent className="pt-[14px] !px-0 space-y-6">
               <div>
-                <p className="mb-[13px]">{orderData.shippingAddress.name}</p>
+                <p className="mb-[13px]">
+                  {orderList?.fname} {orderList?.lname}
+                </p>
                 <p>
-                  {orderData.shippingAddress.street}{" "}
-                  {orderData.shippingAddress.cityStateZip}
+                  {formatUserAddress(
+                    orderList?.shippingAddress?.[0] ||
+                      orderList?.streetAddress?.[0],
+                    orderList?.shippingAddress?.[1] ||
+                      orderList?.streetAddress?.[1],
+                    orderList?.shippingCity || orderList?.city,
+                    orderList?.shippingState || orderList?.state,
+                    orderList?.shippingCountry || orderList?.country,
+                    orderList?.shippingPincode || orderList?.pincode
+                  )}
                 </p>
               </div>
               <div>
                 <p className="pt-2">Email</p>
-                <p>{orderData.shippingAddress.email}</p>
+                <p>{orderList?.email}</p>
               </div>
               <div>
                 <p className="pt-2">Phone</p>
-                <p>{orderData.shippingAddress.phone}</p>
+                <p>{orderList?.mobile}</p>
               </div>
             </CardContent>
           </Card>
 
           <Card className="col-span-1 !rounded-none !shadow-none gap-0">
-            <CardHeader className={"border-b !pb-[18px] !px-5 flex justify-between"}>
+            <CardHeader
+              className={"border-b !pb-[18px] !px-5 flex justify-between"}
+            >
               <CardTitle className="text-base font-normal">
                 <span className="opacity-50">Order ID: </span>
-                <p className="">{orderData.orderId}</p>
+                <p className="">#{id}</p>
               </CardTitle>
               <p className="text-sm">
                 <span className="opacity-50">Payment Method: </span>
-                <p>{orderData.paymentMethod}</p>
+                <p>{orderList?.paymentMethod?.toUpperCase()}</p>
               </p>
             </CardHeader>
             <CardContent className="text-sm pt-[18px]">
               <div className="flex justify-between pb-3 border-b">
                 <span className="opacity-50">Subtotal</span>
                 <span className="font-medium">
-                  ${orderData.summary.subtotal.toFixed(2)}
+                  {formatCurrency(orderList?.totalAmount, currency, language)}
                 </span>
               </div>
-              <div className="flex justify-between py-3 border-b">
+              {/* <div className="flex justify-between py-3 border-b">
                 <span className="opacity-50">Discount</span>
                 <span className="font-medium">
                   {orderData.summary.discount}%
                 </span>
-              </div>
+              </div> */}
               <div className="flex justify-between py-3 border-b">
                 <span className="opacity-50">Shipping</span>
                 <span className="font-medium">
-                  {orderData.summary.shipping}
+                  {formatCurrency(
+                    orderList?.shippingCharge,
+                    currency,
+                    language
+                  )}
                 </span>
               </div>
               <div className="flex justify-between mt-3">
                 <span className="">Total</span>
                 <span className="font-bold text-green text-[16px]">
-                  ${orderData.summary.total.toFixed(2)}
+                  {formatCurrency(
+                    Number(orderList?.shippingCharge) +
+                      Number(orderList?.totalAmount),
+                    currency,
+                    language
+                  )}
                 </span>
               </div>
             </CardContent>
@@ -199,29 +231,34 @@ export default function OrderDetail() {
               </tr>
             </thead>
             <tbody>
-              {orderData.products.map((product) => (
-                <tr
-                  key={product.id}
-                  className="border-b last:border-b-0"
-                >
+              {orderList?.items?.map((product) => (
+                <tr key={product._id} className="border-b last:border-b-0">
                   <td className="py-4 px-4 flex items-center">
                     <img
-                      src={product.image || "/placeholder.svg"}
-                      alt={product.name}
+                      src={
+                        product.productId.mainImage[0] ||
+                        product.productId.mainImage ||
+                        "/placeholder.svg"
+                      }
+                      alt={product.productId.title}
                       className="h-[70px] object-cover rounded-md mr-3"
                     />
-                    <span className="">
-                      {product.name}
-                    </span>
+                    <span className="line-clamp-1">{product.productId.title}</span>
                   </td>
                   <td className="py-4 px-4">
-                    ${product.price.toFixed(2)}
+                    {formatCurrency(
+                      product?.price,
+                      currency,
+                      language
+                    )}
                   </td>
+                  <td className="py-4 px-4">x{product.quantity}</td>
                   <td className="py-4 px-4">
-                    x{product.quantity}
-                  </td>
-                  <td className="py-4 px-4">
-                    ${product.subtotal.toFixed(2)}
+                    {formatCurrency(
+                      product?.price * product.quantity,
+                      currency,
+                      language
+                    )}
                   </td>
                 </tr>
               ))}
