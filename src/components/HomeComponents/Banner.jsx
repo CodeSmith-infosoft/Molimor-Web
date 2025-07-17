@@ -108,9 +108,9 @@ const Banner = () => {
             </div>
           </div>
         </div>
-        <img src="/images/dummy/homeMainBanner.svg" />
+        <img src="/images/dummy/homeMainBanner.svg" className="h-[580px] object-cover" />
       </div>
-      <div className="section-top-spacing grid grid-cols-3 gap-[70px] overflow-hidden">
+      <div className="section-top-spacing grid grid-cols-3 max-lg:gap-[20px] gap-[70px] overflow-hidden">
         <img
           src="/images/dummy/Rectangle1442.svg"
           className="max-h-[200px] w-auto"

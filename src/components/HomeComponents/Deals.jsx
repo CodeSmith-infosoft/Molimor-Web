@@ -15,7 +15,7 @@ const Deals = () => {
 
   return (
     <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto section-top-spacing">
-      <div className="grid grid-cols-4 gap-5 ">
+      <div className="grid max-lg:grid-cols-3 grid-cols-4 gap-5 ">
         <div className="">
           <SubHeader heading={"crazy deal"} />
           <div className="space-y-5">
@@ -28,9 +28,9 @@ const Deals = () => {
             )}
           </div>
         </div>
-        <div className="col-span-2">
+        <div className="max-lg:col-span-1 col-span-2">
           <SubHeader heading={"Combo"} />
-          <div className="gap-5 grid grid-cols-2">
+          <div className="gap-5 grid max-lg:grid-cols-1 grid-cols-2">
             {data?.combo?.length ? (
               data?.combo
                 ?.slice(0, 3)

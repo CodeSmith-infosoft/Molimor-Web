@@ -10,7 +10,7 @@ const BorderCard = ({ product }) => {
   let isDeal = isDateNotPastBoolean(product.variants)
   return (
     <div
-      className="bg-[#FFFFFF] border border-[#E5E7EB] rounded-[10px] px-5 py-[27px] group cursor-pointer w-full h-full"
+      className="bg-[#FFFFFF] border border-[#E5E7EB] rounded-[10px] max-lg:p-[23px] px-5 py-[27px] group cursor-pointer w-full h-full"
       onClick={() => {
         navigate(`/products/${product?._id}`);
       }}
