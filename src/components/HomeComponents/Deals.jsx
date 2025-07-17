@@ -14,7 +14,7 @@ const Deals = () => {
   }, []);
 
   return (
-    <div className="max-w-[1576px] px-10 mx-auto section-top-spacing">
+    <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto section-top-spacing">
       <div className="grid grid-cols-4 gap-5 ">
         <div className="">
           <SubHeader heading={"crazy deal"} />

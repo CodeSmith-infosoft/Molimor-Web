@@ -175,7 +175,7 @@ const Cart = () => {
     <>
       <div className="bg-[#f3f4f6] py-[70px]">
         <div className="bg-white py-[50px]">
-          <div className="max-w-[1576px] mx-auto px-10">
+          <div className="max-w-[1576px]  px-10 max-lg:px-5 mx-auto">
             <div className="grid grid-cols-3 gap-[100px]">
               <div>
                 <Card className="w-full p-[22px] gap-0 !rounded-[5px] !border-[#E5E7EB]">

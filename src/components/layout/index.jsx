@@ -10,7 +10,7 @@ const Layout = ({ children }) => {
       <div className="mt-[250px] mx-auto w-full">
         {children}
       </div>
-      <div className="max-w-[1576px] px-10 mx-auto">
+      <div className="max-w-[1576px] max-lg:px-5 px-10 mx-auto">
         <Footer />
       </div>
     </>

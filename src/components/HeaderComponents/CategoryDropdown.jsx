@@ -122,7 +122,7 @@ export default function CategoryDropdown({ categoriesData }) {
     <div className="relative" ref={buttonRef}>
       <button
         onClick={handleMainToggle}
-        className={`flex items-center gap-2 text-[15px] px-[18px] py-[14px] w-[298px] justify-between ${
+        className={`flex items-center gap-2 text-[15px] px-[18px] py-[14px] max-lg:w-[250px] w-[298px] justify-between ${
           isHomePage ? "text-green" : ""
         } hover:text-green transition-all ease-in-out duration-200 ${
           isHomePage ? "cursor-default" : "cursor-pointer"

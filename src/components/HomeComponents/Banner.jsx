@@ -95,11 +95,11 @@ const Banner = () => {
   };
 
   return (
-    <div className="max-w-[1576px] px-10 mx-auto">
+    <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto">
       <div className="grid grid-cols-[auto_auto] gap-[32px] ">
         <div>
           <div
-            className={`hide-scrollbar max-h-[601px] mt-[1px] bg-white max-w-[298px] z-20 w-80 overflow-y-auto transition-all duration-300 ease-in-out transform opacity-100 scale-100 translate-y-0`}
+            className={`hide-scrollbar h-[580px] mt-[1px] bg-white max-lg:max-w-[250px] max-w-[298px] z-20 w-80 overflow-y-auto transition-all duration-300 ease-in-out transform opacity-100 scale-100 translate-y-0`}
           >
             <div className="py-2">
               {data

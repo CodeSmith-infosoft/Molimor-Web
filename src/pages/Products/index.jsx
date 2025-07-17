@@ -31,7 +31,7 @@ const Products = () => {
   }, [categoryQuery, subcategoryIdQuery]);
 
   return (
-    <div className="max-w-[1576px] mx-auto px-10">
+    <div className="max-w-[1576px]  px-10 max-lg:px-5 mx-auto">
       <Banner />
       <div className="section-top-spacing flex gap-10">
         <Filter filter={filter} setFilter={setFilter} />

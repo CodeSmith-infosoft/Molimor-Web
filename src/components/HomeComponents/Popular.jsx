@@ -17,7 +17,7 @@ const Popular = () => {
     <>
       {" "}
       {data?.length ? (
-        <div className="max-w-[1576px] px-10 mx-auto section-top-spacing">
+        <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto section-top-spacing">
           <SubHeader heading={"Popular Product"} link={"/products"} />
           <div
             className={`flex flex-wrap gap-5 ${
