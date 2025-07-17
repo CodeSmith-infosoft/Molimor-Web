@@ -33,6 +33,61 @@ input:focus-visible {
   display: none;
 }
 
+.form-phone {
+  .react-tel-input .flag-dropdown {
+    position: initial;
+    border-radius: 8px;
+    width: auto;
+    border: 1px solid #dde2e5;
+    padding: 8px 16px;
+    background-color: transparent;
+  }
+  .react-tel-input {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  .react-tel-input .form-control {
+    border: 1px solid #dde2e5 !important;
+    width: 100%;
+    border-radius: 8px;
+    background-color: transparent;
+    height: 56px;
+    border: none;
+    padding-left: 16px;
+    font-size: 16px;
+  }
+  .react-tel-input .country-list {
+    left: 0;
+  }
+  .react-tel-input .selected-flag:hover,
+  .react-tel-input .selected-flag:focus {
+    .react-tel-input .selected-flag:hover,
+    .react-tel-input .selected-flag:focus {
+      background-color: transparent;
+    }
+
+    .react-tel-input .flag-dropdown.open .selected-flag {
+      background-color: transparent;
+    }
+
+    .react-tel-input .flag-dropdown.open {
+      background-color: transparent;
+    }
+
+    .react-tel-input .selected-flag .arrow {
+      left: 25px;
+    }
+
+    .react-tel-input .error-border {
+      border-color: #fb2c36 !important;
+    }
+  }
+  .react-tel-input .error-border {
+    border-color: #fb2c36 !important;
+  }
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
