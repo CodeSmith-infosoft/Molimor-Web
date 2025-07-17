@@ -1,5 +1,8 @@
+import { useEffect, useRef, useState } from "react";
 import ErrorComponent from "../Common/ErrorComponent";
 import InputGroup from "./InputGroup";
+import { Country, State } from "country-state-city";
+import { ChevronDown } from "lucide-react";
 
 const AddressFormSection = ({
   formData,
@@ -8,47 +11,139 @@ const AddressFormSection = ({
   title,
   prefix = "",
   includeContactFields = true,
+  setFormData,
 }) => {
   const getFieldName = (fieldName) =>
-    `${prefix}${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}`;
+    prefix
+      ? `${prefix}${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}`
+      : fieldName;
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [filteredCountries, setFilteredCountries] = useState([]);
+  const [filteredStates, setFilteredStates] = useState([]);
 
-  const renderSelect = (label, name, value, options, error) => (
+  const [isCountryOpen, setIsCountryOpen] = useState(false);
+  const [isStateOpen, setIsStateOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchState, setSearchState] = useState("");
+
+  const selectedCountryRef = useRef("");
+  const countryDropdownRef = useRef(null);
+  const stateDropdownRef = useRef(null);
+
+  useEffect(() => {
+    const allCountries = Country.getAllCountries();
+    setCountries(allCountries);
+    setFilteredCountries(allCountries);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        countryDropdownRef.current &&
+        !countryDropdownRef.current.contains(event.target)
+      ) {
+        setIsCountryOpen(false);
+      }
+      if (
+        stateDropdownRef.current &&
+        !stateDropdownRef.current.contains(event.target)
+      ) {
+        setIsStateOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleCountrySearch = (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearchTerm(value);
+    setFilteredCountries(
+      countries.filter((country) => country.name.toLowerCase().includes(value))
+    );
+  };
+
+  const handleStateSearch = (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearchState(value);
+    setFilteredStates(
+      states.filter((state) => state.name.toLowerCase().includes(value))
+    );
+  };
+
+  const handleCountrySelect = (country) => {
+    selectedCountryRef.current = country.isoCode;
+    setFormData((prev) => ({ ...prev, country: country.name, state: "" }));
+
+    const countryStates = State.getStatesOfCountry(country.isoCode);
+    setStates(countryStates);
+    setFilteredStates(countryStates);
+
+    setIsCountryOpen(false);
+    setSearchTerm("");
+  };
+
+  const handleStateSelect = (state) => {
+    setFormData((prev) => ({ ...prev, state: state.name }));
+    setIsStateOpen(false);
+    setSearchState("");
+  };
+
+  const renderSelect = (
+    label,
+    name,
+    value,
+    options,
+    error,
+    handleSelect,
+    setOpen,
+    isOpen,
+    setSearch,
+    search
+  ) => (
     <div className="mb-[22px] group relative">
       <label
         htmlFor={name}
-        className={`block text-[#6B7280] text-sm pb-2 transition-opacity duration-300 ${
-          value ? "opacity-100" : "opacity-50 group-focus-within:opacity-100"
-        }`}
+        className={`block text-sm pb-2 transition-opacity duration-300 `}
       >
         {label}
       </label>
-      <select
-        id={name}
-        name={name}
-        value={value}
-        onChange={handleChange}
-        className={`w-full px-4 py-[15px] rounded-lg border text-base transition-opacity duration-300 outline-none appearance-none bg-white pr-10 ${
-          error ? "border-red-500" : "border-[#D1D5DB]"
-        } ${
-          value
-            ? "opacity-100 !border-[#333333]"
-            : "opacity-50 focus:opacity-100"
-        }`}
-      >
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 top-[40px]">
-        <svg
-          className="fill-current h-4 w-4"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
+      <div className="relative" ref={countryDropdownRef}>
+        <button
+          type="button"
+          onClick={() => setOpen(!isOpen)}
+          className="w-full px-3 py-2 text-left bg-white border rounded-[5px] border-gray-300 flex items-center justify-between"
         >
-          <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-        </svg>
+          <span className={value ? "" : "text-gray-400"}>
+            {value || "Select Country"}
+          </span>
+          <ChevronDown className="h-4 w-4 text-gray-400" />
+        </button>
+
+        {isOpen && (
+          <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 shadow-lg max-h-60 overflow-y-auto">
+            <div className="p-2">
+              <input
+                type="text"
+                placeholder="Search country..."
+                value={search}
+                onChange={setSearch}
+                className="w-full px-2 py-1 border border-gray-300 text-sm"
+              />
+            </div>
+            {options.map((country) => (
+              <button
+                key={country.isoCode}
+                onClick={() => handleSelect(country)}
+                className="w-full px-3 py-2 text-left hover:bg-gray-100 text-sm"
+              >
+                {country.name}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
       {error && <ErrorComponent message={error} />}
     </div>
@@ -96,14 +191,14 @@ const AddressFormSection = ({
       {renderSelect(
         "Country / Region*",
         getFieldName("country"),
-        formData[getFieldName("country")] || "United States (US)",
-        [
-          { label: "United States (US)", value: "United States (US)" },
-          { label: "Canada", value: "Canada" },
-          { label: "India", value: "India" },
-          { label: "Mexico", value: "Mexico" },
-        ],
-        errors[getFieldName("country")]
+        formData[getFieldName("country")],
+        filteredCountries,
+        errors[getFieldName("country")],
+        handleCountrySelect,
+        setIsCountryOpen,
+        isCountryOpen,
+        handleCountrySearch,
+        searchTerm
       )}
 
       <InputGroup
@@ -133,21 +228,21 @@ const AddressFormSection = ({
         {renderSelect(
           "State*",
           getFieldName("state"),
-          formData[getFieldName("state")] || "California",
-          [
-            { label: "California", value: "California" },
-            { label: "New York", value: "New York" },
-            { label: "Texas", value: "Texas" },
-            { label: "Maharashtra", value: "Maharashtra" },
-          ],
-          errors[getFieldName("state")]
+          formData[getFieldName("state")],
+          filteredStates,
+          errors[getFieldName("state")],
+          handleStateSelect,
+          setIsStateOpen,
+          isStateOpen,
+          handleStateSearch,
+          searchState
         )}
         <InputGroup
           label="ZIP Code*"
           name={getFieldName("zipCode")}
           value={formData[getFieldName("zipCode")] || ""}
           onChange={handleChange}
-          error={errors[getFieldName("zipCode")]}
+          error={errors["zipCode"]}
         />
       </div>
     </>

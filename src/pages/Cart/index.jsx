@@ -289,7 +289,9 @@ const Cart = () => {
                                   variant="ghost"
                                   size="icon"
                                   className="rounded-full w-8 cursor-pointer h-8"
-                                  onClick={() => handleDeleteItem(item?.productId?._id)}
+                                  onClick={() =>
+                                    handleDeleteItem(item?.productId?._id)
+                                  }
                                 >
                                   <svg
                                     width="18"
@@ -399,7 +401,10 @@ const Cart = () => {
                     Continue Shopping
                   </Link>
                   <div>
-                    <button className="underline cursor-pointer text-[15px] font-medium py-[10px] px-5 bg-green rounded-[5px] text-white">
+                    <button
+                      className="underline cursor-pointer text-[15px] font-medium py-[10px] px-5 bg-green rounded-[5px] text-white"
+                      onClick={() => navigate("/order")}
+                    >
                       Check Out
                     </button>
                   </div>

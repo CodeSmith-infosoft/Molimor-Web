@@ -9,20 +9,20 @@ export default function Order() {
     lastName: "",
     phone: "",
     email: "",
-    country: "United States (US)",
+    country: "",
     streetAddress: "",
     apartment: "",
     city: "",
-    state: "California",
+    state: "",
     zipCode: "",
     createAccount: false,
     shipToDifferentAddress: false,
     orderNotes: "",
-    shippingCountry: "United States (US)",
+    shippingCountry: "",
     shippingStreetAddress: "",
     shippingApartment: "",
     shippingCity: "",
-    shippingState: "California",
+    shippingState: "",
     shippingZipCode: "",
   });
 
@@ -210,9 +210,6 @@ export default function Order() {
         ...(formData.orderNotes && { orderNote: formData.orderNotes }),
       };
       console.log("Submitting data:", submissionData);
-      alert("Order placed! Check console for submission data.");
-    } else {
-      alert("Please correct the errors in the form before placing the order.");
     }
   };
 
@@ -222,79 +219,58 @@ export default function Order() {
         <div className="max-w-[1576px] mx-auto px-10">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-[100px]">
             <div className="lg:col-span-2">
-              <h1 className="font-bold text-xl mb-6">Billing details</h1>
-              <form onSubmit={handleSubmit}>
+              <h1 className="font-bold mb-6">Billing details</h1>
+              <form>
                 <AddressFormSection
                   formData={formData}
                   handleChange={handleChange}
                   errors={errors}
                   includeContactFields={true}
+                  setFormData={setFormData}
                 />
 
                 <div className="mb-6">
-                  <label className="flex items-center cursor-pointer">
+                  <label className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="checkbox"
                       name="createAccount"
                       checked={formData.createAccount}
                       onChange={handleChange}
-                      className="hidden peer"
-                      id="create-account-checkbox"
+                      className="peer hidden"
                     />
-                    <span className="w-4 h-4 border border-gray-400 rounded mr-2 flex items-center justify-center peer-checked:bg-[#166534] peer-checked:border-[#166534] transition-colors">
-                      <svg
-                        className="w-3 h-3 text-white opacity-0 peer-checked:opacity-100 transition-opacity"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M5 13l4 4L19 7"
-                        ></path>
-                      </svg>
-                    </span>
-                    <span className="text-gray-700 text-sm">
+                    <div className="w-4 h-4 rounded-[2.5px] border border-[#333333] flex items-center justify-center peer-checked:bg-[#076536] peer-checked:border-[#076536] transition-colors duration-200">
+                      <img
+                        src={"/images/login/checked.svg"}
+                        className="w-3 h-3"
+                      />
+                    </div>
+                    <span className="text-[#333333] text-sm">
                       Create an account?
                     </span>
                   </label>
                 </div>
 
                 <div className="mb-6">
-                  <label className="flex items-center cursor-pointer">
+                  <label className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="checkbox"
                       name="shipToDifferentAddress"
                       checked={formData.shipToDifferentAddress}
                       onChange={handleChange}
-                      className="hidden peer"
-                      id="ship-to-different-address-checkbox"
+                      className="peer hidden"
                     />
-                    <span className="w-4 h-4 border border-gray-400 rounded mr-2 flex items-center justify-center peer-checked:bg-[#166534] peer-checked:border-[#166534] transition-colors">
-                      <svg
-                        className="w-3 h-3 text-white opacity-0 peer-checked:opacity-100 transition-opacity"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M5 13l4 4L19 7"
-                        ></path>
-                      </svg>
-                    </span>
-                    <span className="text-gray-700 text-sm">
+                    <div className="w-4 h-4 rounded-[2.5px] border border-[#333333] flex items-center justify-center peer-checked:bg-[#076536] peer-checked:border-[#076536] transition-colors duration-200">
+                      <img
+                        src={"/images/login/checked.svg"}
+                        className="w-3 h-3"
+                      />
+                    </div>
+                    <span className="text-[#333333] font-bold text-sm">
                       Ship to a different address?
                     </span>
                   </label>
                 </div>
-
+                {console.log(formData, errors)}
                 {formData.shipToDifferentAddress && (
                   <div className="mt-8 pt-8 border-t border-[#D1D5DB]">
                     <AddressFormSection
@@ -332,6 +308,7 @@ export default function Order() {
                 setCouponCode={setCouponCode}
                 handleApplyCoupon={handleApplyCoupon}
                 discountAmount={discountAmount}
+                handleSubmit={handleSubmit}
               />
             </div>
           </div>
