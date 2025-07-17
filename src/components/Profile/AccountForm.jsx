@@ -1,5 +1,7 @@
 import ErrorComponent from "@/components/Common/ErrorComponent";
 import { useState, useRef } from "react";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 export default function AccountForm() {
   const [formData, setFormData] = useState({
@@ -64,16 +66,6 @@ export default function AccountForm() {
     // Phone Number validation
     if (!formData.phoneNumber.trim()) {
       newErrors.phoneNumber = "Phone number is required";
-    } else {
-      // Remove all non-digit characters for validation
-      const digitsOnly = formData.phoneNumber.replace(/\D/g, "");
-      if (digitsOnly.length < 10) {
-        newErrors.phoneNumber = "Phone number must be at least 10 digits";
-      } else if (digitsOnly.length > 15) {
-        newErrors.phoneNumber = "Phone number is too long";
-      } else if (!/^\+?[\d\s\-()]+$/.test(formData.phoneNumber.trim())) {
-        newErrors.phoneNumber = "Please enter a valid phone number";
-      }
     }
 
     return newErrors;
@@ -120,22 +112,18 @@ export default function AccountForm() {
   };
 
   return (
-    <div className="p-6 bg-white border border-[#E6E6E6]">
-      <h1 className="text-2xl font-semibold mb-8 text-gray-900">
+    <div className=" rounded-[8px] bg-white border border-[#E6E6E6]">
+      <h1 className="text-[20px] py-4 px-6 border-b font-medium">
         Your Account
       </h1>
 
-      <div className="flex flex-col lg:flex-row gap-8">
+      <div className="flex flex-col py-6 px-[50px] lg:flex-row gap-8">
         {/* Left side - Form */}
         <div className="w-1/2">
           {/* First Name */}
           <div className="mb-[22px] group">
             <label
-              className={`block text-mid-gray text-sm pb-2 transition-opacity duration-300 ${
-                formData.firstName
-                  ? "opacity-100"
-                  : "opacity-50 group-focus-within:opacity-100"
-              }`}
+              className={`block text-mid-gray text-sm pb-2 transition-opacity duration-300 `}
             >
               First Name
             </label>
@@ -147,10 +135,6 @@ export default function AccountForm() {
               onChange={handleChange}
               className={`w-full px-4 py-[15px] rounded-lg border text-base transition-opacity duration-300 ${
                 errors.firstName ? "border-red-500" : "border-gray-300"
-              } ${
-                formData.firstName
-                  ? "opacity-100 !border-[#333333]"
-                  : "opacity-50 focus:opacity-100"
               }`}
             />
             {errors.firstName && <ErrorComponent message={errors.firstName} />}
@@ -159,11 +143,7 @@ export default function AccountForm() {
           {/* Last Name */}
           <div className="mb-[22px] group">
             <label
-              className={`block text-mid-gray text-sm pb-2 transition-opacity duration-300 ${
-                formData.lastName
-                  ? "opacity-100"
-                  : "opacity-50 group-focus-within:opacity-100"
-              }`}
+              className={`block text-mid-gray text-sm pb-2 transition-opacity duration-300 `}
             >
               Last Name
             </label>
@@ -175,11 +155,7 @@ export default function AccountForm() {
               onChange={handleChange}
               className={`w-full px-4 py-[15px] rounded-lg border text-base transition-opacity duration-300 ${
                 errors.lastName ? "border-red-500" : "border-gray-300"
-              } ${
-                formData.lastName
-                  ? "opacity-100 !border-[#333333]"
-                  : "opacity-50 focus:opacity-100"
-              }`}
+              } `}
             />
             {errors.lastName && <ErrorComponent message={errors.lastName} />}
           </div>
@@ -187,11 +163,7 @@ export default function AccountForm() {
           {/* Email */}
           <div className="mb-[22px] group">
             <label
-              className={`block text-mid-gray text-sm pb-2 transition-opacity duration-300 ${
-                formData.email
-                  ? "opacity-100"
-                  : "opacity-50 group-focus-within:opacity-100"
-              }`}
+              className={`block text-mid-gray text-sm pb-2 transition-opacity duration-300`}
             >
               Email
             </label>
@@ -203,40 +175,39 @@ export default function AccountForm() {
               onChange={handleChange}
               className={`w-full px-4 py-[15px] rounded-lg border text-base transition-opacity duration-300 ${
                 errors.email ? "border-red-500" : "border-gray-300"
-              } ${
-                formData.email
-                  ? "opacity-100 !border-[#333333]"
-                  : "opacity-50 focus:opacity-100"
               }`}
             />
             {errors.email && <ErrorComponent message={errors.email} />}
           </div>
 
           {/* Phone Number */}
-          <div className="mb-[22px] group">
+          <div className="mb-[22px] group form-phone">
             <label
-              className={`block text-mid-gray text-sm pb-2 transition-opacity duration-300 ${
-                formData.phoneNumber
-                  ? "opacity-100"
-                  : "opacity-50 group-focus-within:opacity-100"
-              }`}
+              className={`block text-mid-gray text-sm pb-2 transition-opacity duration-300 `}
             >
               Phone Number
             </label>
-            <input
-              type="tel"
-              name="phoneNumber"
+            <PhoneInput
+              country={"in"}
               value={formData.phoneNumber}
-              placeholder="(000) 000-0000"
-              onChange={handleChange}
-              className={`w-full px-4 py-[15px] rounded-lg border text-base transition-opacity duration-300 ${
+              onChange={(value) => {
+                setFormData((prev) => ({
+                  ...prev,
+                  phoneNumber: value,
+                }));
+
+                if (errors.phoneNumber) {
+                  setErrors((prev) => ({
+                    ...prev,
+                    phoneNumber: "",
+                  }));
+                }
+              }}
+              inputClass={`w-full flex px-4 py-[15px] rounded-lg border text-base transition-opacity duration-300 ${
                 errors.phoneNumber ? "border-red-500" : "border-gray-300"
-              } ${
-                formData.phoneNumber
-                  ? "opacity-100 !border-[#333333]"
-                  : "opacity-50 focus:opacity-100"
               }`}
             />
+
             {errors.phoneNumber && (
               <ErrorComponent message={errors.phoneNumber} />
             )}
@@ -245,7 +216,7 @@ export default function AccountForm() {
           {/* Save Button */}
           <button
             onClick={handleSaveChanges}
-            className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-medium transition-colors duration-200"
+            className="bg-green cursor-pointer text-white px-8 py-[14px] rounded-[43px] font-medium transition-colors duration-200"
           >
             Save Changes
           </button>
@@ -253,7 +224,7 @@ export default function AccountForm() {
 
         {/* Right side - Profile Image */}
         <div className="flex flex-col w-1/2 justify-center items-center">
-          <div className="w-32 h-32 rounded-full overflow-hidden mb-4 bg-gray-200 border-2 border-gray-200 hover:border-gray-300 transition-colors duration-200">
+          <div className="w-[224px] h-[224px] rounded-full overflow-hidden mb-4 bg-gray-200 border-2 border-gray-200 hover:border-gray-300 transition-colors duration-200">
             <img
               src={profileImage}
               alt="Profile"
@@ -266,7 +237,7 @@ export default function AccountForm() {
           </div>
           <button
             onClick={handleImageChange}
-            className="border-2 border-green-600 text-green-600 px-6 py-2 rounded-lg font-medium hover:bg-green-50 transition-colors duration-200"
+            className="border-2 border-green text-green px-8 py-[14px] rounded-[43px] cursor-pointer font-medium hover:bg-green-50 transition-colors duration-200"
           >
             Choose Image
           </button>
