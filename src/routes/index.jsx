@@ -9,6 +9,9 @@ import Cart from "@/pages/Cart";
 import ForgotPassword from "@/pages/ForgotPassword";
 import Order from "@/pages/Order";
 import Profile from "@/pages/Profile";
+import NewPassword from "@/pages/NewPassword";
+import RecentOrder from "@/pages/RecentOrder";
+import OrderDetail from "@/pages/OrderDetail";
 
 export const ROUTES = [
   { path: "/", exact: true, component: <Home /> },
@@ -18,15 +21,17 @@ export const ROUTES = [
   { path: "/deals", exact: true, component: <Combo /> },
   { path: "/cart", exact: true, component: <Cart /> },
   { path: "/order", exact: true, component: <Order /> },
-  { path: "/profile", exact: true, component: <Profile /> },
 ];
 
 export const REJECT_ROUTES = [
   { path: "/login", exact: true, component: <SignIn /> },
   { path: "/forgot-password", exact: true, component: <ForgotPassword /> },
   { path: "/sign-up", exact: true, component: <SignUp /> },
+  { path: "/change-password", exact: true, component: <NewPassword /> },
 ];
 
 export const REQUIRED_ROUTES = [
-  { path: "/", exact: true, component: <Home /> },
+  { path: "/profile", exact: true, component: <Profile /> },
+  { path: "/recent-order", exact: true, component: <RecentOrder /> },
+  { path: "/recent-order/:id", exact: true, component: <OrderDetail /> },
 ];

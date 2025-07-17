@@ -208,7 +208,7 @@ const Login = () => {
                     type={showPassword ? "text" : "password"}
                     name="password"
                     value={formData.password}
-                    placeholder="At least 8 characters"
+                    placeholder="At least 6 characters"
                     onChange={handleChange}
                     className={`w-full px-4 py-[15px] pr-12 rounded-lg border text-base transition-opacity duration-300 ${
                       errors.password ? "border-red-500" : "border-light-gray"
@@ -253,7 +253,7 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full mt-[25px] py-3 bg-red-600 text-white font-bold rounded-lg text-sm uppercase"
+                className="w-full mt-[25px] py-3 bg-green text-white font-bold rounded-lg text-sm uppercase"
               >
                 {loading ? "Loading..." : "Continue"}
               </button>
