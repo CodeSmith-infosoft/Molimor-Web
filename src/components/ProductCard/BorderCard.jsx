@@ -18,13 +18,13 @@ const BorderCard = ({ product }) => {
       <div className="max-w-[200px] mx-auto relative">
         <img
           src={product?.mainImage}
-          className="w-auto max-h-[220px] mb-4 group-hover:scale-[1.05] transition-transform duration-300 object-contain ease-in-out"
+          className="w-auto max-lg:max-h-[200px] max-h-[220px] mb-4 group-hover:scale-[1.05] transition-transform duration-300 object-contain ease-in-out"
         />
         <div className="space-y-[12px]">
-          <label className="capitalize opacity-50 text-sm block ">
+          <label className="capitalize opacity-50 max-lg:text-xs text-sm block ">
             {product?.category1?.name}
           </label>
-          <label className="capitalize font-medium line-clamp-2">
+          <label className="capitalize font-medium max-lg:text-sm line-clamp-2">
             {product?.title}
           </label>
           <StarRating rating={Number(product?.ratingCount || 5)} />
@@ -34,7 +34,7 @@ const BorderCard = ({ product }) => {
               currency,
               language
             )}{" "}
-            <span className="text-sm font-medium line-through opacity-30 ml-[10px]">
+            <span className="max-lg:text-xs text-sm font-medium line-through opacity-30 ml-[10px]">
               {formatCurrency(product.variants[0].mrp, currency, language)}
             </span>
           </label>

@@ -31,7 +31,7 @@ const ProductList = ({ filter, category }) => {
   }, [filter]);
 
   return (
-    <div className="grid gap-10 grid-cols-4 w-full h-fit">
+    <div className="grid max-lg:gap-[22px] gap-10 max-lg:grid-cols-3 grid-cols-4 w-full h-fit">
       {mainData?.length ? (
         mainData.map((product) => <BorderCard product={product} />)
       ) : (

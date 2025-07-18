@@ -138,20 +138,20 @@ const Wishlist = () => {
 
   return (
     <>
-      <section className="py-[70px] bg-[#f3f4f6]">
-        <div className="bg-white py-[50px]">
+      <section className="py-[70px] max-lg:py-[50px] bg-[#f3f4f6]">
+        <div className="bg-white max-lg:py-[30px] py-[50px]">
           <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto">
             <div className="overflow-hidden">
               <Table>
                 <TableHeader>
                   <TableRow className="">
-                    <TableHead className="w-[40%] text-[15px] font-medium">
+                    <TableHead className="w-[50%] text-[15px] font-medium">
                       Product
                     </TableHead>
-                    <TableHead className="w-[20%] text-[15px] font-medium">
+                    <TableHead className="w-[15%] text-[15px] font-medium">
                       Price
                     </TableHead>
-                    <TableHead className="w-[15%] text-[15px] font-medium">
+                    <TableHead className="w-[10%] text-[15px] font-medium">
                       Stock Status
                     </TableHead>
                     <TableHead className="w-[25%] text-[15px] font-medium text-center">

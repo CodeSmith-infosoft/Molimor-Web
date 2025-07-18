@@ -76,8 +76,8 @@ export default function OrderDetail() {
   );
 
   return (
-    <div className="max-w-[1576px] px-10 max-lg:px-5 py-[70px] mx-auto">
-      <div className="border px-[37px]">
+    <div className="max-w-[1576px] px-10 max-lg:px-5 max-lg:py-[50px] py-[70px] mx-auto">
+      <div className="border max-lg:px-5 px-[37px]">
         {/* Header */}
         <div className="flex items-center justify-between py-4 px-6 border-b border-gray-200 mb-6">
           <div className="flex items-center space-x-2">
@@ -98,10 +98,10 @@ export default function OrderDetail() {
         </div>
 
         {/* Address and Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-[50px] my-10">
-          <Card className="col-span-1 !rounded-none !shadow-none gap-0 !px-5 !py-[19px]">
+        <div className="grid grid-cols-1 md:grid-cols-3 max-lg:gap-5 gap-[50px] my-10">
+          <Card className="col-span-1 !rounded-none !shadow-none gap-0 !px-5 max-lg:!py-[10px] !py-[19px]">
             <CardHeader className={"!px-0 border-b !pb-0 gap-0"}>
-              <CardTitle className="text-base font-semibold pb-[19px]">
+              <CardTitle className="text-base font-semibold max-lg:pb-[14px] pb-[19px]">
                 Billing Address
               </CardTitle>
             </CardHeader>
@@ -131,9 +131,9 @@ export default function OrderDetail() {
               </div>
             </CardContent>
           </Card>
-          <Card className="col-span-1 !rounded-none !shadow-none gap-0 !px-5 !py-[19px]">
+          <Card className="col-span-1 !rounded-none !shadow-none gap-0 !px-5 max-lg:!py-[10px] !py-[19px]">
             <CardHeader className={"!px-0 border-b !pb-0 gap-0"}>
-              <CardTitle className="text-base font-semibold pb-[19px]">
+              <CardTitle className="text-base font-semibold max-lg:pb-[14px] pb-[19px]">
                 Shipping Address
               </CardTitle>
             </CardHeader>
@@ -243,14 +243,12 @@ export default function OrderDetail() {
                       alt={product.productId.title}
                       className="h-[70px] object-cover rounded-md mr-3"
                     />
-                    <span className="line-clamp-1">{product.productId.title}</span>
+                    <span className="line-clamp-1">
+                      {product.productId.title}
+                    </span>
                   </td>
                   <td className="py-4 px-4">
-                    {formatCurrency(
-                      product?.price,
-                      currency,
-                      language
-                    )}
+                    {formatCurrency(product?.price, currency, language)}
                   </td>
                   <td className="py-4 px-4">x{product.quantity}</td>
                   <td className="py-4 px-4">

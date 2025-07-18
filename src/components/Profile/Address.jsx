@@ -118,14 +118,14 @@ const AddressFormSection = ({
     dropdownRef
   ) => (
     <div className="mb-[22px] group relative">
-      <label className="block text-sm pb-2 transition-opacity duration-300">
+      <label className="block max-lg:text-[13px] text-sm pb-2 transition-opacity duration-300">
         {label}
       </label>
       <div className="relative" ref={dropdownRef}>
         <button
           type="button"
           onClick={() => setOpen(!isOpen)}
-          className="w-full px-3 py-2 cursor-pointer text-left bg-white border rounded-lg border-gray-300 flex items-center justify-between"
+          className="w-full px-3 py-2 cursor-pointer text-left bg-white border rounded-[8px] border-gray-300 flex items-center justify-between"
         >
           <span className={value ? "" : "text-gray-400"}>
             {value || placeholder}
