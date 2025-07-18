@@ -144,7 +144,7 @@ export default function Detail({ data, getProduct }) {
         <ProductImageSlider data={data} selectedWeight={selectedWeight} />
         <div className="">
           <div className="bg-white">
-            <h1 className="text-[22px] font-medium text-gray-800 mb-[14px]">
+            <h1 className="text-[22px] font-medium  mb-[14px]">
               {data?.title}
             </h1>
             <div className="flex items-center pb-[14px] border-b mb-[14px]">
@@ -220,7 +220,7 @@ export default function Detail({ data, getProduct }) {
                     className={
                       selectedWeight?.weight === weight.weight
                         ? "bg-green text-white hover:bg-green rounded-[6px]"
-                        : "text-gray-700 border-0 rounded-[6px]"
+                        : " border-0 rounded-[6px]"
                     }
                     onClick={() => setSelectedWeight(weight)}
                   >
@@ -232,7 +232,7 @@ export default function Detail({ data, getProduct }) {
 
             <div className="mb-[14px]">
               <p className="text-sm font-semibold mb-4">Key Benefits:-</p>
-              <div className="  text-gray-700">
+              <div className="  ">
                 <ul className="list-disc list-inside space-y-1 grid grid-cols-1 md:grid-cols-2 gap-2">
                   {data?.isFeatured?.map((benefit, index) => (
                     <li key={`benefit1-${index * 2}`}>{benefit}</li>
@@ -325,7 +325,7 @@ export default function Detail({ data, getProduct }) {
                   viewBox="0 0 22 17"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="!w-[22px] !h-[16px]"
+                  className="!w-[22px] !h-[16px] shrink-0"
                 >
                   <path
                     d="M19.14 0.222229H2.86C2.35481 0.222229 1.88222 0.346068 1.44222 0.593746C1.00222 0.841425 0.651852 1.17992 0.391111 1.60923C0.13037 2.03854 0 2.50912 0 3.02099V13.3244C0 13.8363 0.126296 14.3151 0.378889 14.7609C0.631481 15.2067 0.973704 15.5618 1.40556 15.8259C1.83741 16.0901 2.32222 16.2222 2.86 16.2222H19.14C19.6452 16.2222 20.1178 16.0943 20.5578 15.8383C20.9978 15.5824 21.3481 15.2356 21.6089 14.7981C21.8696 14.3605 22 13.8693 22 13.3244V3.02099C22 2.50912 21.8696 2.03854 21.6089 1.60923C21.3481 1.17992 20.9978 0.841425 20.5578 0.593746C20.1178 0.346068 19.6452 0.222229 19.14 0.222229ZM2.86 1.7826H19.14C19.4985 1.7826 19.7919 1.90644 20.02 2.15412C20.2481 2.4018 20.3622 2.69075 20.3622 3.02099V5.27486H1.63778V3.02099C1.63778 2.65773 1.75185 2.36052 1.98 2.12935C2.20815 1.89818 2.50148 1.7826 2.86 1.7826ZM19.14 14.6619H2.86C2.51778 14.6619 2.22852 14.5339 1.99222 14.278C1.75593 14.022 1.63778 13.7372 1.63778 13.4235V7.03337H20.4844V13.3244C20.4193 13.7042 20.2685 14.022 20.0322 14.278C19.7959 14.5339 19.4985 14.6619 19.14 14.6619Z"
@@ -334,10 +334,10 @@ export default function Detail({ data, getProduct }) {
                 </svg>
 
                 <div>
-                  <p className="font-bold text-sm inline text-gray-800">
+                  <p className="font-bold text-sm inline ">
                     Payment.{" "}
                   </p>
-                  <p className="text-sm inline text-gray-600">
+                  <p className="text-sm inline ">
                     {productData.paymentInfo}
                   </p>
                 </div>
@@ -349,6 +349,7 @@ export default function Detail({ data, getProduct }) {
                   viewBox="0 0 18 23"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
+                  className="shrink-0"
                 >
                   <path
                     d="M17.6146 3.3546L9.38787 0.295645C9.14082 0.197758 8.96788 0.197758 8.86906 0.295645L0.617623 3.3546C0.419984 3.40354 0.267637 3.49735 0.160582 3.63602C0.0535273 3.77469 0 3.91745 0 4.06428V11.21C0 13.0372 0.642328 14.8318 1.92698 16.5938C2.89871 17.8826 4.17513 19.1143 5.75625 20.289C6.59621 20.9089 7.51029 21.4881 8.49849 22.0265L8.64672 22.1243C8.72907 22.1896 8.83612 22.2222 8.96788 22.2222C9.09964 22.2222 9.19846 22.1896 9.26434 22.1243L9.38787 22.0509C10.3267 21.5452 11.216 20.9823 12.056 20.3624C13.6701 19.1877 14.9629 17.9479 15.9347 16.6427C17.2523 14.8644 17.9111 13.0535 17.9111 11.21V4.06428C18.0099 3.91745 18.0264 3.77469 17.9605 3.63602C17.8946 3.49735 17.7793 3.40354 17.6146 3.3546ZM16.4782 11.21C16.4782 12.6783 15.9429 14.1466 14.8724 15.6149C14.0489 16.7243 12.9536 17.7929 11.5866 18.8207C10.7137 19.4732 9.84079 20.0279 8.96788 20.4847C8.12792 20.0443 7.25501 19.4896 6.34916 18.8207C5.0151 17.7929 3.94455 16.7243 3.13752 15.6149C2.08345 14.1466 1.55641 12.6783 1.55641 11.21V4.57818L9.0667 1.83736L16.4782 4.57818V11.21ZM6.49739 10.6961C6.33269 10.5493 6.14329 10.4758 5.92918 10.4758C5.71507 10.4758 5.52567 10.5493 5.36097 10.6961C5.19627 10.8429 5.11803 11.0265 5.12627 11.2467C5.1345 11.4669 5.21274 11.6586 5.36097 11.8218L7.41147 13.8529C7.59264 13.9998 7.76558 14.0732 7.93028 14.0732C8.0291 14.0732 8.12792 14.0487 8.22674 13.9998C8.32556 13.9508 8.39967 13.9019 8.44908 13.8529L12.5748 9.79064C12.723 9.62749 12.7971 9.4358 12.7971 9.21556C12.7971 8.99531 12.723 8.81177 12.5748 8.66494C12.4266 8.51811 12.2372 8.44062 12.0066 8.43246C11.776 8.42431 11.5866 8.5018 11.4384 8.66494L8.0291 12.1154L6.49739 10.6961Z"
@@ -357,10 +358,10 @@ export default function Detail({ data, getProduct }) {
                 </svg>
 
                 <div>
-                  <p className="font-bold text-sm inline text-gray-800">
+                  <p className="font-bold text-sm inline ">
                     Warranty.{" "}
                   </p>
-                  <p className="text-sm inline text-gray-600">
+                  <p className="text-sm inline ">
                     {productData.warrantyInfo}
                   </p>
                 </div>
@@ -368,7 +369,7 @@ export default function Detail({ data, getProduct }) {
             </div>
 
             <div
-              className="flex items-center text-sm text-gray-700 hover:text-gray-900 cursor-pointer relative"
+              className="flex items-center text-sm   cursor-pointer relative"
               ref={dropdownRef}
             >
               <div
@@ -404,7 +405,7 @@ export default function Detail({ data, getProduct }) {
                         "_blank"
                       )
                     }
-                    className="flex gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 first:rounded-t-md"
+                    className="flex gap-2 w-full text-left px-3 py-2 text-sm  hover:bg-gray-100 first:rounded-t-md"
                   >
                     <img
                       src={"/images/footer/watsapp.svg"}
@@ -422,7 +423,7 @@ export default function Detail({ data, getProduct }) {
                         "_blank"
                       )
                     }
-                    className="flex gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    className="flex gap-2 w-full text-left px-3 py-2 text-sm  hover:bg-gray-100"
                   >
                     <img
                       src={"/images/footer/facebook.png"}
@@ -441,7 +442,7 @@ export default function Detail({ data, getProduct }) {
                         "_blank"
                       )
                     }
-                    className="flex gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    className="flex gap-2 w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
                   >
                     <img src={"/images/footer/x.png"} className="h-4" alt="" />{" "}
                     Share on Twitter
@@ -452,7 +453,7 @@ export default function Detail({ data, getProduct }) {
                       navigator.clipboard.writeText(window.location.href);
                       toast.success("Link copied to clipboard!");
                     }}
-                    className="flex gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 last:rounded-b-md"
+                    className="flex gap-2 w-full text-left px-3 py-2 text-sm hover:bg-gray-100 last:rounded-b-md"
                   >
                     <img
                       src={"/images/footer/link.svg"}
@@ -475,7 +476,7 @@ export default function Detail({ data, getProduct }) {
             viewBox="0 0 22 17"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="!w-[22px] !h-[16px]"
+            className="!w-[22px] !h-[16px] shrink-0"
           >
             <path
               d="M19.14 0.222229H2.86C2.35481 0.222229 1.88222 0.346068 1.44222 0.593746C1.00222 0.841425 0.651852 1.17992 0.391111 1.60923C0.13037 2.03854 0 2.50912 0 3.02099V13.3244C0 13.8363 0.126296 14.3151 0.378889 14.7609C0.631481 15.2067 0.973704 15.5618 1.40556 15.8259C1.83741 16.0901 2.32222 16.2222 2.86 16.2222H19.14C19.6452 16.2222 20.1178 16.0943 20.5578 15.8383C20.9978 15.5824 21.3481 15.2356 21.6089 14.7981C21.8696 14.3605 22 13.8693 22 13.3244V3.02099C22 2.50912 21.8696 2.03854 21.6089 1.60923C21.3481 1.17992 20.9978 0.841425 20.5578 0.593746C20.1178 0.346068 19.6452 0.222229 19.14 0.222229ZM2.86 1.7826H19.14C19.4985 1.7826 19.7919 1.90644 20.02 2.15412C20.2481 2.4018 20.3622 2.69075 20.3622 3.02099V5.27486H1.63778V3.02099C1.63778 2.65773 1.75185 2.36052 1.98 2.12935C2.20815 1.89818 2.50148 1.7826 2.86 1.7826ZM19.14 14.6619H2.86C2.51778 14.6619 2.22852 14.5339 1.99222 14.278C1.75593 14.022 1.63778 13.7372 1.63778 13.4235V7.03337H20.4844V13.3244C20.4193 13.7042 20.2685 14.022 20.0322 14.278C19.7959 14.5339 19.4985 14.6619 19.14 14.6619Z"
@@ -484,8 +485,8 @@ export default function Detail({ data, getProduct }) {
           </svg>
 
           <div>
-            <p className="font-bold text-sm inline text-gray-800">Payment. </p>
-            <p className="text-sm inline text-gray-600">
+            <p className="font-bold text-sm inline ">Payment. </p>
+            <p className="text-sm inline ">
               {productData.paymentInfo}
             </p>
           </div>
@@ -497,6 +498,7 @@ export default function Detail({ data, getProduct }) {
             viewBox="0 0 18 23"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            className="shrink-0"
           >
             <path
               d="M17.6146 3.3546L9.38787 0.295645C9.14082 0.197758 8.96788 0.197758 8.86906 0.295645L0.617623 3.3546C0.419984 3.40354 0.267637 3.49735 0.160582 3.63602C0.0535273 3.77469 0 3.91745 0 4.06428V11.21C0 13.0372 0.642328 14.8318 1.92698 16.5938C2.89871 17.8826 4.17513 19.1143 5.75625 20.289C6.59621 20.9089 7.51029 21.4881 8.49849 22.0265L8.64672 22.1243C8.72907 22.1896 8.83612 22.2222 8.96788 22.2222C9.09964 22.2222 9.19846 22.1896 9.26434 22.1243L9.38787 22.0509C10.3267 21.5452 11.216 20.9823 12.056 20.3624C13.6701 19.1877 14.9629 17.9479 15.9347 16.6427C17.2523 14.8644 17.9111 13.0535 17.9111 11.21V4.06428C18.0099 3.91745 18.0264 3.77469 17.9605 3.63602C17.8946 3.49735 17.7793 3.40354 17.6146 3.3546ZM16.4782 11.21C16.4782 12.6783 15.9429 14.1466 14.8724 15.6149C14.0489 16.7243 12.9536 17.7929 11.5866 18.8207C10.7137 19.4732 9.84079 20.0279 8.96788 20.4847C8.12792 20.0443 7.25501 19.4896 6.34916 18.8207C5.0151 17.7929 3.94455 16.7243 3.13752 15.6149C2.08345 14.1466 1.55641 12.6783 1.55641 11.21V4.57818L9.0667 1.83736L16.4782 4.57818V11.21ZM6.49739 10.6961C6.33269 10.5493 6.14329 10.4758 5.92918 10.4758C5.71507 10.4758 5.52567 10.5493 5.36097 10.6961C5.19627 10.8429 5.11803 11.0265 5.12627 11.2467C5.1345 11.4669 5.21274 11.6586 5.36097 11.8218L7.41147 13.8529C7.59264 13.9998 7.76558 14.0732 7.93028 14.0732C8.0291 14.0732 8.12792 14.0487 8.22674 13.9998C8.32556 13.9508 8.39967 13.9019 8.44908 13.8529L12.5748 9.79064C12.723 9.62749 12.7971 9.4358 12.7971 9.21556C12.7971 8.99531 12.723 8.81177 12.5748 8.66494C12.4266 8.51811 12.2372 8.44062 12.0066 8.43246C11.776 8.42431 11.5866 8.5018 11.4384 8.66494L8.0291 12.1154L6.49739 10.6961Z"
@@ -505,8 +507,8 @@ export default function Detail({ data, getProduct }) {
           </svg>
 
           <div>
-            <p className="font-bold text-sm inline text-gray-800">Warranty. </p>
-            <p className="text-sm inline text-gray-600">
+            <p className="font-bold text-sm inline ">Warranty. </p>
+            <p className="text-sm inline ">
               {productData.warrantyInfo}
             </p>
           </div>

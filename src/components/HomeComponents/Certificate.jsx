@@ -33,7 +33,7 @@ const Certificate = () => {
             <img
               src={src}
               alt={`Certificate ${index + 1}`}
-              className="max-lg:h-[60px] h-[70px]"
+              className="max-mobile:h-[50px] max-lg:h-[60px] h-[70px]"
             />
           </div>
         ))}

@@ -15,15 +15,15 @@ const OfferCountdown = () => {
         {laptop && !tablet ? "" : "Special"} Offer :
       </label>
       <div className="flex gap-[5px] items-center">
-        <div className="border border-[#FED7AA] p-1 text-[10px] text-[#C2410C] bg-[#FFEDD5] rounded-md ">
+        <div className="border border-[#FED7AA] max-mobile:p-[3px] leading-[normal] p-1 text-[10px] text-[#C2410C] bg-[#FFEDD5] max-mobile:rounded-[3px] rounded-md ">
           {format(hours)}
         </div>
         <span className="">:</span>
-        <div className="border border-[#FED7AA] p-1 text-[10px] text-[#C2410C] bg-[#FFEDD5] rounded-md ">
+        <div className="border border-[#FED7AA] max-mobile:p-[3px] p-1 leading-[normal] text-[10px] text-[#C2410C] bg-[#FFEDD5] max-mobile:rounded-[3px] rounded-md ">
           {format(minutes)}
         </div>
         <span className="">:</span>
-        <div className="border border-[#FED7AA] p-1 text-[10px] text-[#C2410C] bg-[#FFEDD5] rounded-md ">
+        <div className="border border-[#FED7AA] max-mobile:p-[3px] p-1 leading-[normal] text-[10px] text-[#C2410C] bg-[#FFEDD5] max-mobile:rounded-[3px] rounded-md ">
           {format(seconds)}
         </div>
       </div>

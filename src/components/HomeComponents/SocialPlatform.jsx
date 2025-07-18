@@ -37,7 +37,7 @@ const SocialPlatform = () => {
               width={286}
               alt={`shop-${index}`}
               style={{ borderRadius: "10px" }}
-              className="object-contain w-[200px] max-lg:w-[140px] max-md:w-[120px] max-md:h-[120px] max-lg:h-[140px] h-[200px]"
+              className="object-contain w-[200px] max-lg:w-[140px] max-md:w-[120px] max-mobile:w-[100px] max-mobile:h-[100px] max-md:h-[120px] max-lg:h-[140px] h-[200px]"
             />
             <div className=" group-hover:opacity-100 text-white absolute top-0 left-0 w-full h-full bg-black/60 opacity-0 transition-opacity duration-300 ease-in-out flex justify-center items-center rounded-[10px] cursor-pointer">
               <FaInstagram size={70} />

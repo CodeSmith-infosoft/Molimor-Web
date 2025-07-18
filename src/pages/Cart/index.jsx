@@ -18,6 +18,7 @@ import {
   editCartItemFromLocalstorage,
   formatCurrency,
 } from "@/utils";
+import RecentView from "@/components/HomeComponents/RecentView";
 
 const Cart = () => {
   const { setCartCount, currency, language } = useContext(MainContext);
@@ -440,6 +441,9 @@ const Cart = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="bg-[#f3f4f6] max-lg:pb-[50px] pb-[70px]">
+        <RecentView title={"Recommendations"} />
       </div>
     </>
   );

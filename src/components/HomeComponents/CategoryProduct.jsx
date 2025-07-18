@@ -27,10 +27,10 @@ const CategoryProduct = () => {
 
   return (
     <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto">
-      <h3 className="max-lg:text-[20px] text-2xl font-medium section-top-spacing sub-bottom-spacing">
+      <h3 className="max-mobile:text-lg max-lg:text-[20px] text-2xl font-medium section-top-spacing sub-bottom-spacing">
         Category Product
       </h3>
-      <div className="grid grid-cols-2 gap-5">
+      <div className="grid max-mobile:grid-cols-1 grid-cols-2 gap-5">
         <div>
           <img src="/images/dummy/76.svg" className="mb-5" />
           <div className="flex gap-[10px]">
@@ -40,7 +40,7 @@ const CategoryProduct = () => {
                   {molimor?.products?.slice(0, 3)?.map((deal, i) => (
                     <CarouselItem
                       key={i}
-                      className="max-md:max-w-[220px] max-lg:max-w-[243px] max-w-[239px] w-full shrink-0"
+                      className="max-mobile:max-w-[195px] max-md:max-w-[220px] max-lg:max-w-[243px] max-w-[239px] w-full shrink-0"
                     >
                       <FillCard data={deal} />
                     </CarouselItem>
@@ -63,7 +63,7 @@ const CategoryProduct = () => {
                   {girnes?.products?.slice(0, 3)?.map((deal, i) => (
                     <CarouselItem
                       key={i}
-                      className="max-md:max-w-[220px] max-lg:max-w-[243px] max-w-[239px] w-full shrink-0"
+                      className="max-mobile:max-w-[195px] max-md:max-w-[220px] max-lg:max-w-[243px] max-w-[239px] w-full shrink-0"
                     >
                       <FillCard data={deal} />
                     </CarouselItem>
@@ -78,7 +78,7 @@ const CategoryProduct = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-[auto_auto] justify-center max-lg:gap-10 max-lg:px-[50px] gap-[60px] section-top-spacing">
+      <div className="grid max-mobile:hidden grid-cols-[auto_auto] justify-center max-lg:gap-10 max-lg:px-[50px] gap-[60px] section-top-spacing">
         <img src="/images/dummy/Bannar.svg" />
         <img src="/images/dummy/Bannar1.svg" />
       </div>

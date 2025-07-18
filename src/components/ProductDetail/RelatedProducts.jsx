@@ -38,7 +38,7 @@ const RelatedProducts = ({ singleData }) => {
         <Carousel className="w-full relative">
           <CarouselContent className={"gap-5"}>
             {data?.products?.slice(0, 6)?.map((data, index) => (
-              <CarouselItem key={index} className="max-w-[232px] shrink-0">
+              <CarouselItem key={index} className="max-md:max-w-[220px] max-lg:max-w-[243px] max-w-[232px] shrink-0">
                 <FillCard data={data} />
               </CarouselItem>
             ))}
@@ -49,7 +49,7 @@ const RelatedProducts = ({ singleData }) => {
         <Carousel className="w-full relative">
           <CarouselContent className={"gap-5"}>
             {data?.products?.slice(6, 12)?.map((data, index) => (
-              <CarouselItem key={index} className="max-w-[232px] shrink-0">
+              <CarouselItem key={index} className="max-md:max-w-[220px] max-lg:max-w-[243px] max-w-[232px] shrink-0">
                 <FillCard data={data} />
               </CarouselItem>
             ))}

@@ -122,7 +122,7 @@ export default function ProductImageSlider({ data, selectedWeight }) {
       </div>
       <div>
         <div
-          className="flex items-center text-sm text-gray-700 hover:text-gray-900 cursor-pointer relative"
+          className="flex items-center text-sm  cursor-pointer relative"
           ref={dropdownRef}
         >
           <div
@@ -155,7 +155,7 @@ export default function ProductImageSlider({ data, selectedWeight }) {
                     "_blank"
                   )
                 }
-                className="flex gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 first:rounded-t-md"
+                className="flex gap-2 w-full text-left px-3 py-2 text-sm  hover:bg-gray-100 first:rounded-t-md"
               >
                 <img
                   src={"/images/footer/watsapp.svg"}
@@ -173,7 +173,7 @@ export default function ProductImageSlider({ data, selectedWeight }) {
                     "_blank"
                   )
                 }
-                className="flex gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                className="flex gap-2 w-full text-left px-3 py-2 text-sm  hover:bg-gray-100"
               >
                 <img
                   src={"/images/footer/facebook.png"}
@@ -192,7 +192,7 @@ export default function ProductImageSlider({ data, selectedWeight }) {
                     "_blank"
                   )
                 }
-                className="flex gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                className="flex gap-2 w-full text-left px-3 py-2 text-sm  hover:bg-gray-100"
               >
                 <img src={"/images/footer/x.png"} className="h-4" alt="" />{" "}
                 Share on Twitter
@@ -203,7 +203,7 @@ export default function ProductImageSlider({ data, selectedWeight }) {
                   navigator.clipboard.writeText(window.location.href);
                   toast.success("Link copied to clipboard!");
                 }}
-                className="flex gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 last:rounded-b-md"
+                className="flex gap-2 w-full text-left px-3 py-2 text-sm  hover:bg-gray-100 last:rounded-b-md"
               >
                 <img src={"/images/footer/link.svg"} className="h-4" alt="" />{" "}
                 Copy Link

@@ -15,25 +15,25 @@ const FillCard = ({ data }) => {
       <div className="max-w-[200px] max-lg:max-w-[172px] mx-auto relative">
         <img
           src="/images/dummy/khichadi.png"
-          className="w-auto max-lg:max-h-[170px] max-h-[220px] mb-4 group-hover:scale-[1.05] transition-transform duration-300 ease-in-out"
+          className="w-auto max-mobile:max-h-[150px] mx-auto max-lg:max-h-[170px] max-h-[220px] mb-4 group-hover:scale-[1.05] transition-transform duration-300 ease-in-out"
         />
-        <div className="space-y-[10px] px-2">
+        <div className="space-y-[10px] max-mobile:px-4 px-2">
           <label className="capitalize font-medium line-clamp-2">
             {data.title}
           </label>
           <StarRating rating={3.5} />
           {isDateNotPastBoolean(data.variants) ? (
-            <span className="text-[#2C26DC] text-lg font-semibold">
+            <span className="text-[#2C26DC] max-mobile:text-base text-lg font-semibold">
               Limited time deal
             </span>
           ) : (
-            <span className="text-lg font-semibold">
+            <span className="text-lg font-semibold max-mobile:text-base">
               {getPercent(data.variants)}% Off
             </span>
           )}
         </div>
         {isDateNotPastBoolean(data.variants) && (
-          <span className="absolute bg-[#DC2626] rounded-full py-[2.5px] px-2 text-white text-xs font-medium top-0 ">
+          <span className="absolute bg-[#DC2626] max-mobile:left-3 rounded-full py-[2.5px] px-2 text-white text-xs font-medium top-0 ">
             {getPercent(data.variants)}%
           </span>
         )}

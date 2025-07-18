@@ -59,7 +59,7 @@ const BuyMore = ({ data = [] }) => {
               <div className="bg-white rounded-lg sticky top-6">
                 <h3 className="text-xl font-bold mb-4">Order Summary</h3>
                 {selectedProducts.length === 0 ? (
-                  <p className="text-gray-500 text-center py-8">
+                  <p className=" text-center py-8">
                     No products selected
                   </p>
                 ) : (
@@ -74,7 +74,7 @@ const BuyMore = ({ data = [] }) => {
                             <h4 className="font-medium text-sm line-clamp-1">
                               {product.title}
                             </h4>
-                            <p className="text-xs text-gray-500">
+                            <p className="text-xs ">
                               {product.category1?.name}
                             </p>
                           </div>

@@ -43,7 +43,7 @@ export default function Dropdown({ options, defaultValue, onChange }) {
             <button
               key={option}
               onClick={() => handleSelect(option)}
-              className="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 first:rounded-t-md last:rounded-b-md"
+              className="block w-full text-left px-3 py-2 text-sm hover:bg-gray-100 first:rounded-t-md last:rounded-b-md"
             >
               {option}
             </button>

@@ -52,7 +52,7 @@ const StarRatingInput = ({ rating, onRatingChange }) => {
           className={`w-6 h-6 cursor-pointer ${
             star <= rating
               ? "fill-yellow-400 text-yellow-400"
-              : "fill-gray-300 text-gray-300"
+              : "fill-gray-300 "
           }`}
           onClick={() => onRatingChange(star)}
         />
@@ -82,7 +82,7 @@ const ReviewStatistics = ({ stats }) => {
                 style={{ width: `${stats.ratingPercentages[star]}%` }}
               />
             </div>
-            <span className="text-sm text-gray-500 dark:text-gray-400">
+            <span className="text-sm ">
               {stats.ratingCounts[star] > 1000
                 ? `${(stats.ratingCounts[star] / 1000).toFixed(2)}K`
                 : stats.ratingCounts[star]}

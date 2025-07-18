@@ -135,7 +135,7 @@ export default function ChangePassword() {
             <button
               type="button"
               onClick={() => togglePasswordVisibility("currentPassword")}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 "
             >
               {showPassword.currentPassword ? (
                 <svg
@@ -199,7 +199,7 @@ export default function ChangePassword() {
               <button
                 type="button"
                 onClick={() => togglePasswordVisibility("newPassword")}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 "
               >
                 {showPassword.newPassword ? (
                   <svg
@@ -264,7 +264,7 @@ export default function ChangePassword() {
               <button
                 type="button"
                 onClick={() => togglePasswordVisibility("confirmPassword")}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 "
               >
                 {showPassword.confirmPassword ? (
                   <svg

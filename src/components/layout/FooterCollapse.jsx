@@ -11,7 +11,7 @@ const FooterCollapse = ({ title, children }) => {
     <Collapsible
       open={isOpen}
       onOpenChange={setIsOpen}
-      className="flex flex-col gap-[16px]"
+      className="max-md:flex flex-col hidden gap-[16px]"
     >
       <CollapsibleTrigger asChild>
         <div className="flex justify-between items-center cursor-pointer">

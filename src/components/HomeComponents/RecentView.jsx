@@ -9,18 +9,21 @@ import {
 } from "@/components/ui/carousel";
 import FillCard from "../ProductCard/FillCard";
 
-const RecentView = () => {
+const RecentView = ({ title }) => {
   const recent = getRecentItems();
   return (
     <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto">
       <h3 className="text-2xl font-medium sub-bottom-spacing">
-        Recently Viewed
+        {title ? title : "Recently Viewed"}
       </h3>
       <Carousel className="w-full relative">
         <CarouselContent className={"max-lg:gap-0 gap-5"}>
           {recent?.map((data, index) => (
-            <CarouselItem key={index} className="max-lg:max-w-[220px] w-[240px] shrink-0">
-                <FillCard data={data} />
+            <CarouselItem
+              key={index}
+              className="max-mobile:max-w-[195px] max-lg:max-w-[220px] w-[240px] shrink-0"
+            >
+              <FillCard data={data} />
             </CarouselItem>
           ))}
         </CarouselContent>

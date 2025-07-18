@@ -130,7 +130,7 @@ const Banner = () => {
       </div>
       <Marquee
         pauseOnHover={true}
-        className="max-lg:!flex !hidden certificate-marquee section-top-spacing"
+        className="max-mobile:!hidden max-lg:!flex !hidden certificate-marquee section-top-spacing"
         duration={15000}
       >
         <img

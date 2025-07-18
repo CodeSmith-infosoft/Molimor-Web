@@ -51,19 +51,19 @@ export default function CountdownTimer({
         Until the end of the sale:
       </span>{" "}
       <span className="text-lg font-bold">{timeLeft.days}</span>{" "}
-      <span className="text-[11px] opacity-70">days</span>{" "}
-      <span className="text-lg font-bold">
+      <span className="text-[10px] opacity-70">days</span>{" "}
+      <span className="text-lg max-mobile:text-base font-bold">
         {String(timeLeft.hours).padStart(2, "0")}
       </span>{" "}
-      <span className="text-[11px] opacity-70">hours</span>{" "}
-      <span className="text-lg font-bold">
+      <span className="text-[10px] opacity-70">hours</span>{" "}
+      <span className="text-lg max-mobile:text-base font-bold">
         {String(timeLeft.minutes).padStart(2, "0")}
       </span>{" "}
-      <span className="text-[11px] opacity-70">minutes</span>{" "}
-      <span className="text-lg font-bold">
+      <span className="text-[10px] opacity-70">minutes</span>{" "}
+      <span className="text-lg max-mobile:text-base font-bold">
         {String(timeLeft.seconds).padStart(2, "0")}
       </span>{" "}
-      <span className="text-[11px] opacity-70">sec.</span>
+      <span className="text-[10px] opacity-70">sec.</span>
     </div>
   );
 }

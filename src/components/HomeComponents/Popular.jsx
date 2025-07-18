@@ -32,7 +32,7 @@ const Popular = () => {
                 {data?.map((product, i) => (
                   <CarouselItem
                     key={i}
-                    className="max-md:max-w-[220px] max-lg:max-w-[243px] max-w-[244px] w-full shrink-0"
+                    className="max-mobile:max-w-[195px] max-md:max-w-[220px] max-lg:max-w-[243px] max-w-[244px] w-full shrink-0"
                   >
                     <FillCard data={product} />
                   </CarouselItem>

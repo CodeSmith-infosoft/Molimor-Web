@@ -38,7 +38,7 @@ export default function Footer() {
             <div className="flex items-center mb-5">
               <img src="/images/logo.png" className="h-[66px]" alt="" />
             </div>
-            <p className="text-sm text-gray-600 leading-relaxed max-md:max-w-none max-w-[293px] text-justify mb-[50px]">
+            <p className="text-sm leading-relaxed max-md:max-w-none max-w-[293px] text-justify max-mobile:mb-[30px] mb-[50px]">
               Lorem ipsum dolor sit amet consectetur. Orci posuere vulputate
               tempor tempor placerat. Et et placerat ut tincidunt sagittis. Non
               feugiat vitae in quis semper lobortis aliquam auctor. Quis quis
@@ -302,7 +302,7 @@ export default function Footer() {
                   <p className="text-xs mb-[1px] text-[#333333] opacity-60">
                     Monday-Friday, 08am-5pm
                   </p>
-                  <p className="text-[20px] font-bold text-[#333333]">
+                  <p className="text-[20px] max-mobile:text-base font-bold text-[#333333]">
                     0 800 300-353
                   </p>
                 </div>
@@ -336,7 +336,7 @@ export default function Footer() {
 
         {/* Bottom Section */}
         <div className="mt-[49px] flex flex-col md:flex-row justify-between">
-          <p className="text-xs text-gray-600">
+          <p className="text-xs">
             ©Copyright <span className="font-bold">Molimor</span> 2023. All
             Right Reserved.
           </p>

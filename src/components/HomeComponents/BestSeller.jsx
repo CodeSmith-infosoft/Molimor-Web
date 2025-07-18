@@ -43,7 +43,7 @@ const BestSeller = () => {
             {molimor?.products?.slice(0, 2)?.map((deal, i) => (
               <CarouselItem
                 key={i}
-                className="max-md:max-w-[220px] max-lg:max-w-[243px] max-main:max-w-[250px] max-w-[276px] w-full shrink-0"
+                className="max-mobile:max-w-[195px] max-md:max-w-[220px] max-lg:max-w-[243px] max-main:max-w-[250px] max-w-[276px] w-full shrink-0"
               >
                 <FillCard data={deal} />
               </CarouselItem>
@@ -61,7 +61,7 @@ const BestSeller = () => {
             {molimor?.products?.slice(2, 4)?.map((deal, i) => (
               <CarouselItem
                 key={i}
-                className="max-md:max-w-[220px] max-lg:max-w-[243px] max-main:max-w-[250px] max-w-[276px] w-full shrink-0"
+                className="max-mobile:max-w-[195px] max-md:max-w-[220px] max-lg:max-w-[243px] max-main:max-w-[250px] max-w-[276px] w-full shrink-0"
               >
                 <FillCard data={deal} />
               </CarouselItem>
@@ -77,7 +77,7 @@ const BestSeller = () => {
             {homeKitchen?.products.slice(0, 2)?.map((deal, i) => (
               <CarouselItem
                 key={i}
-                className="max-md:max-w-[220px] max-lg:max-w-[243px] max-main:max-w-[250px] max-w-[276px] w-full shrink-0"
+                className="max-mobile:max-w-[195px] max-md:max-w-[220px] max-lg:max-w-[243px] max-main:max-w-[250px] max-w-[276px] w-full shrink-0"
               >
                 <FillCard data={deal} />
               </CarouselItem>
@@ -95,7 +95,7 @@ const BestSeller = () => {
             {homeCare?.products.slice(0, 2)?.map((deal, i) => (
               <CarouselItem
                 key={i}
-                className="max-md:max-w-[220px] max-lg:max-w-[243px] max-main:max-w-[250px] max-w-[276px] w-full shrink-0"
+                className="max-mobile:max-w-[195px] max-md:max-w-[220px] max-lg:max-w-[243px] max-main:max-w-[250px] max-w-[276px] w-full shrink-0"
               >
                 <FillCard data={deal} />
               </CarouselItem>

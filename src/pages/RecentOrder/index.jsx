@@ -61,19 +61,19 @@ export default function RecentOrder() {
           <div className="relative" ref={dropdownRef}>
             <button
               type="button"
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white hover:bg-gray-50 h-9 px-3 py-2 gap-1 text-gray-700"
+              className="inline-flex items-center justify-center whitespace-nowrap rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-white hover:bg-gray-50 h-9 px-3 py-2 gap-1 "
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               aria-expanded={isDropdownOpen}
               aria-haspopup="true"
             >
-              Status <ChevronDown className="h-4 w-4 ml-1 text-gray-500" />
+              Status <ChevronDown className="h-4 w-4 ml-1 " />
             </button>
             {isDropdownOpen && (
               <div className="absolute right-0 z-10 mt-2 w-[150px] origin-top-right rounded-md border border-gray-200 bg-white p-1 shadow-lg outline-none">
                 {uniqueStatuses.map((status) => (
                   <div
                     key={status}
-                    className="relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm text-gray-800 outline-none hover:bg-gray-100 data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+                    className="relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm  outline-none hover:bg-gray-100 data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
                     onClick={() => {
                       setFilterStatus(status);
                       setIsDropdownOpen(false);
