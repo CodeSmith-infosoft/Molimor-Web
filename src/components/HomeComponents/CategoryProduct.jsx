@@ -40,7 +40,7 @@ const CategoryProduct = () => {
                   {molimor?.products?.slice(0, 3)?.map((deal, i) => (
                     <CarouselItem
                       key={i}
-                      className="max-lg:max-w-[243px] max-w-[239px] w-full shrink-0"
+                      className="max-md:max-w-[220px] max-lg:max-w-[243px] max-w-[239px] w-full shrink-0"
                     >
                       <FillCard data={deal} />
                     </CarouselItem>
@@ -63,7 +63,7 @@ const CategoryProduct = () => {
                   {girnes?.products?.slice(0, 3)?.map((deal, i) => (
                     <CarouselItem
                       key={i}
-                      className="max-lg:max-w-[243px] max-w-[239px] w-full shrink-0"
+                      className="max-md:max-w-[220px] max-lg:max-w-[243px] max-w-[239px] w-full shrink-0"
                     >
                       <FillCard data={deal} />
                     </CarouselItem>
@@ -78,7 +78,7 @@ const CategoryProduct = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-[auto_auto] justify-center gap-[60px] section-top-spacing">
+      <div className="grid grid-cols-[auto_auto] justify-center max-lg:gap-10 max-lg:px-[50px] gap-[60px] section-top-spacing">
         <img src="/images/dummy/Bannar.svg" />
         <img src="/images/dummy/Bannar1.svg" />
       </div>

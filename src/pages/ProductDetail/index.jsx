@@ -33,10 +33,10 @@ const ProductDetail = () => {
     <>
       <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto max-lg:py-[50px] py-[70px]">
         <Detail data={data} getProduct={fetchData} />
-        <div className="max-lg:py-[50px] py-[70px]">
+        <div className="">
           <BuyMore data={data?.buyItWith} />
         </div>
-        <div>
+        <div className="section-top-spacing">
           <div className="space-y-[30px]">
             <h1 className="text-[20px] font-bold py-4 inline-block border-b-2 border-[#333333]">
               Descriptions

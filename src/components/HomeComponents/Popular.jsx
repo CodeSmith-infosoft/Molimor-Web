@@ -32,7 +32,7 @@ const Popular = () => {
                 {data?.map((product, i) => (
                   <CarouselItem
                     key={i}
-                    className="max-lg:max-w-[220px] max-w-[244px] w-full shrink-0"
+                    className="max-md:max-w-[220px] max-lg:max-w-[243px] max-w-[244px] w-full shrink-0"
                   >
                     <FillCard data={product} />
                   </CarouselItem>
@@ -46,8 +46,11 @@ const Popular = () => {
       ) : (
         <></>
       )}
-      <div className="section-top-spacing">
-        <img src="/images/dummy/Frame1.svg" className="mx-auto" />
+      <div className="section-top-spacing px-10">
+        <img
+          src="/images/dummy/Frame1.svg"
+          className="mx-auto max-lg:max-w-[643px] w-full"
+        />
       </div>
     </>
   );

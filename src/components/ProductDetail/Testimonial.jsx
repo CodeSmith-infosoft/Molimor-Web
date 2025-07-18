@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Star } from "lucide-react";
 import {
   Dialog,
@@ -9,58 +9,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
-// Dummy data for reviews
-const initialReviews = [
-  {
-    id: 1,
-    name: "John Doe",
-    rating: 4,
-    title: "Perfect Combination!!",
-    content:
-      "This review was collected as part of a promotion. I forgot to post my photos from my review! So here is my review again. A perfect combination of softness, strength, and proper friction to make any user leaving clean and spotless!! I have been purchasing for years and Angel Soft isn't too thick where you think you are using a towel and it's not too thin leaving you with unexpected tears during use!! Some say I have an addition to Angel Soft, I say it's dedication for a great product!! See the attached photos from my last purchase!",
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    rating: 5,
-    title: "Excellent Product!",
-    content:
-      "Absolutely love this product! It exceeded my expectations in every way. Highly recommend it to everyone looking for quality and durability. Will definitely buy again!",
-  },
-  {
-    id: 3,
-    name: "Alice Johnson",
-    rating: 3,
-    title: "Good, but could be better",
-    content:
-      "It's a decent product, but I expected a bit more for the price. The quality is okay, but there are some minor issues. Overall, it gets the job done.",
-  },
-  {
-    id: 4,
-    name: "Bob Williams",
-    rating: 5,
-    title: "Fantastic!",
-    content:
-      "Couldn't be happier with my purchase. This is exactly what I needed. The features are great and it's very easy to use. Five stars!",
-  },
-  {
-    id: 5,
-    name: "Charlie Brown",
-    rating: 2,
-    title: "Disappointed",
-    content:
-      "Not what I was hoping for. The product felt cheap and broke after a few uses. I would not recommend this to others. Very disappointed with the quality.",
-  },
-];
+import useAxios from "@/customHook/fetch-hook";
+import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 // Helper to calculate review statistics
 const calculateReviewStats = (reviews) => {
-  const totalReviews = reviews.length;
+  const totalReviews = reviews?.length;
   let totalRatingSum = 0;
   const ratingCounts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
 
-  reviews.forEach((review) => {
+  reviews?.forEach((review) => {
     totalRatingSum += review.rating;
     ratingCounts[review.rating]++;
   });
@@ -139,7 +98,7 @@ const ReviewStatistics = ({ stats }) => {
 const CustomerReviewCard = ({ review }) => {
   return (
     <div className="grid gap-2">
-      <h3 className="font-medium text-sm">{review.title}</h3>
+      <h3 className="font-medium text-sm">{review.name}</h3>
       <div className="flex items-center gap-0.5">
         {[1, 2, 3, 4, 5].map((star) => (
           <Star
@@ -152,7 +111,7 @@ const CustomerReviewCard = ({ review }) => {
           />
         ))}
       </div>
-      <p className="text-sm">{review.content}</p>
+      <p className="text-sm">{review.comment}</p>
     </div>
   );
 };
@@ -165,17 +124,30 @@ const ErrorComponent = ({ message, id }) => (
 );
 
 export default function CustomerReviews() {
-  const [reviews, setReviews] = useState(initialReviews);
+  const { id } = useParams();
   const [showAllReviews, setShowAllReviews] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const { data, fetchData } = useAxios({
+    method: "GET",
+    url: `/review/getAllReviewByProductId/${id}`,
+  });
+
+  const { fetchData: addReview } = useAxios({
+    method: "POST",
+    url: `/review/addReview`,
+  });
 
   const [newReview, setNewReview] = useState({
     name: "",
     email: "",
-    content: "",
+    comment: "",
     rating: 0,
   });
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -209,11 +181,11 @@ export default function CustomerReviews() {
       isValid = false;
     }
 
-    if (!newReview.content.trim()) {
-      newErrors.content = "Review content is required.";
+    if (!newReview.comment.trim()) {
+      newErrors.comment = "Review comment is required.";
       isValid = false;
-    } else if (newReview.content.trim().length < 10) {
-      newErrors.content = "Review content must be at least 10 characters.";
+    } else if (newReview.comment.trim().length < 10) {
+      newErrors.comment = "Review comment must be at least 10 characters.";
       isValid = false;
     }
 
@@ -225,20 +197,21 @@ export default function CustomerReviews() {
     setErrors(newErrors);
 
     if (isValid) {
-      const reviewToAdd = {
-        id: reviews.length + 1,
-        ...newReview,
-        title: `Review by ${newReview.name}`,
-      };
-      setReviews((prev) => [reviewToAdd, ...prev]);
-      setNewReview({ name: "", email: "", content: "", rating: 0 });
-      setErrors({}); // Clear all errors on successful submission
-      setIsPopupOpen(false);
+      addReview({ data: { ...newReview, productId: id } }).then((res) => {
+        const toast2 = res.success ? toast.success : toast.error;
+        toast2(res.message);
+        if (res.success) {
+          fetchData();
+          setNewReview({ name: "", email: "", comment: "", rating: 0 });
+          setErrors({}); // Clear all errors on successful submission
+          setIsPopupOpen(false);
+        }
+      });
     }
   };
 
-  const reviewStats = calculateReviewStats(reviews);
-  const displayedReviews = showAllReviews ? reviews : reviews.slice(0, 2); // Show first 2 or all
+  const reviewStats = calculateReviewStats(data);
+  const displayedReviews = showAllReviews ? data : data?.slice(0, 2);
 
   return (
     <div className="grid grid-cols-3 gap-[64px]">
@@ -326,7 +299,7 @@ export default function CustomerReviews() {
               <div className="group">
                 <label
                   className={`block text-mid-gray text-sm pb-2 transition-opacity duration-300 ${
-                    newReview.content
+                    newReview.comment
                       ? "opacity-100"
                       : "opacity-50 group-focus-within:opacity-100"
                   }`}
@@ -334,22 +307,22 @@ export default function CustomerReviews() {
                   Review Content
                 </label>
                 <textarea
-                  id="content"
-                  name="content"
-                  value={newReview.content}
+                  id="comment"
+                  name="comment"
+                  value={newReview.comment}
                   placeholder="Write your review here..."
                   onChange={handleInputChange}
                   className={`w-full px-4 py-[15px] rounded-lg border text-base transition-opacity duration-300 min-h-[100px] ${
-                    errors.content ? "border-red-500" : "border-light-gray"
+                    errors.comment ? "border-red-500" : "border-light-gray"
                   } ${
-                    newReview.content
+                    newReview.comment
                       ? "opacity-100 !border-[#333333]"
                       : "opacity-50 focus:opacity-100"
                   }`}
-                  aria-describedby="content-error"
+                  aria-describedby="comment-error"
                 />
-                {errors.content && (
-                  <ErrorComponent message={errors.content} id="content-error" />
+                {errors.comment && (
+                  <ErrorComponent message={errors.comment} id="comment-error" />
                 )}
               </div>
 
@@ -390,11 +363,11 @@ export default function CustomerReviews() {
       <div className="flex flex-col col-span-2 gap-6">
         <h2 className="text-[22px] font-medium">Customers say</h2>
         <div className="grid gap-8">
-          {displayedReviews.map((review) => (
-            <CustomerReviewCard key={review.id} review={review} />
+          {displayedReviews?.map((review) => (
+            <CustomerReviewCard key={review._id} review={review} />
           ))}
         </div>
-        {reviews.length > 2 && ( // Only show toggle if there are more than 2 reviews
+        {data?.length > 2 && ( // Only show toggle if there are more than 2 reviews
           <button
             onClick={() => setShowAllReviews(!showAllReviews)}
             className="underline font-medium cursor-pointer text-left text-lg mt-4"

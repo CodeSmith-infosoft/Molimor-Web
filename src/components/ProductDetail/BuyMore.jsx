@@ -3,11 +3,9 @@ import { formatCurrency, isDateNotPast } from "@/utils";
 import MainContext from "@/context/MainContext";
 import { ShoppingCart } from "lucide-react";
 import SelectCard from "./SelectCard";
-
 const BuyMore = ({ data = [] }) => {
   const { language, currency } = useContext(MainContext);
   const [selectedProducts, setSelectedProducts] = useState([]);
-
   const handleProductSelect = (product) => {
     setSelectedProducts((prev) => {
       const isSelected = prev.some((p) => p._id === product._id);
@@ -18,13 +16,11 @@ const BuyMore = ({ data = [] }) => {
       }
     });
   };
-
   const calculateTotal = () => {
     return selectedProducts.reduce((total, product) => {
       return total + isDateNotPast(product.variants);
     }, 0);
   };
-
   const calculateSavings = () => {
     return selectedProducts.reduce((total, product) => {
       return (
@@ -32,15 +28,13 @@ const BuyMore = ({ data = [] }) => {
       );
     }, 0);
   };
-
   const handleAddToCart = () => {
     console.log("Adding to cart:", selectedProducts);
   };
-
   return (
     <>
       {data.length ? (
-        <>
+        <div className="max-lg:py-[50px] py-[70px]">
           <h4 className="text-[20px] font-semibold mb-[26px]">Buy it with</h4>
           <div className="grid grid-cols-5 max-lg:gap-5 gap-6">
             <div className="col-span-4">
@@ -61,11 +55,9 @@ const BuyMore = ({ data = [] }) => {
                 )}
               </div>
             </div>
-
             <div className="w-full">
               <div className="bg-white rounded-lg sticky top-6">
                 <h3 className="text-xl font-bold mb-4">Order Summary</h3>
-
                 {selectedProducts.length === 0 ? (
                   <p className="text-gray-500 text-center py-8">
                     No products selected
@@ -96,7 +88,6 @@ const BuyMore = ({ data = [] }) => {
                         </div>
                       ))}
                     </div>
-
                     <div className="border-t pt-4 space-y-2">
                       <div className="flex justify-between text-lg font-bold">
                         <span>Total Price:</span>
@@ -117,7 +108,6 @@ const BuyMore = ({ data = [] }) => {
                         </div>
                       )}
                     </div>
-
                     <button
                       className="w-full bg-green text-white py-3 rounded-lg font-medium mt-6 cursor-pointer transition-colors flex items-center justify-center space-x-2"
                       onClick={handleAddToCart}
@@ -130,12 +120,11 @@ const BuyMore = ({ data = [] }) => {
               </div>
             </div>
           </div>
-        </>
+        </div>
       ) : (
         <> </>
       )}
     </>
   );
 };
-
 export default BuyMore;

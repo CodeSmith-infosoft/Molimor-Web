@@ -24,7 +24,7 @@ export default function CategoriesNavigation() {
   }, []);
 
   return (
-    <nav className="bg-white">
+    <nav className="bg-white max-md:hidden">
       <div className="max-w-[1576px] max-lg:px-5 px-10 mx-auto mt-[30px]">
         <div className="flex items-center gap-[32px]">
           <CategoryDropdown categoriesData={data} />

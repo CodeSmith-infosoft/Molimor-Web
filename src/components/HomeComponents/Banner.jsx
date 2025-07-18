@@ -1,6 +1,7 @@
 import useAxios from "@/customHook/fetch-hook";
 import { ChevronRight } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import Marquee from "react-fast-marquee";
 import { useNavigate } from "react-router-dom";
 
 const Banner = () => {
@@ -96,8 +97,8 @@ const Banner = () => {
 
   return (
     <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto">
-      <div className="grid grid-cols-[auto_auto] gap-[32px] ">
-        <div>
+      <div className="grid max-md:grid-cols-1 grid-cols-[auto_auto] gap-[32px] ">
+        <div className="max-md:hidden">
           <div
             className={`hide-scrollbar h-[580px] mt-[1px] bg-white max-lg:max-w-[250px] max-w-[298px] z-20 w-80 overflow-y-auto transition-all duration-300 ease-in-out transform opacity-100 scale-100 translate-y-0`}
           >
@@ -108,9 +109,12 @@ const Banner = () => {
             </div>
           </div>
         </div>
-        <img src="/images/dummy/homeMainBanner.svg" className="h-[580px] object-cover" />
+        <img
+          src="/images/dummy/homeMainBanner.svg"
+          className="h-[580px] max-md:h-auto object-cover"
+        />
       </div>
-      <div className="section-top-spacing grid grid-cols-3 max-lg:gap-[20px] gap-[70px] overflow-hidden">
+      <div className="section-top-spacing grid max-lg:hidden grid-cols-3 max-lg:gap-[20px] gap-[70px] overflow-hidden">
         <img
           src="/images/dummy/Rectangle1442.svg"
           className="max-h-[200px] w-auto"
@@ -124,6 +128,24 @@ const Banner = () => {
           className="max-h-[200px] w-auto"
         />
       </div>
+      <Marquee
+        pauseOnHover={true}
+        className="max-lg:!flex !hidden certificate-marquee section-top-spacing"
+        duration={15000}
+      >
+        <img
+          src="/images/dummy/Rectangle1442.svg"
+          className="max-h-[200px] ml-5 w-auto"
+        />
+        <img
+          src="/images/dummy/Rectangle1443.svg"
+          className="max-h-[200px] ml-5 w-auto"
+        />
+        <img
+          src="/images/dummy/Rectangle1444.svg"
+          className="max-h-[200px] ml-5 w-auto"
+        />
+      </Marquee>
     </div>
   );
 };

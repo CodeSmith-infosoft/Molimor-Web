@@ -43,14 +43,14 @@ const BestSeller = () => {
             {molimor?.products?.slice(0, 2)?.map((deal, i) => (
               <CarouselItem
                 key={i}
-                className="max-lg:max-w-[220px] max-main:max-w-[250px] max-w-[276px] w-full shrink-0"
+                className="max-md:max-w-[220px] max-lg:max-w-[243px] max-main:max-w-[250px] max-w-[276px] w-full shrink-0"
               >
                 <FillCard data={deal} />
               </CarouselItem>
             ))}
             <CarouselItem
               className={
-                "flex items-center max-lg:min-w-[273px] max-main:min-w-[336px] w-full max-lg:w-[257px]"
+                "flex items-center max-md:hidden max-lg:min-w-[273px] max-main:min-w-[336px] w-full max-lg:w-[257px]"
               }
             >
               <img
@@ -61,7 +61,7 @@ const BestSeller = () => {
             {molimor?.products?.slice(2, 4)?.map((deal, i) => (
               <CarouselItem
                 key={i}
-                className="max-lg:max-w-[220px] max-main:max-w-[250px] max-w-[276px] w-full shrink-0"
+                className="max-md:max-w-[220px] max-lg:max-w-[243px] max-main:max-w-[250px] max-w-[276px] w-full shrink-0"
               >
                 <FillCard data={deal} />
               </CarouselItem>
@@ -77,14 +77,14 @@ const BestSeller = () => {
             {homeKitchen?.products.slice(0, 2)?.map((deal, i) => (
               <CarouselItem
                 key={i}
-                className="max-lg:max-w-[220px] max-main:max-w-[250px] max-w-[276px] w-full shrink-0"
+                className="max-md:max-w-[220px] max-lg:max-w-[243px] max-main:max-w-[250px] max-w-[276px] w-full shrink-0"
               >
                 <FillCard data={deal} />
               </CarouselItem>
             ))}
             <CarouselItem
               className={
-                "flex items-center max-lg:min-w-[273px] max-main:min-w-[336px] w-full max-lg:w-[257px]"
+                "flex items-center max-md:hidden max-lg:min-w-[273px] max-main:min-w-[336px] w-full max-lg:w-[257px]"
               }
             >
               <img
@@ -95,7 +95,7 @@ const BestSeller = () => {
             {homeCare?.products.slice(0, 2)?.map((deal, i) => (
               <CarouselItem
                 key={i}
-                className="max-lg:max-w-[220px] max-main:max-w-[250px] max-w-[276px] w-full shrink-0"
+                className="max-md:max-w-[220px] max-lg:max-w-[243px] max-main:max-w-[250px] max-w-[276px] w-full shrink-0"
               >
                 <FillCard data={deal} />
               </CarouselItem>
