@@ -46,7 +46,7 @@ export default function CountdownTimer({
   }, []);
 
   return (
-    <div className="text-white">
+    <div className="text-white flex justify-center items-center gap-1">
       <span className="text-xs opacity-70 font-medium">
         Until the end of the sale:
       </span>{" "}

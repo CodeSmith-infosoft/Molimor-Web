@@ -34,7 +34,7 @@ const SocialPlatform = () => {
               style={{ borderRadius: "10px" }}
               className="object-contain w-[200px] h-[200px]"
             />
-            <div className=" group-hover:opacity-100 absolute top-0 left-0 w-full h-full bg-black/60 opacity-0 transition-opacity duration-300 ease-in-out flex justify-center items-center rounded-[10px] cursor-pointer">
+            <div className=" group-hover:opacity-100 text-white absolute top-0 left-0 w-full h-full bg-black/60 opacity-0 transition-opacity duration-300 ease-in-out flex justify-center items-center rounded-[10px] cursor-pointer">
               <FaInstagram size={70} />
             </div>
           </div>

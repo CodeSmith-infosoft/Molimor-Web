@@ -286,7 +286,7 @@ const Wishlist = () => {
             </div>
             <div className="flex justify-between items-center mt-10">
               <button
-                className=" text-sm"
+                className=" text-sm underline"
                 onClick={() => navigate("/products")}
               >
                 Continue Shopping

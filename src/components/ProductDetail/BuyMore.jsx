@@ -40,7 +40,7 @@ const BuyMore = ({ data = [] }) => {
   return (
     <>
       <h4 className="text-[20px] font-semibold mb-[26px]">Buy it with</h4>
-      <div className="grid grid-cols-5 gap-6">
+      <div className="grid grid-cols-5 max-lg:gap-5 gap-6">
         <div className="col-span-4">
           <div className="grid grid-cols-4 gap-5">
             {data?.length ? (
@@ -60,8 +60,8 @@ const BuyMore = ({ data = [] }) => {
           </div>
         </div>
 
-        <div className="flex justify-end">
-          <div className="bg-white rounded-lg p-6 sticky top-6 min-w-[280px]">
+        <div className="w-full">
+          <div className="bg-white rounded-lg sticky top-6">
             <h3 className="text-xl font-bold mb-4">Order Summary</h3>
 
             {selectedProducts.length === 0 ? (
@@ -76,7 +76,7 @@ const BuyMore = ({ data = [] }) => {
                       key={product._id}
                       className="flex justify-between items-center"
                     >
-                      <div className="flex-1">
+                      <div className="flex-1 max-lg:max-w-[120px]">
                         <h4 className="font-medium text-sm line-clamp-1">
                           {product.title}
                         </h4>

@@ -11,7 +11,8 @@ import { IoLogOut } from "react-icons/io5";
 
 export default function Header() {
   // const [language, setLanguage] = useState("English");
-  const { currency, setCurrency, cartCount, setCartCount } = useContext(MainContext);
+  const { currency, setCurrency, cartCount, setCartCount } =
+    useContext(MainContext);
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -68,6 +69,18 @@ export default function Header() {
     localStorage.removeItem("token");
     localStorage.removeItem("_id");
     navigate("/login");
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && searchQuery.length) {
+      navigate(`/products?search=${searchQuery}`);
+    }
+  };
+
+  const handleSearch = () => {
+    if (searchQuery.length) {
+      navigate(`/products?search=${searchQuery}`);
+    }
   };
 
   return (
@@ -156,10 +169,14 @@ export default function Header() {
                 type="text"
                 placeholder="Search for products, categories or brands..."
                 value={searchQuery}
+                onKeyDown={handleKeyDown}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full px-4 py-3 text-sm border bg-[#F3F4F6] border-[#E5E7EB] rounded-lg focus:outline-none focus:ring-2 focus:ring-green focus:border-transparent"
               />
-              <button className="absolute right-3 top-1/2 transform -translate-y-1/2">
+              <button
+                className="absolute right-3 cursor-pointer top-1/2 transform -translate-y-1/2"
+                onClick={() => handleSearch()}
+              >
                 <svg
                   width="26"
                   height="26"
@@ -258,13 +275,13 @@ export default function Header() {
                   />
                 </svg>
 
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-semibold rounded-full w-5 h-5 flex items-center justify-center">
+                <span className="absolute -top-2 -right-2 bg-[#DC2626] text-white text-[10px] font-semibold rounded-full w-5 h-5 flex items-center justify-center">
                   {activeCart.wishlist}
                 </span>
               </Link>
             </div>
 
-            <div className="relative">
+            <div className="relative pr-2">
               <Link to={"/cart"}>
                 <svg
                   width="33"
@@ -279,7 +296,7 @@ export default function Header() {
                   />
                 </svg>
 
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-semibold rounded-full w-5 h-5 flex items-center justify-center">
+                <span className="absolute -top-2 right-0 bg-[#DC2626] text-white text-[10px] font-semibold rounded-full w-5 h-5 flex items-center justify-center">
                   {activeCart.cart}
                 </span>
               </Link>

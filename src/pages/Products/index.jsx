@@ -10,17 +10,21 @@ const Products = () => {
   const [searchParams] = useSearchParams();
   const categoryQuery = searchParams.get("category") || "";
   const subcategoryIdQuery = searchParams.get("subcategoryId") || "";
+  const searchQuery = searchParams.get("search") || "";
+
   const [filter, setFilter] = useState({
     category: "",
     subcategoryId: "",
     minPrice: "",
     maxPrice: "",
     review: "",
+    search: "",
   });
+
   const [data, setData] = useState([]);
   const { fetchData } = useAxios({
     method: "GET",
-    url: "", // we'll pass url dynamically
+    url: "",
   });
 
   const requestCounter = useRef(0);
@@ -28,27 +32,38 @@ const Products = () => {
   useEffect(() => {
     const requestId = ++requestCounter.current;
     fetchData({
-      url: `/product/getAllProductsList?${getParamString(filter)}`,
+      url: `/product/getAllProductsList?${getParamString({
+        ...filter,
+        search: "",
+      })}`,
     }).then((res) => {
       if (requestId === requestCounter.current) {
-        setData(res.data);
+        let result = res.data;
+        if (filter.search) {
+          result = result.filter((item) =>
+            item.name.toLowerCase().includes(filter.search.toLowerCase())
+          );
+        }
+
+        setData(result);
       }
     });
   }, [filter]);
 
   useEffect(() => {
-    if (categoryQuery || subcategoryIdQuery) {
+    if (categoryQuery || subcategoryIdQuery || searchQuery) {
       let newCategory = null;
       if (categoryQuery.split("-").length > 1) {
         newCategory = categoryQuery.split("-").join(" & ");
       }
-      setFilter({
-        ...filter,
+      setFilter((prev) => ({
+        ...prev,
         category: newCategory || categoryQuery,
         subcategoryId: subcategoryIdQuery,
-      });
+        search: searchQuery,
+      }));
     }
-  }, [categoryQuery, subcategoryIdQuery]);
+  }, [categoryQuery, subcategoryIdQuery, searchQuery]);
 
   return (
     <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto">
