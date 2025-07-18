@@ -314,7 +314,7 @@ export default function Order() {
   };
 
   return (
-    <div className="bg-[#f3f4f6] max-sm:py-[30px] max-md:py-[40px] max-lg:py-[50px] py-[70px]">
+    <div className="bg-[#f3f4f6] max-mobile:py-[30px] max-md:py-[40px] max-lg:py-[50px] py-[70px]">
       <div className="bg-white max-lg:py-[30px] py-[50px]">
         <div className="max-w-[1576px]  px-10 max-lg:px-5 mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-3 max-md:gap-[0px] max-lg:gap-[20px] gap-[100px]">

@@ -76,22 +76,27 @@ export default function OrderDetail() {
   );
 
   return (
-    <div className="max-w-[1576px] px-10 max-lg:px-5 max-lg:py-[50px] py-[70px] mx-auto">
+    <div className="max-w-[1576px] px-10 max-lg:px-5 max-mobile:py-[30px] max-md:py-[40px] max-lg:py-[50px] py-[70px] mx-auto">
       <div className="border max-lg:px-5 px-[37px]">
         {/* Header */}
-        <div className="flex items-center justify-between py-4 px-6 border-b border-gray-200 mb-6">
-          <div className="flex items-center space-x-2">
-            <span className="text-[22px] font-black">Order Details</span>
-            <span className="opacity-50">•</span>
-            <span className="text-sm opacity-50">{orderData.orderDate}</span>
-            <span className="opacity-50">•</span>
-            <span className="text-sm opacity-50">
+        <div className="flex max-mobile:flex-col-reverse max-mobile:items-start items-center max-mobile:justify-start justify-between py-4 px-6 border-b border-gray-200 mb-6">
+          <div className="flex max-sm:flex-col flex-row max-sm:items-start items-center gap-1 md:gap-x-2">
+            <span className="text-[22px] font-black max-md:text-[20px]">
+              Order Details
+            </span>
+            <span className="opacity-50 max-sm:hidden inline">•</span>
+            <span className="text-sm opacity-50 max-md:text-xs">
+              {orderData.orderDate}
+            </span>
+            <span className="opacity-50 max-sm:hidden inline">•</span>
+            <span className="text-sm opacity-50 max-md:text-xs">
               {orderData.numProducts} Products
             </span>
           </div>
+
           <Link
             to={"/recent-order"}
-            className="text-green hover:underline font-semibold"
+            className="text-green max-mobile:mb-5 hover:underline font-semibold"
           >
             Back to List
           </Link>

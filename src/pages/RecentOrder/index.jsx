@@ -53,7 +53,7 @@ export default function RecentOrder() {
   ];
 
   return (
-    <div className="flex max-w-[1576px] max-lg:py-[50px] py-[70px] max-lg:px-5 px-10 mx-auto items-start justify-center">
+    <div className="flex max-w-[1576px] max-mobile:py-[30px] max-md:py-[40px] max-lg:py-[50px] py-[70px] max-lg:px-5 px-10 mx-auto items-start justify-center">
       <div className="w-full bg-white border border-[#E5E7EB] rounded-[8px]">
         {/* Header with background and bottom border */}
         <div className="flex flex-row items-center justify-between max-lg:p-5 py-5 px-9 border-b border-gray-200">
