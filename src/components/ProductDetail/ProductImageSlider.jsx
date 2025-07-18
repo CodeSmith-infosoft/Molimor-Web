@@ -73,7 +73,7 @@ export default function ProductImageSlider({ data, selectedWeight }) {
       <div className="flex flex-col gap-4 w-full">
         <Carousel
           setApi={setMainApi}
-          className="w-full h-full !max-h-[660px] relative"
+          className="w-full h-full max-lg:!max-h-[438px] !max-h-[660px]  relative"
         >
           <CarouselContent>
             {data?.image?.map((image, index) => (

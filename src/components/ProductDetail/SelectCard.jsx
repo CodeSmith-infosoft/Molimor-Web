@@ -25,7 +25,7 @@ const SelectCard = ({ product, isSelected, onSelect }) => {
       <div
         className={`bg-[#FFFFFF] border rounded-[10px] px-5 py-[27px] group cursor-pointer w-full h-full transition-all duration-300 ${
           isSelected 
-            ? 'border-green shadow-lg' 
+            ? 'border-green' 
             : 'border-[#E5E7EB] hover:border-gray-300'
         }`}
         onClick={handleClick}
@@ -49,7 +49,7 @@ const SelectCard = ({ product, isSelected, onSelect }) => {
                 currency,
                 language
               )}{" "}
-              <span className="text-sm font-medium line-through opacity-30 ml-[10px]">
+              <span className="text-sm font-medium line-through opacity-30 max-lg:ml-[4px] ml-[10px]">
                 {formatCurrency(product.variants[0].mrp, currency, language)}
               </span>
             </label>

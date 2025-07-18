@@ -102,6 +102,18 @@ export default function Header() {
     navigate("/login");
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && searchQuery.length) {
+      navigate(`/products?search=${searchQuery}`);
+    }
+  };
+
+  const handleSearch = () => {
+    if (searchQuery.length) {
+      navigate(`/products?search=${searchQuery}`);
+    }
+  };
+
   return (
     <div className="w-full bg-white fixed z-20 top-0">
       {/* Green countdown banner */}
@@ -188,10 +200,14 @@ export default function Header() {
                 type="text"
                 placeholder="Search for products, categories or brands..."
                 value={searchQuery}
+                onKeyDown={handleKeyDown}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full px-4 py-3 text-sm border bg-[#F3F4F6] border-[#E5E7EB] rounded-lg focus:outline-none focus:ring-2 focus:ring-green focus:border-transparent"
               />
-              <button className="absolute right-3 top-1/2 transform -translate-y-1/2">
+              <button
+                className="absolute right-3 cursor-pointer top-1/2 transform -translate-y-1/2"
+                onClick={() => handleSearch()}
+              >
                 <svg
                   width="26"
                   height="26"

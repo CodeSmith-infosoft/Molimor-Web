@@ -173,12 +173,12 @@ const Cart = () => {
 
   return (
     <>
-      <div className="bg-[#f3f4f6] py-[70px]">
-        <div className="bg-white py-[50px]">
+      <div className="bg-[#f3f4f6] max-lg:py-[50px] py-[70px]">
+        <div className="bg-white max-lg:py-[30px] py-[50px]">
           <div className="max-w-[1576px]  px-10 max-lg:px-5 mx-auto">
-            <div className="grid grid-cols-3 gap-[100px]">
+            <div className="grid grid-cols-3 max-lg:gap-5 gap-[100px]">
               <div>
-                <Card className="w-full p-[22px] gap-0 !rounded-[5px] !border-[#E5E7EB]">
+                <Card className="w-full p-[22px] gap-0 !shadow-none !rounded-[5px] !border-[#E5E7EB]">
                   <CardHeader className="border-b gap-0 px-0">
                     <CardTitle className="text-[20px] mb-[10px] font-bold">
                       Summary
@@ -186,7 +186,7 @@ const Cart = () => {
                     <p className="text-[16px] font-light">Estimate Shipping</p>
                   </CardHeader>
                   <CardContent className="space-y-6 px-0">
-                    <div className="space-y-2 pt-4 dark:border-gray-700">
+                    <div className="space-y-2 pt-4">
                       <div className="flex justify-between mb-4">
                         <span className="text-sm">Sub-Total</span>
                         <span className="text-sm font-medium">{subTotal}</span>
@@ -209,7 +209,7 @@ const Cart = () => {
                   </CardContent>
                 </Card>
               </div>
-              <div className="col-span-2">
+              <div className=" col-span-2">
                 <div className="w-full overflow-x-auto">
                   <Table>
                     <TableHeader>
@@ -235,7 +235,7 @@ const Cart = () => {
                       {cartData?.length ? (
                         cartData?.map((item) => (
                           <TableRow key={item?._id}>
-                            <TableCell className="flex items-center gap-4 py-4 overflow-hidden">
+                            <TableCell className="flex max-lg:max-w-[200px] items-center gap-4 py-4 overflow-hidden">
                               <img
                                 src={item?.productId?.image}
                                 alt={item?.productId?.title}
