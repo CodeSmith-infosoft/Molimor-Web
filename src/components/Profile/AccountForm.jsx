@@ -114,7 +114,7 @@ export default function AccountForm({ userData, getProfile }) {
 
   return (
     <div className=" rounded-[8px] bg-white border border-[#E6E6E6]">
-      <h1 className="max-sm:text-lg text-[20px] py-4 px-6 border-b font-medium">
+      <h1 className="max-mobile:text-lg text-[20px] py-4 px-6 border-b font-medium">
         Your Account
       </h1>
 

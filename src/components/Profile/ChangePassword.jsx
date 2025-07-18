@@ -312,7 +312,7 @@ export default function ChangePassword() {
         {/* Change Password Button */}
         <button
           onClick={handleChangePassword}
-          className="bg-green cursor-pointer text-white px-8 py-[14px] rounded-[43px] font-medium transition-colors duration-200"
+          className="bg-green cursor-pointer max-mobile: text-white px-8 py-[14px] rounded-[43px] font-medium transition-colors duration-200"
         >
           Change Password
         </button>
