@@ -70,6 +70,8 @@ export default function Header() {
   const scrollTimeoutRef = useRef(null);
 
   useEffect(() => {
+    if (!isHomePage) return;
+
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
@@ -78,16 +80,16 @@ export default function Header() {
         clearTimeout(scrollTimeoutRef.current);
       }
 
-      // Hide categories when scrolling down, show when scrolling up
+      // Hide categories when scrolling down past 100
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        // Scrolling down - hide categories
         setShowCategories(false);
-      } else if (currentScrollY < lastScrollY && currentScrollY > 100) {
-        // Scrolling up - show categories
+      }
+      // Show categories only when scrolled up and near top (<= 100)
+      else if (currentScrollY < lastScrollY && currentScrollY <= 100) {
         setShowCategories(true);
       }
 
-      // Show categories after user stops scrolling for 2 seconds
+      // Show categories after 2 seconds of no scroll
       scrollTimeoutRef.current = setTimeout(() => {
         setShowCategories(true);
       }, 2000);
@@ -95,17 +97,12 @@ export default function Header() {
       setLastScrollY(currentScrollY);
     };
 
-    // Only add scroll listener on home pages
-    if (isHomePage) {
-      window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-        if (scrollTimeoutRef.current) {
-          clearTimeout(scrollTimeoutRef.current);
-        }
-      };
-    }
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+    };
   }, [lastScrollY, isHomePage]);
 
   useEffect(() => {
@@ -393,7 +390,7 @@ export default function Header() {
       </div>
 
       <CategoriesNavigation />
-      <div className=" max-md:block px-5 my-6 max-mobile:my-4 hidden">
+      <div className=" max-md:block transition-all px-5 my-6 max-mobile:my-4 hidden">
         <div className="relative">
           <input
             type="text"
@@ -423,10 +420,15 @@ export default function Header() {
           </button>
         </div>
       </div>
-      {isHomePage && showCategories && (
+      {isHomePage && (
         <div
-          className="hidden max-md:block mb-4"
-          ref={scrollTimeoutRef}
+          className={`max-md:block overflow-hidden transition-all duration-500 ease-in-out
+    ${
+      showCategories
+        ? "opacity-100 max-h-[100px]"
+        : "opacity-0 max-h-0 pointer-events-none"
+    }
+  `}
         >
           <Carousel className="w-full relative px-[10px]">
             <CarouselContent className={"max-mobile:gap-8 gap-[10px]"}>
