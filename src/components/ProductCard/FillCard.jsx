@@ -7,16 +7,16 @@ const FillCard = ({ data }) => {
   const navigate = useNavigate()
 
   return (
-    <div className="bg-[#FFFFFF] rounded-[10px] py-[27px] group cursor-pointer w-full" onClick={() => {
+    <div className="bg-[#FFFFFF] rounded-[10px] max-lg:py-5 py-[27px] group cursor-pointer w-full" onClick={() => {
       navigate(`/products/${data._id}`)
     }}>
-      <div className="max-w-[200px] mx-auto relative">
+      <div className="max-w-[200px] max-lg:max-w-[172px] mx-auto relative">
         <img
           src="/images/dummy/khichadi.png"
-          className="w-auto max-h-[220px] mb-4 group-hover:scale-[1.05] transition-transform duration-300 ease-in-out"
+          className="w-auto max-lg:max-h-[170px] max-h-[220px] mb-4 group-hover:scale-[1.05] transition-transform duration-300 ease-in-out"
         />
         <div className="space-y-[10px] px-2">
-          <label className="capitalize font-medium line-clamp-1">{data.title}</label>
+          <label className="capitalize font-medium line-clamp-2">{data.title}</label>
           <StarRating rating={3.5} />
           {isDateNotPastBoolean(data.variants) ? (
             <span className="text-[#2C26DC] text-lg font-semibold">

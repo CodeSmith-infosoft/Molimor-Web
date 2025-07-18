@@ -1,6 +1,13 @@
 import useAxios from "@/customHook/fetch-hook";
 import React, { useEffect } from "react";
 import FillCard from "../ProductCard/FillCard";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "../ui/carousel";
 
 const CategoryProduct = () => {
   const { data: molimor, fetchData: fetchMolimor } = useAxios({
@@ -28,9 +35,20 @@ const CategoryProduct = () => {
           <img src="/images/dummy/76.svg" className="mb-5" />
           <div className="flex gap-[10px]">
             {molimor?.products?.length ? (
-              molimor?.products
-                ?.slice(0, 3)
-                ?.map((deal) => <FillCard data={deal} />)
+              <Carousel className="w-full relative">
+                <CarouselContent className={"gap-[10px]"}>
+                  {molimor?.products?.slice(0, 3)?.map((deal, i) => (
+                    <CarouselItem
+                      key={i}
+                      className="max-lg:max-w-[243px] max-w-[239px] w-full shrink-0"
+                    >
+                      <FillCard data={deal} />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 z-10" />
+                <CarouselNext className="absolute max-main:right-0 right-4 top-1/2 -translate-y-1/2 z-10" />
+              </Carousel>
             ) : (
               <></>
             )}
@@ -40,9 +58,20 @@ const CategoryProduct = () => {
           <img src="/images/dummy/76.svg" className="mb-5" />
           <div className="flex gap-[10px]">
             {girnes?.products?.length ? (
-              girnes?.products
-                ?.slice(0, 3)
-                ?.map((deal) => <FillCard data={deal} />)
+              <Carousel className="w-full relative">
+                <CarouselContent className={"gap-[10px]"}>
+                  {girnes?.products?.slice(0, 3)?.map((deal, i) => (
+                    <CarouselItem
+                      key={i}
+                      className="max-lg:max-w-[243px] max-w-[239px] w-full shrink-0"
+                    >
+                      <FillCard data={deal} />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 z-10" />
+                <CarouselNext className="absolute max-main:right-0 right-4 top-1/2 -translate-y-1/2 z-10" />
+              </Carousel>
             ) : (
               <></>
             )}

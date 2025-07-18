@@ -1,6 +1,6 @@
 import useAxios from "@/customHook/fetch-hook";
 import { useEffect } from "react";
-import Marquee from "react-easy-marquee";
+import Marquee from "react-fast-marquee";
 import { FaInstagram } from "react-icons/fa";
 
 const SocialPlatform = () => {
@@ -18,10 +18,10 @@ const SocialPlatform = () => {
       <h3 className="text-2xl font-medium sub-bottom-spacing text-center">
         Social Platform
       </h3>
-      <Marquee autoFill={true} pauseOnHover={true} className="!h-[200px]">
+      <Marquee autoFill={true} pauseOnHover={true} duration={15000} className="!h-[200px]">
         {data?.map((item, index) => (
           <div
-            className="relative group overflow-hidden"
+            className="relative group overflow-hidden ml-[22px]"
             onClick={() =>
               window.open(item.url, "_blank", "noopener,noreferrer")
             }

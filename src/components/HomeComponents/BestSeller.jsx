@@ -2,6 +2,13 @@ import useAxios from "@/customHook/fetch-hook";
 import React, { useEffect } from "react";
 import FillCard from "../ProductCard/FillCard";
 import SubHeader from "./SubHeader";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "../ui/carousel";
 
 const BestSeller = () => {
   const { data: molimor, fetchData: fetchMolimor } = useAxios({
@@ -31,30 +38,72 @@ const BestSeller = () => {
     <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto section-top-spacing">
       <SubHeader heading={"best seller product"} link={"/products"} />
       <div className={`flex gap-5 mb-5`}>
-        {molimor?.products.slice(0, 2).map((product) => (
-          <div className="max-w-[267px] w-full">
-            <FillCard data={product} />
-          </div>
-        ))}
-        <img src="/images/dummy/Frame19.svg" />
-        {molimor?.products.slice(2, 4).map((product) => (
-          <div className="max-w-[267px] w-full">
-            <FillCard data={product} />
-          </div>
-        ))}
+        <Carousel className="w-full relative">
+          <CarouselContent className={"gap-[10px]"}>
+            {molimor?.products?.slice(0, 2)?.map((deal, i) => (
+              <CarouselItem
+                key={i}
+                className="max-lg:max-w-[220px] max-main:max-w-[250px] max-w-[276px] w-full shrink-0"
+              >
+                <FillCard data={deal} />
+              </CarouselItem>
+            ))}
+            <CarouselItem
+              className={
+                "flex items-center max-lg:min-w-[273px] max-main:min-w-[336px] w-full max-lg:w-[257px]"
+              }
+            >
+              <img
+                src="/images/dummy/Frame19.svg"
+                className="max-lg:min-w-[257px] max-main:min-w-[320px] w-full shrink-0"
+              />
+            </CarouselItem>
+            {molimor?.products?.slice(2, 4)?.map((deal, i) => (
+              <CarouselItem
+                key={i}
+                className="max-lg:max-w-[220px] max-main:max-w-[250px] max-w-[276px] w-full shrink-0"
+              >
+                <FillCard data={deal} />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 z-10" />
+          <CarouselNext className="absolute right-0 top-1/2 -translate-y-1/2 z-10" />
+        </Carousel>
       </div>
       <div className={`flex gap-5`}>
-        {homeKitchen?.products.slice(0, 2).map((product) => (
-          <div className="max-w-[267px] w-full">
-            <FillCard data={product} />
-          </div>
-        ))}
-        <img src="/images/dummy/Frame19.svg" />
-        {homeCare?.products.slice(0, 2).map((product) => (
-          <div className="max-w-[267px] w-full">
-            <FillCard data={product} />
-          </div>
-        ))}
+        <Carousel className="w-full relative">
+          <CarouselContent className={"gap-[10px]"}>
+            {homeKitchen?.products.slice(0, 2)?.map((deal, i) => (
+              <CarouselItem
+                key={i}
+                className="max-lg:max-w-[220px] max-main:max-w-[250px] max-w-[276px] w-full shrink-0"
+              >
+                <FillCard data={deal} />
+              </CarouselItem>
+            ))}
+            <CarouselItem
+              className={
+                "flex items-center max-lg:min-w-[273px] max-main:min-w-[336px] w-full max-lg:w-[257px]"
+              }
+            >
+              <img
+                src="/images/dummy/Frame19.svg"
+                className="max-lg:min-w-[257px] max-main:min-w-[320px] w-full shrink-0"
+              />
+            </CarouselItem>
+            {homeCare?.products.slice(0, 2)?.map((deal, i) => (
+              <CarouselItem
+                key={i}
+                className="max-lg:max-w-[220px] max-main:max-w-[250px] max-w-[276px] w-full shrink-0"
+              >
+                <FillCard data={deal} />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 z-10" />
+          <CarouselNext className="absolute right-0 top-1/2 -translate-y-1/2 z-10" />
+        </Carousel>
       </div>
     </div>
   ) : (

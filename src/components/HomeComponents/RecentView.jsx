@@ -17,9 +17,9 @@ const RecentView = () => {
         Recently Viewed
       </h3>
       <Carousel className="w-full relative">
-        <CarouselContent className={"gap-5"}>
+        <CarouselContent className={"max-lg:gap-0 gap-5"}>
           {recent?.map((data, index) => (
-            <CarouselItem key={index} className="w-[240px] shrink-0">
+            <CarouselItem key={index} className="max-lg:max-w-[220px] w-[240px] shrink-0">
                 <FillCard data={data} />
             </CarouselItem>
           ))}
