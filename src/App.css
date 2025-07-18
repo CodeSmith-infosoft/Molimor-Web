@@ -24,6 +24,35 @@ input:focus-visible {
   .sub-bottom-spacing {
     margin-bottom: 26px;
   }
+
+  @media (max-width: 1024px) {
+    .section-top-spacing {
+      margin-top: 50px;
+    }
+
+    .sub-bottom-spacing {
+      margin-bottom: 16px;
+    }
+  }
+  @media (max-width: 768px) {
+    .section-top-spacing {
+      margin-top: 40px;
+    }
+
+    .sub-bottom-spacing {
+      margin-bottom: 16px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .section-top-spacing {
+      margin-top: 30px;
+    }
+
+    .sub-bottom-spacing {
+      margin-bottom: 12px;
+    }
+  }
 }
 
 .hide-scrollbar {

@@ -105,7 +105,7 @@ const AddressFormSection = ({
     placeholder,
     dropdownRef
   ) => (
-    <div className="mb-[22px] group relative" ref={dropdownRef}>
+    <div className="max-lg:mb-[22px] mb-[22px] group relative" ref={dropdownRef}>
       <label
         htmlFor={name}
         className={`block text-sm pb-2 transition-opacity duration-300 `}
@@ -157,7 +157,7 @@ const AddressFormSection = ({
     <>
       {title && <h2 className="font-bold text-xl mb-6">{title}</h2>}
       {includeContactFields && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 max-lg:gap-x-[20px] gap-x-6">
           <InputGroup
             label="First name*"
             name={getFieldName("firstName")}
@@ -235,7 +235,7 @@ const AddressFormSection = ({
         placeholder={"Your City"}
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 max-lg:gap-x-[20px] gap-x-6">
         {renderSelect(
           "State*",
           getFieldName("state"),

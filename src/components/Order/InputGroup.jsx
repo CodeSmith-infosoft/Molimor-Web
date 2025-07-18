@@ -1,15 +1,15 @@
 import ErrorComponent from "../Common/ErrorComponent"
 
 const InputGroup = ({ label, type = "text", name, value, onChange, placeholder, error, className = "" }) => {
-  const inputClasses = `w-full text-sm px-4 py-[11px] rounded-[8px] border text-base transition-opacity duration-300 outline-none ${
-    error ? "border-red-500" : "border-[#E5E7EB]"
+  const inputClasses = `w-full px-4 py-[11px] rounded-[8px] border text-base transition-opacity duration-300 outline-none ${
+    error ? "border-[#fb2c36]" : "border-[#E5E7EB]"
   } `
 
   return (
-    <div className={`mb-[22px] group ${className}`}>
+    <div className={`max-lg:mb-[20px] mb-[22px] group ${className}`}>
       <label
         htmlFor={name}
-        className={`block text-sm pb-2 transition-opacity duration-300 `}
+        className={`block max-lg:text-[13px] text-sm pb-2 transition-opacity duration-300 `}
       >
         {label}
       </label>

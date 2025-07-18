@@ -26,36 +26,38 @@ const OrderSummary = ({
 
   return (
     <div className="bg-white p-[30px] border border-[#E5E7EB] rounded-lg">
-      <h2 className="font-semibold text-xl mb-5">Your order</h2>
+      <h2 className="font-semibold max-lg:text-[15px] text-xl mb-5">
+        Your order
+      </h2>
 
       <div className="flex justify-between items-center mb-[14px]">
-        <span className=" text-sm font-medium">Product</span>
-        <span className=" text-sm font-medium">Subtotal</span>
+        <span className="max-lg:text-xs text-sm font-medium">Product</span>
+        <span className="max-lg:text-xs text-sm font-medium">Subtotal</span>
       </div>
       {cartItems?.map((item) => (
         <div
           key={item.productId?._id}
           className="flex justify-between items-center mb-[14px]"
         >
-          <span className="text-sm max-w-[150px]">
+          <span className="max-lg:text-xs text-sm max-w-[150px]">
             {item?.productId?.title}{" "}
             <span className="font-bold">× {item?.quantity}</span>
           </span>
-          <span className="text-sm">
+          <span className="max-lg:text-xs text-sm">
             {formatCurrency(item?.price * item?.quantity, currency, language)}
           </span>
         </div>
       ))}
 
       <div className="flex justify-between items-center mb-[14px]">
-        <span className="text-sm font-medium">Subtotal</span>
-        <span className="text-sm">
+        <span className="max-lg:text-xs text-sm font-medium">Subtotal</span>
+        <span className="max-lg:text-xs text-sm">
           {formatCurrency(subtotal, currency, language)}
         </span>
       </div>
 
       <div className="flex justify-between items-center mb-[14px]">
-        <span className="text-sm font-medium">Shipping:</span>
+        <span className="max-lg:text-xs text-sm font-medium">Shipping:</span>
         <div className="flex flex-col items-end">
           <label className="flex items-center mb-1 cursor-pointer">
             <input
@@ -64,9 +66,9 @@ const OrderSummary = ({
               value="flatRate"
               checked={selectedShippingOption === "flatRate"}
               onChange={handleShippingChange}
-              className="hidden text-sm font-medium"
+              className="hidden max-lg:text-xs text-sm font-medium"
             />
-            <span className="text-sm font-medium mr-2">
+            <span className="max-lg:text-xs text-sm font-medium mr-2">
               Flat Rate: {formatCurrency(15, currency, language)}
             </span>
             <span
@@ -91,7 +93,7 @@ const OrderSummary = ({
               className="hidden"
             />
 
-            <span className="text-sm font-medium mr-2">Local Pickup</span>
+            <span className="max-lg:text-xs text-sm font-medium mr-2">Local Pickup</span>
             <span
               className={`w-4 h-4 rounded-full border-2 flex items-center justify-center  ${
                 selectedShippingOption === "localPickup"
@@ -107,8 +109,8 @@ const OrderSummary = ({
         </div>
       </div>
 
-      <div className="flex justify-between items-center font-bold text-lg border-t pt-[14px]">
-        <span className="text-sm font-medium">Total</span>
+      <div className="flex justify-between items-center font-bold max-lg:text-sm text-lg border-t pt-[14px]">
+        <span className="max-lg:text-xs text-sm font-medium">Total</span>
         <span className="text-sm font-bold">
           {formatCurrency(finalTotal, currency, language)}
         </span>

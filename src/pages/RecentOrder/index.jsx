@@ -53,10 +53,10 @@ export default function RecentOrder() {
   ];
 
   return (
-    <div className="flex max-w-[1576px] py-[70px] px-10 mx-auto items-start justify-center">
+    <div className="flex max-w-[1576px] max-lg:py-[50px] py-[70px] max-lg:px-5 px-10 mx-auto items-start justify-center">
       <div className="w-full bg-white border border-[#E5E7EB] rounded-[8px]">
         {/* Header with background and bottom border */}
-        <div className="flex flex-row items-center justify-between py-5 px-9 border-b border-gray-200">
+        <div className="flex flex-row items-center justify-between max-lg:p-5 py-5 px-9 border-b border-gray-200">
           <h2 className="">Recent Order History</h2>
           <div className="relative" ref={dropdownRef}>
             <button
@@ -93,12 +93,12 @@ export default function RecentOrder() {
         </div>
         <div className="">
           <div className="overflow-x-auto">
-            <Table>
+            <Table className={"!text-base"}>
               <TableHeader>
                 <TableRow className="border-b border-[#E5E7EB] bg-[#F3F4F6]">
                   {" "}
                   {/* Table header row has a bottom border */}
-                  <TableHead className="font-bold py-3 px-4 pl-[36px] text-left">
+                  <TableHead className="font-bold py-3 px-4 max-lg:pl-5 pl-[36px] text-left">
                     Order ID
                   </TableHead>
                   <TableHead className="font-bold py-3 px-4 text-left">
@@ -110,7 +110,7 @@ export default function RecentOrder() {
                   <TableHead className="font-bold py-3 px-4 text-left">
                     Status
                   </TableHead>
-                  <TableHead className="text-right font-bold pr-[36px] py-3 px-4">
+                  <TableHead className="text-right font-bold max-lg:pr-5 pr-[36px] py-3 px-4">
                     {" "}
                   </TableHead>{" "}
                 </TableRow>
@@ -125,7 +125,7 @@ export default function RecentOrder() {
                   >
                     {" "}
                     {/* Subtle border between rows */}
-                    <TableCell className="font-medium py-3 px-4 pl-9 border-b-0">
+                    <TableCell className="py-3 px-4 max-lg:pl-5 pl-9 border-b-0">
                       {order?.orderId}
                     </TableCell>
                     <TableCell className="py-3 px-4 border-b-0">
@@ -137,10 +137,10 @@ export default function RecentOrder() {
                     <TableCell className="py-3 px-4 border-b-0">
                       {order.status}
                     </TableCell>
-                    <TableCell className="text-right py-3 px-4 pr-9 border-b-0">
+                    <TableCell className="text-right py-3 px-4 max-lg:pr-5 pr-9 border-b-0">
                       <Link
                         to={`/recent-order/${order.orderId}`}
-                        className="text-green text-sm font-medium"
+                        className="text-green"
                       >
                         View Details
                       </Link>

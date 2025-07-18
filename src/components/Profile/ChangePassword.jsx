@@ -59,7 +59,7 @@ export default function ChangePassword() {
       newErrors.newPassword = "New password is required";
     } else if (passwordData.newPassword.length < 6) {
       newErrors.newPassword = "Password must be at least 6 characters long";
-    } 
+    }
 
     // Confirm Password validation
     if (!passwordData.confirmPassword) {
@@ -101,7 +101,7 @@ export default function ChangePassword() {
             confirmPassword: "",
           });
         } else {
-          toast.error(res.message)
+          toast.error(res.message);
         }
       });
 
@@ -118,7 +118,7 @@ export default function ChangePassword() {
       {/* Current Password */}
       <div className="py-6 px-[50px]">
         <div className="mb-[22px] group">
-          <label className="block text-gray-600 text-sm pb-2">
+          <label className="block max-lg:text-[13px] text-sm pb-2">
             Current Password
           </label>
           <div className="relative">
@@ -128,12 +128,8 @@ export default function ChangePassword() {
               value={passwordData.currentPassword}
               placeholder="••••••••••••••"
               onChange={handleChange}
-              className={`w-full px-4 py-[9px] pr-12 rounded-lg border text-base transition-opacity duration-300 ${
-                errors.currentPassword ? "border-red-500" : "border-gray-300"
-              } ${
-                passwordData.currentPassword
-                  ? "opacity-100 !border-[#333333]"
-                  : "opacity-50 focus:opacity-100"
+              className={`w-full px-4 py-[11px] rounded-[8px] border text-base transition-opacity duration-300 outline-none ${
+                errors.currentPassword ? "border-[#fb2c36]" : "border-[#E5E7EB]"
               }`}
             />
             <button
@@ -186,7 +182,7 @@ export default function ChangePassword() {
         <div className="flex gap-x-[10px] mb-6">
           {/* New Password */}
           <div className="flex-1 group">
-            <label className="block text-gray-600 text-sm pb-2">
+            <label className="block max-lg:text-[13px] text-sm pb-2">
               New Password
             </label>
             <div className="relative">
@@ -196,12 +192,8 @@ export default function ChangePassword() {
                 value={passwordData.newPassword}
                 placeholder="Password"
                 onChange={handleChange}
-                className={`w-full px-4 py-[9px] pr-12 rounded-lg border text-base transition-opacity duration-300 ${
-                  errors.newPassword ? "border-red-500" : "border-gray-300"
-                } ${
-                  passwordData.newPassword
-                    ? "opacity-100 !border-[#333333]"
-                    : "opacity-50 focus:opacity-100"
+                className={`w-full px-4 py-[11px] rounded-[8px] border text-base transition-opacity duration-300 outline-none ${
+                  errors.newPassword ? "border-[#fb2c36]" : "border-[#E5E7EB]"
                 }`}
               />
               <button
@@ -253,7 +245,7 @@ export default function ChangePassword() {
 
           {/* Confirm Password */}
           <div className="flex-1 group">
-            <label className="block text-gray-600 text-sm pb-2">
+            <label className="block max-lg:text-[13px] text-sm pb-2">
               Confirm Password
             </label>
             <div className="relative">
@@ -263,12 +255,10 @@ export default function ChangePassword() {
                 value={passwordData.confirmPassword}
                 placeholder="Password"
                 onChange={handleChange}
-                className={`w-full px-4 py-[9px] pr-12 rounded-lg border text-base transition-opacity duration-300 ${
-                  errors.confirmPassword ? "border-red-500" : "border-gray-300"
-                } ${
-                  passwordData.confirmPassword
-                    ? "opacity-100 !border-[#333333]"
-                    : "opacity-50 focus:opacity-100"
+                className={`w-full px-4 py-[11px] rounded-[8px] border text-base transition-opacity duration-300 outline-none ${
+                  errors.confirmPassword
+                    ? "border-[#fb2c36]"
+                    : "border-[#E5E7EB]"
                 }`}
               />
               <button

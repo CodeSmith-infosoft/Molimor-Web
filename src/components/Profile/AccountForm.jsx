@@ -122,9 +122,9 @@ export default function AccountForm({ userData, getProfile }) {
         {/* Left side - Form */}
         <div className="w-1/2">
           {/* First Name */}
-          <div className="mb-[22px] group">
+          <div className="max-lg:mb-[20px] mb-[22px] group">
             <label
-              className={`block text-mid-gray text-sm pb-2 transition-opacity duration-300 `}
+              className={`block max-lg:text-[13px] text-sm pb-2 transition-opacity duration-300  `}
             >
               First Name
             </label>
@@ -134,17 +134,17 @@ export default function AccountForm({ userData, getProfile }) {
               value={formData.firstName}
               placeholder="Enter your first name"
               onChange={handleChange}
-              className={`w-full px-4 py-[9px] rounded-lg border text-base transition-opacity duration-300 ${
-                errors.firstName ? "border-red-500" : "border-gray-300"
+              className={`w-full px-4 py-[11px] rounded-[8px] border text-base transition-opacity duration-300 outline-none ${
+                errors.firstName ? "border-[#fb2c36]" : "border-[#E5E7EB]"
               }`}
             />
             {errors.firstName && <ErrorComponent message={errors.firstName} />}
           </div>
 
           {/* Last Name */}
-          <div className="mb-[22px] group">
+          <div className="max-lg:mb-[20px] mb-[22px] group">
             <label
-              className={`block text-mid-gray text-sm pb-2 transition-opacity duration-300 `}
+              className={`block max-lg:text-[13px] text-sm pb-2 transition-opacity duration-300 `}
             >
               Last Name
             </label>
@@ -154,9 +154,9 @@ export default function AccountForm({ userData, getProfile }) {
               value={formData.lastName}
               placeholder="Enter your last name"
               onChange={handleChange}
-              className={`w-full px-4 py-[9px] rounded-lg border text-base transition-opacity duration-300 ${
-                errors.lastName ? "border-red-500" : "border-gray-300"
-              } `}
+              className={`w-full px-4 py-[11px] rounded-[8px] border text-base transition-opacity duration-300 outline-none ${
+                errors.lastName ? "border-[#fb2c36]" : "border-[#E5E7EB]"
+              }`}
             />
             {errors.lastName && <ErrorComponent message={errors.lastName} />}
           </div>
@@ -164,7 +164,7 @@ export default function AccountForm({ userData, getProfile }) {
           {/* Email */}
           <div className="mb-[22px] group">
             <label
-              className={`block text-mid-gray text-sm pb-2 transition-opacity duration-300`}
+              className={`block max-lg:text-[13px] text-sm pb-2 transition-opacity duration-300`}
             >
               Email
             </label>
@@ -175,8 +175,8 @@ export default function AccountForm({ userData, getProfile }) {
               readOnly
               placeholder="Example@email.com"
               onChange={handleChange}
-              className={`w-full px-4 py-[9px] rounded-lg border text-base transition-opacity duration-300 ${
-                errors.email ? "border-red-500" : "border-gray-300"
+              className={`w-full px-4 py-[11px] rounded-[8px] border text-base transition-opacity duration-300 outline-none ${
+                errors.email ? "border-[#fb2c36]" : "border-[#E5E7EB]"
               }`}
             />
             {errors.email && <ErrorComponent message={errors.email} />}
@@ -185,7 +185,7 @@ export default function AccountForm({ userData, getProfile }) {
           {/* Phone Number */}
           <div className="mb-[22px] group form-phone">
             <label
-              className={`block text-mid-gray text-sm pb-2 transition-opacity duration-300 `}
+              className={`block max-lg:text-[13px] text-sm pb-2 transition-opacity duration-300 `}
             >
               Phone Number
             </label>
@@ -195,8 +195,8 @@ export default function AccountForm({ userData, getProfile }) {
               value={formData.phoneNumber}
               placeholder="Enter your phone number"
               onChange={handleChange}
-              className={`w-full px-4 py-[9px] rounded-lg border text-base transition-opacity duration-300 ${
-                errors.email ? "border-red-500" : "border-gray-300"
+              className={`w-full px-4 py-[11px] rounded-[8px] border text-base transition-opacity duration-300 outline-none ${
+                errors.phoneNumber ? "border-[#fb2c36]" : "border-[#E5E7EB]"
               }`}
             />
 

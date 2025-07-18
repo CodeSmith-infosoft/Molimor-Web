@@ -86,7 +86,7 @@ export default function Header() {
       <div className="bg-white mt-5">
         <div className="max-w-[1576px] max-lg:px-5 px-10 mx-auto flex justify-between items-center text-sm">
           <div className="flex items-center gap-5">
-            <Link to={"/"} className="text-xs font-medium">
+            <Link to={"/profile"} className="text-xs font-medium">
               My Account
             </Link>
             <Link to={"/wishlist"} className="text-xs font-medium">
@@ -104,7 +104,7 @@ export default function Header() {
               defaultValue={currency}
               onChange={setCurrency}
             />
-            <Link to={"/"} className="text-xs font-medium">
+            <Link to={"/recent-order"} className="text-xs font-medium">
               Order Tracking
             </Link>
           </div>
