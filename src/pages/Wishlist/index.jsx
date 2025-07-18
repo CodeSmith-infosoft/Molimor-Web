@@ -138,7 +138,7 @@ const Wishlist = () => {
 
   return (
     <>
-      <section className="py-[70px] max-lg:py-[50px] bg-[#f3f4f6]">
+      <section className="py-[70px] max-md:py-[40px] max-mobile:py-[30px] max-lg:py-[50px] bg-[#f3f4f6]">
         <div className="bg-white max-lg:py-[30px] py-[50px]">
           <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto">
             <div className="overflow-hidden">
@@ -163,7 +163,7 @@ const Wishlist = () => {
                   {wishlistData?.length ? (
                     wishlistData?.map((item) => (
                       <TableRow key={item.id}>
-                        <TableCell className="flex items-center gap-4 py-4">
+                        <TableCell className="flex max-md:w-[280px] whitespace-break-spaces items-center gap-4 py-4">
                           <img
                             src={
                               item?.productId?.mainImage[0] ||
@@ -175,7 +175,7 @@ const Wishlist = () => {
                             height={50}
                             className="rounded-md object-cover"
                           />
-                          <span>{item?.productId?.title}</span>
+                          <span className="d line-clamp-1">{item?.productId?.title}</span>
                         </TableCell>
                         <TableCell className={"text-[15px] font-medium"}>
                           {formatCurrency(
@@ -199,17 +199,19 @@ const Wishlist = () => {
                         </TableCell>
                         <TableCell className="">
                           <div className="flex items-center justify-center gap-2">
-                           {!item?.productId?.isCart && <button
-                              className="bg-green flex gap-2 hover:bg-green-800 cursor-pointer text-white rounded-[43px] px-8 py-[12px]"
-                              size="sm"
-                              disabled={buttonLoader === item?.productId?._id}
-                              onClick={() => AddtoCart(item?.productId)}
-                            >
-                              {buttonLoader === item?.productId?._id && (
-                                <span className="w-4 h-4 block border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                              )}
-                              Add to Cart
-                            </button>}
+                            {!item?.productId?.isCart && (
+                              <button
+                                className="bg-green flex gap-2 hover:bg-green-800 cursor-pointer text-white rounded-[43px] px-8 py-[12px]"
+                                size="sm"
+                                disabled={buttonLoader === item?.productId?._id}
+                                onClick={() => AddtoCart(item?.productId)}
+                              >
+                                {buttonLoader === item?.productId?._id && (
+                                  <span className="w-4 h-4 block border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                                )}
+                                Add to Cart
+                              </button>
+                            )}
                             <Button
                               variant="ghost"
                               size="icon"

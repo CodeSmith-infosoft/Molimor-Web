@@ -148,9 +148,9 @@ const Login = () => {
   };
 
   return (
-    <section className="login py-10">
+    <section className="login max-mobile:py-[30px] max-md:py-[40px] max-lg:py-[50px] py-[70px]">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-6">
-        <div className="flex-1 flex justify-center items-center">
+        <div className="flex-1 max-md:hidden flex justify-center items-center">
           <img
             src={"/images/login/loginBanner.svg"}
             alt="login"

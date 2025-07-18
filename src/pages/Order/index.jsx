@@ -314,10 +314,10 @@ export default function Order() {
   };
 
   return (
-    <div className="bg-[#f3f4f6] max-lg:py-[50px] py-[70px]">
+    <div className="bg-[#f3f4f6] max-sm:py-[30px] max-md:py-[40px] max-lg:py-[50px] py-[70px]">
       <div className="bg-white max-lg:py-[30px] py-[50px]">
         <div className="max-w-[1576px]  px-10 max-lg:px-5 mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-3 max-lg:gap-[20px] gap-[100px]">
+          <div className="grid grid-cols-1 lg:grid-cols-3 max-md:gap-[0px] max-lg:gap-[20px] gap-[100px]">
             <div className="lg:col-span-2">
               <h1 className="max-lg:text-[15px] font-bold max-lg:mb-5 mb-6">Billing details</h1>
               <form>
@@ -350,7 +350,6 @@ export default function Order() {
                     </span>
                   </label>
                 </div>
-                {console.log(formData, errors)}
                 {formData.shipToDifferentAddress && (
                   <div className="mt-8 pt-8 border-t border-[#D1D5DB]">
                     <AddressFormSection

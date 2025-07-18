@@ -115,16 +115,16 @@ const SignUp = () => {
   };
 
   return (
-    <section className="login pb-[60px]">
-      <div className="max-w-screen-xl mx-auto px-4 flex flex-wrap items-center justify-center gap-y-10 lg:flex-nowrap">
-        <div className="w-full lg:w-1/2 flex justify-center items-center">
+    <section className="login max-mobile:py-[30px] max-md:py-[40px] max-lg:py-[50px] py-[70px]">
+      <div className="max-w-screen-xl mx-auto px-4 flex flex-wrap items-center justify-center gap-y-10">
+        <div className="max-md:w-full w-1/2 flex max-md:hidden justify-center items-center">
           <img
             src={"/images/login/loginBanner.svg"}
             alt="login"
             className="max-w-full h-auto"
           />
         </div>
-        <div className="w-full lg:w-1/2 px-4">
+        <div className="max-md:w-full w-1/2">
           <div className="max-w-[500px] w-full mx-auto border-none px-5">
             <p className="text-center text-green text-xs">
               LET'S GET YOU STARTED

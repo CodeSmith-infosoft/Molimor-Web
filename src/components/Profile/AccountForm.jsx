@@ -114,13 +114,13 @@ export default function AccountForm({ userData, getProfile }) {
 
   return (
     <div className=" rounded-[8px] bg-white border border-[#E6E6E6]">
-      <h1 className="text-[20px] py-4 px-6 border-b font-medium">
+      <h1 className="max-sm:text-lg text-[20px] py-4 px-6 border-b font-medium">
         Your Account
       </h1>
 
-      <div className="flex flex-col py-6 px-[50px] lg:flex-row gap-8">
+      <div className="flex max-md:flex-col-reverse max-md:py-5 max-md:px-[15px] py-6 px-[50px] gap-8">
         {/* Left side - Form */}
-        <div className="w-1/2">
+        <div className="max-md:w-full w-1/2">
           {/* First Name */}
           <div className="max-lg:mb-[20px] mb-[22px] group">
             <label
@@ -134,7 +134,7 @@ export default function AccountForm({ userData, getProfile }) {
               value={formData.firstName}
               placeholder="Enter your first name"
               onChange={handleChange}
-              className={`w-full px-4 py-[11px] rounded-[8px] border text-base transition-opacity duration-300 outline-none ${
+              className={`w-full px-4  max-mobile:text-sm py-[11px] rounded-[8px] border text-base transition-opacity duration-300 outline-none ${
                 errors.firstName ? "border-[#fb2c36]" : "border-[#E5E7EB]"
               }`}
             />
@@ -154,7 +154,7 @@ export default function AccountForm({ userData, getProfile }) {
               value={formData.lastName}
               placeholder="Enter your last name"
               onChange={handleChange}
-              className={`w-full px-4 py-[11px] rounded-[8px] border text-base transition-opacity duration-300 outline-none ${
+              className={`w-full px-4 py-[11px]  max-mobile:text-sm rounded-[8px] border text-base transition-opacity duration-300 outline-none ${
                 errors.lastName ? "border-[#fb2c36]" : "border-[#E5E7EB]"
               }`}
             />
@@ -175,7 +175,7 @@ export default function AccountForm({ userData, getProfile }) {
               readOnly
               placeholder="Example@email.com"
               onChange={handleChange}
-              className={`w-full px-4 py-[11px] rounded-[8px] border text-base transition-opacity duration-300 outline-none ${
+              className={`w-full px-4 py-[11px]  max-mobile:text-sm rounded-[8px] border text-base transition-opacity duration-300 outline-none ${
                 errors.email ? "border-[#fb2c36]" : "border-[#E5E7EB]"
               }`}
             />
@@ -195,7 +195,7 @@ export default function AccountForm({ userData, getProfile }) {
               value={formData.phoneNumber}
               placeholder="Enter your phone number"
               onChange={handleChange}
-              className={`w-full px-4 py-[11px] rounded-[8px] border text-base transition-opacity duration-300 outline-none ${
+              className={`w-full px-4 py-[11px]  max-mobile:text-sm rounded-[8px] border text-base transition-opacity duration-300 outline-none ${
                 errors.phoneNumber ? "border-[#fb2c36]" : "border-[#E5E7EB]"
               }`}
             />
@@ -215,8 +215,8 @@ export default function AccountForm({ userData, getProfile }) {
         </div>
 
         {/* Right side - Profile Image */}
-        <div className="flex flex-col w-1/2 justify-center items-center">
-          <div className="w-[224px] h-[224px] rounded-full overflow-hidden mb-4 bg-gray-200 border-2 border-gray-200 hover:border-gray-300 transition-colors duration-200">
+        <div className="flex flex-col max-md:w-full w-1/2 justify-center items-center">
+          <div className="max-md:w-[150px] max-md:h-[150px] w-[224px] h-[224px] rounded-full overflow-hidden mb-4 bg-gray-200 border-2 border-gray-200 hover:border-gray-300 transition-colors duration-200">
             <img
               src={profileImage || "/images/common/user.svg"}
               alt="Profile"
@@ -229,7 +229,7 @@ export default function AccountForm({ userData, getProfile }) {
           </div>
           <button
             onClick={handleImageChange}
-            className="border-2 border-green text-green px-8 py-[14px] rounded-[43px] cursor-pointer font-medium hover:bg-green-50 transition-colors duration-200"
+            className="border-2 border-green text-green max-md:px-4 max-md:py-2 px-8 py-[14px] rounded-[43px] cursor-pointer font-medium hover:bg-green-50 transition-colors duration-200"
           >
             Choose Image
           </button>

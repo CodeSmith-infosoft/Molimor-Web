@@ -111,12 +111,12 @@ export default function ChangePassword() {
 
   return (
     <div className="rounded-[8px] bg-white border border-[#E6E6E6]">
-      <h2 className="text-[20px] py-4 px-6 border-b font-medium">
+      <h2 className="max-md:text-lg text-[20px] py-4 px-6 border-b font-medium">
         Change Password
       </h2>
 
       {/* Current Password */}
-      <div className="py-6 px-[50px]">
+      <div className=" max-md:py-5 max-md:px-[15px] py-6 px-[50px]">
         <div className="mb-[22px] group">
           <label className="block max-lg:text-[13px] text-sm pb-2">
             Current Password
@@ -128,7 +128,7 @@ export default function ChangePassword() {
               value={passwordData.currentPassword}
               placeholder="••••••••••••••"
               onChange={handleChange}
-              className={`w-full px-4 py-[11px] rounded-[8px] border text-base transition-opacity duration-300 outline-none ${
+              className={`w-full px-4 py-[11px] rounded-[8px] border max-mobile:text-sm text-base transition-opacity duration-300 outline-none ${
                 errors.currentPassword ? "border-[#fb2c36]" : "border-[#E5E7EB]"
               }`}
             />
@@ -179,9 +179,9 @@ export default function ChangePassword() {
           )}
         </div>
 
-        <div className="flex gap-x-[10px] mb-6">
+        <div className="flex max-md:block gap-x-[10px] mb-6">
           {/* New Password */}
-          <div className="flex-1 group">
+          <div className="flex-1 max-md:mb-5 group">
             <label className="block max-lg:text-[13px] text-sm pb-2">
               New Password
             </label>
@@ -192,7 +192,7 @@ export default function ChangePassword() {
                 value={passwordData.newPassword}
                 placeholder="Password"
                 onChange={handleChange}
-                className={`w-full px-4 py-[11px] rounded-[8px] border text-base transition-opacity duration-300 outline-none ${
+                className={`w-full px-4 py-[11px] max-mobile:text-sm rounded-[8px] border text-base transition-opacity duration-300 outline-none ${
                   errors.newPassword ? "border-[#fb2c36]" : "border-[#E5E7EB]"
                 }`}
               />
@@ -255,7 +255,7 @@ export default function ChangePassword() {
                 value={passwordData.confirmPassword}
                 placeholder="Password"
                 onChange={handleChange}
-                className={`w-full px-4 py-[11px] rounded-[8px] border text-base transition-opacity duration-300 outline-none ${
+                className={`w-full px-4 py-[11px] max-mobile:text-sm rounded-[8px] border text-base transition-opacity duration-300 outline-none ${
                   errors.confirmPassword
                     ? "border-[#fb2c36]"
                     : "border-[#E5E7EB]"

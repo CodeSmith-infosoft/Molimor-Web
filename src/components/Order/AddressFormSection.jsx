@@ -75,7 +75,11 @@ const AddressFormSection = ({
 
   const handleCountrySelect = (country) => {
     selectedCountryRef.current = country.isoCode;
-    setFormData((prev) => ({ ...prev, [getFieldName("country")]: country.name, [getFieldName("state")]: "" }));
+    setFormData((prev) => ({
+      ...prev,
+      [getFieldName("country")]: country.name,
+      [getFieldName("state")]: "",
+    }));
 
     const countryStates = State.getStatesOfCountry(country.isoCode);
     setStates(countryStates);
@@ -105,10 +109,13 @@ const AddressFormSection = ({
     placeholder,
     dropdownRef
   ) => (
-    <div className="max-lg:mb-[22px] mb-[22px] group relative" ref={dropdownRef}>
+    <div
+      className="max-lg:mb-[22px] mb-[22px] group relative"
+      ref={dropdownRef}
+    >
       <label
         htmlFor={name}
-        className={`block text-sm pb-2 transition-opacity duration-300 `}
+        className={`block max-lg:text-[13px] text-sm pb-2 transition-opacity duration-300 `}
       >
         {label}
       </label>
@@ -116,7 +123,7 @@ const AddressFormSection = ({
         <button
           type="button"
           onClick={() => setOpen(!isOpen)}
-          className={`w-full px-3 py-[11px] text-sm font-normal text-left bg-white border rounded-[8px] border-gray-300 flex items-center justify-between ${
+          className={`w-full px-3 py-2 cursor-pointer text-left max-mobile:text-sm bg-white border rounded-[8px] border-gray-300 flex items-center justify-between ${
             error ? "border-red-500" : "border-[#E5E7EB]"
           }`}
         >
