@@ -125,7 +125,7 @@ const AddressFormSection = ({
         <button
           type="button"
           onClick={() => setOpen(!isOpen)}
-          className="w-full px-3 py-2 cursor-pointer text-left max-mobile:text-sm bg-white border rounded-[8px] border-gray-300 flex items-center justify-between"
+          className="w-full px-4 py-[11px] cursor-pointer text-left max-mobile:text-sm bg-white border rounded-[8px] flex items-center justify-between"
         >
           <span className={value ? "" : "text-gray-400"}>
             {value || placeholder}

@@ -150,9 +150,9 @@ const Cart = () => {
         calculatedSubTotal + calculatedDeliveryCharges;
 
       return {
-        subTotal: `$${calculatedSubTotal.toFixed(2)}`,
-        deliveryCharges: `$${calculatedDeliveryCharges.toFixed(2)}`,
-        totalAmount: `$${calculatedTotalAmount.toFixed(2)}`,
+        subTotal: calculatedSubTotal,
+        deliveryCharges: calculatedDeliveryCharges,
+        totalAmount: calculatedTotalAmount,
       };
     } else {
       return {
@@ -190,12 +190,14 @@ const Cart = () => {
                     <div className="space-y-2 pt-4">
                       <div className="flex justify-between mb-4">
                         <span className="text-sm">Sub-Total</span>
-                        <span className="text-sm font-medium">{subTotal}</span>
+                        <span className="text-sm font-medium">
+                          {formatCurrency(subTotal, currency, language)}
+                        </span>
                       </div>
                       <div className="flex justify-between pb-[20px]">
                         <span className="text-sm">Delivery Charges</span>
                         <span className="text-sm font-medium">
-                          {deliveryCharges}
+                          {formatCurrency(deliveryCharges, currency, language)}
                         </span>
                       </div>
                       <div className="flex justify-between pt-[20px] border-t border-gray-200 dark:border-gray-700">
@@ -203,7 +205,7 @@ const Cart = () => {
                           Total Amount
                         </span>
                         <span className="text-base font-semibold">
-                          {totalAmount}
+                          {formatCurrency(totalAmount, currency, language)}
                         </span>
                       </div>
                     </div>
