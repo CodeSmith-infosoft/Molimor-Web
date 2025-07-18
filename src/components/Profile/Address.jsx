@@ -125,7 +125,7 @@ const AddressFormSection = ({
         <button
           type="button"
           onClick={() => setOpen(!isOpen)}
-          className="w-full px-3 py-2 cursor-pointer text-left bg-white border rounded-[8px] border-gray-300 flex items-center justify-between"
+          className="w-full px-3 py-2 cursor-pointer text-left max-mobile:text-sm bg-white border rounded-[8px] border-gray-300 flex items-center justify-between"
         >
           <span className={value ? "" : "text-gray-400"}>
             {value || placeholder}
@@ -163,9 +163,11 @@ const AddressFormSection = ({
   return (
     <>
       {title && (
-        <h2 className="text-[20px] py-4 px-6 border-b font-medium">{title}</h2>
+        <h2 className="max-md:text-lg text-[20px] py-4 px-6 border-b font-medium">
+          {title}
+        </h2>
       )}
-      <div className=" pt-6 px-[50px]">
+      <div className=" max-md:pt-5 max-md:px-[15px] pt-6 px-[50px]">
         {renderSelect(
           "Country / Region*",
           getFieldName("country"),
@@ -338,7 +340,7 @@ export default function Address({ userData, getProfile }) {
         includeContactFields={false}
         setFormData={setFormData}
       />
-      <div className=" pb-6 px-[50px]">
+      <div className=" max-md:pb-5 max-md:px-[15px] pb-6 px-[50px]">
         <button
           onClick={handleSaveChanges}
           className="bg-green cursor-pointer text-white px-8 py-[14px] rounded-[43px] font-medium transition-colors duration-200"

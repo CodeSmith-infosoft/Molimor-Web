@@ -1,7 +1,7 @@
 import ErrorComponent from "../Common/ErrorComponent"
 
 const InputGroup = ({ label, type = "text", name, value, onChange, placeholder, error, className = "" }) => {
-  const inputClasses = `w-full px-4 py-[11px] rounded-[8px] border text-base transition-opacity duration-300 outline-none ${
+  const inputClasses = `w-full px-4 max-mobile:text-sm py-[11px] rounded-[8px] border text-base transition-opacity duration-300 outline-none ${
     error ? "border-[#fb2c36]" : "border-[#E5E7EB]"
   } `
 

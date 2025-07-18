@@ -173,11 +173,11 @@ const Cart = () => {
 
   return (
     <>
-      <div className="bg-[#f3f4f6] max-lg:py-[50px] py-[70px]">
+      <div className="bg-[#f3f4f6] max-sm:py-[30px] max-md:py-[40px] max-lg:py-[50px] py-[70px]">
         <div className="bg-white max-lg:py-[30px] py-[50px]">
           <div className="max-w-[1576px]  px-10 max-lg:px-5 mx-auto">
-            <div className="grid grid-cols-3 max-lg:gap-5 gap-[100px]">
-              <div>
+            <div className="grid max-md:grid-cols-1 grid-cols-3 max-md:gap-[30px] max-lg:gap-5 gap-[100px]">
+              <div className="max-md:order-2">
                 <Card className="w-full p-[22px] gap-0 !shadow-none !rounded-[5px] !border-[#E5E7EB]">
                   <CardHeader className="border-b gap-0 px-0">
                     <CardTitle className="text-[20px] mb-[10px] font-bold">
@@ -209,7 +209,7 @@ const Cart = () => {
                   </CardContent>
                 </Card>
               </div>
-              <div className=" col-span-2">
+              <div className="max-md:col-span-1 max-md:order-1 col-span-2">
                 <div className="w-full overflow-x-auto">
                   <Table>
                     <TableHeader>
@@ -370,57 +370,6 @@ const Cart = () => {
                     </TableBody>
                   </Table>
                 </div>
-                {/* 
-                <div className="mt-[30px] flex justify-end">
-                  <div>
-                    <Pagination>
-                      <PaginationContent>
-                        <PaginationItem>
-                          <button
-                            onClick={() => handlePageChange(currentPage - 1)}
-                            disabled={currentPage === 1}
-                            className={`px-3 py-1 text-sm rounded ${
-                              currentPage === 1
-                                ? "opacity-50 cursor-not-allowed"
-                                : ""
-                            }`}
-                          >
-                            Previous
-                          </button>
-                        </PaginationItem>
-
-                        {[...Array(totalPages)].map((_, index) => (
-                          <PaginationItem key={index}>
-                            <button
-                              onClick={() => handlePageChange(index + 1)}
-                              className={`px-3 py-1 text-sm rounded ${
-                                currentPage === index + 1
-                                  ? "bg-green text-white"
-                                  : "bg-gray-100 hover:bg-gray-200"
-                              }`}
-                            >
-                              {index + 1}
-                            </button>
-                          </PaginationItem>
-                        ))}
-
-                        <PaginationItem>
-                          <button
-                            onClick={() => handlePageChange(currentPage + 1)}
-                            disabled={currentPage === totalPages}
-                            className={`px-3 py-1 text-sm rounded ${
-                              currentPage === totalPages
-                                ? "opacity-50 cursor-not-allowed"
-                                : ""
-                            }`}
-                          >
-                            Next
-                          </button>
-                        </PaginationItem>
-                      </PaginationContent>
-                    </Pagination>
-                  </div>
-                </div> */}
                 <div className="flex justify-between items-center mt-[30px]">
                   <Link to={"/products"} className=" text-sm underline">
                     Continue Shopping

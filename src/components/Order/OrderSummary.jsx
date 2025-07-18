@@ -25,7 +25,7 @@ const OrderSummary = ({
   const finalTotal = totalBeforeDiscount;
 
   return (
-    <div className="bg-white p-[30px] border border-[#E5E7EB] rounded-lg">
+    <div className="bg-white max-mobile:py-5 max-mobile:px-[15px] max-md:p-[20px] p-[30px] border border-[#E5E7EB] rounded-lg">
       <h2 className="font-semibold max-lg:text-[15px] text-xl mb-5">
         Your order
       </h2>
@@ -39,7 +39,7 @@ const OrderSummary = ({
           key={item.productId?._id}
           className="flex justify-between items-center mb-[14px]"
         >
-          <span className="max-lg:text-xs text-sm max-w-[150px]">
+          <span className="max-lg:text-xs text-sm max-md:max-w-[200px] max-w-[150px]">
             {item?.productId?.title}{" "}
             <span className="font-bold">× {item?.quantity}</span>
           </span>

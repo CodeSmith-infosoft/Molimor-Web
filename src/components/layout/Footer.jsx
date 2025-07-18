@@ -30,7 +30,7 @@ export default function Footer() {
     },
   ];
   return (
-    <footer className="pt-[70px]">
+    <footer className="max-lg:py-[50px] py-[70px]">
       <div className="mx-auto">
         <div className="grid max-md:grid-cols-1 max-lg:grid-cols-[auto_auto_auto_auto] grid-cols-4 max-lg:gap-10 gap-[120px]">
           {/* Logo and Description Section */}
