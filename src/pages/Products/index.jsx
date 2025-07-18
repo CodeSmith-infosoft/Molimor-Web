@@ -68,7 +68,7 @@ const Products = () => {
   return (
     <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto">
       <Banner />
-      <div className="section-top-spacing flex max-lg:gap-[22px] gap-10">
+      <div className="section-top-spacing flex max-md:flex-col max-lg:gap-[22px] gap-10">
         <Filter filter={filter} setFilter={setFilter} />
         <ProductList data={data} />
       </div>

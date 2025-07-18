@@ -65,6 +65,48 @@ export default function Header() {
   const currencyOptions = ["USD", "EUR", "INR"];
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef();
+  const [showCategories, setShowCategories] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const scrollTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Clear previous timeout
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+
+      // Hide categories when scrolling down, show when scrolling up
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down - hide categories
+        setShowCategories(false);
+      } else if (currentScrollY < lastScrollY && currentScrollY > 100) {
+        // Scrolling up - show categories
+        setShowCategories(true);
+      }
+
+      // Show categories after user stops scrolling for 2 seconds
+      scrollTimeoutRef.current = setTimeout(() => {
+        setShowCategories(true);
+      }, 2000);
+
+      setLastScrollY(currentScrollY);
+    };
+
+    // Only add scroll listener on home pages
+    if (isHomePage) {
+      window.addEventListener("scroll", handleScroll, { passive: true });
+
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+        if (scrollTimeoutRef.current) {
+          clearTimeout(scrollTimeoutRef.current);
+        }
+      };
+    }
+  }, [lastScrollY, isHomePage]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -351,7 +393,7 @@ export default function Header() {
       </div>
 
       <CategoriesNavigation />
-      <div className=" max-md:block px-5 mt-6 max-mobile:mt-4 hidden">
+      <div className=" max-md:block px-5 my-6 max-mobile:my-4 hidden">
         <div className="relative">
           <input
             type="text"
@@ -381,8 +423,11 @@ export default function Header() {
           </button>
         </div>
       </div>
-      {isHomePage && (
-        <div className="hidden max-md:block mt-6 max-mobile:mt-4 mb-4">
+      {isHomePage && showCategories && (
+        <div
+          className="hidden max-md:block mb-4"
+          ref={scrollTimeoutRef}
+        >
           <Carousel className="w-full relative px-[10px]">
             <CarouselContent className={"max-mobile:gap-8 gap-[10px]"}>
               {categoryData?.map((item, i) => (
