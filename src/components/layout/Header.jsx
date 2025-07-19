@@ -422,7 +422,7 @@ export default function Header() {
       </div>
       {isHomePage && (
         <div
-          className={`max-md:block hidden overflow-hidden transition-all duration-500 ease-in-out
+          className={`max-md:block hidden pb-2 overflow-hidden transition-all duration-500 ease-in-out
     ${
       showCategories
         ? "opacity-100 max-h-[100px]"
