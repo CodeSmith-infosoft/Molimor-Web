@@ -301,7 +301,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Section */}
-        <div className="mt-[49px] flex flex-col md:flex-row justify-between">
+        <div className="mt-[49px] flex flex-col md:flex-row items-center md:justify-between">
           <p className="text-xs">
             ©Copyright <span className="font-bold">Molimor</span> 2023. All
             Right Reserved.

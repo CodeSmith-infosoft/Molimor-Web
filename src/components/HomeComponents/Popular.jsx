@@ -49,7 +49,7 @@ const Popular = () => {
       <div className="section-top-spacing px-10">
         <img
           src="/images/dummy/Frame1.svg"
-          className="mx-auto max-lg:max-w-[643px] w-full"
+          className="mx-auto max-lg:max-w-[643px] max-w-[959px] w-full"
         />
       </div>
     </>

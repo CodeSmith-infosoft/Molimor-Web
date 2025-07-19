@@ -20,7 +20,7 @@ const Deals = () => {
     <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto section-top-spacing">
       <div className="grid max-mobile:grid-cols-1 max-md:grid-cols-2 max-lg:grid-cols-3 grid-cols-4 max-mobile:gap-[30px] gap-5 ">
         <div className="max-mobile:col-span-full">
-          <SubHeader heading={"crazy deal"} />
+          <SubHeader heading={"crazy deal"} link={"/deals?category=Deals"} />
           <div className="space-y-5 max-mobile:space-y-0 max-mobile:grid max-mobile:grid-cols-2 max-mobile:gap-4">
             {data?.crazyDeal?.length ? (
               [...data.crazyDeal, ...data.crazyDeal, ...data.crazyDeal]
@@ -38,7 +38,7 @@ const Deals = () => {
           </div>
         </div>
         <div className="max-mobile:col-span-full max-lg:col-span-1 col-span-2">
-          <SubHeader heading={"Combo"} />
+          <SubHeader heading={"Combo"} link={"deals?category=combo"} />
           <div className="gap-5 grid max-mobile:grid-cols-2 max-mobile:gap-4 max-lg:grid-cols-1 grid-cols-2">
             {data?.combo?.length ? (
               [...data.combo, ...data.combo]
@@ -56,7 +56,7 @@ const Deals = () => {
           </div>
         </div>
         <div className="max-mobile:col-span-full max-md:col-span-2">
-          <SubHeader heading={"deal of the day"} />
+          <SubHeader heading={"deal of the day"} link={"/deals?category=Deals"} />
           <div className="space-y-5">
             {data?.dealOfTheDay?.length ? (
               data.dealOfTheDay

@@ -38,6 +38,7 @@ export default function Order() {
     useState("cashOnDelivery");
   const [isCouponActive, setIsCouponActive] = useState(false);
   const [couponCode, setCouponCode] = useState("");
+  const [loader, setLoader] = useState(false);
   const token = localStorage.getItem("token");
   const { fetchData: placeOrder } = useAxios({
     method: "POST",
@@ -262,6 +263,7 @@ export default function Order() {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
+      setLoader(true);
       const submissionData = {
         fname: formData.firstName,
         lname: formData.lastName,
@@ -307,14 +309,18 @@ export default function Order() {
         submissionData.couponId = couponData?.[0]?._id;
       }
 
-      placeOrder({ data: submissionData }).then((res) => {
-        if (res.success) {
-          setTimeout(() => {
-            setCartCount((prev) => prev + 1);
-          }, 3000);
-          navigate("/products");
-        }
-      });
+      placeOrder({ data: submissionData })
+        .then((res) => {
+          if (res.success) {
+            setTimeout(() => {
+              setCartCount((prev) => prev + 1);
+            }, 3000);
+            navigate("/products");
+          }
+        })
+        .finally(() => {
+          setLoader(false);
+        });
     }
   };
 
@@ -402,6 +408,7 @@ export default function Order() {
                 handleSubmit={handleSubmit}
                 isCouponActive={isCouponActive}
                 removeCoupon={removeCoupon}
+                loader={loader}
               />
             </div>
           </div>

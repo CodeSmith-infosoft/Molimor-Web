@@ -8,13 +8,7 @@ import useAxios from "@/customHook/fetch-hook";
 import { FaList, FaUser } from "react-icons/fa";
 import { GoHeartFill } from "react-icons/go";
 import { IoLogOut } from "react-icons/io5";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "../ui/carousel";
+import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 
 const categoryData = [
   {

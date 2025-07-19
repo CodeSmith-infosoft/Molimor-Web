@@ -15,14 +15,16 @@ const OrderSummary = ({
   handleSubmit,
   isCouponActive,
   removeCoupon,
+  loader,
 }) => {
   const { language, currency } = useContext(MainContext);
   const subtotal = cartItems?.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );
-  const shippingCost = selectedShippingOption === "flatRate" ? 15.0 : 0.0;
-  const totalBeforeDiscount = subtotal + shippingCost;
+  const calculatedDeliveryCharges = subtotal * 0.2;
+  // const shippingCost = selectedShippingOption === "flatRate" ? 15.0 : 0.0;
+  const totalBeforeDiscount = subtotal + calculatedDeliveryCharges;
   const finalTotal = totalBeforeDiscount;
 
   return (
@@ -72,7 +74,8 @@ const OrderSummary = ({
               className="hidden max-lg:text-xs text-sm font-medium"
             />
             <span className="max-lg:text-xs text-sm font-medium mr-2">
-              Flat Rate: {formatCurrency(15, currency, language)}
+              Delivery Charges:{" "}
+              {formatCurrency(calculatedDeliveryCharges, currency, language)}
             </span>
             <span
               className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
@@ -86,7 +89,7 @@ const OrderSummary = ({
               )}
             </span>
           </label>
-          <label className="flex items-center cursor-pointer">
+          {/* <label className="flex items-center cursor-pointer">
             <input
               type="radio"
               name="shipping"
@@ -110,7 +113,7 @@ const OrderSummary = ({
                 <span className="w-2 h-2 bg-[#166534] rounded-full"></span>
               )}
             </span>
-          </label>
+          </label> */}
         </div>
       </div>
 
@@ -218,7 +221,9 @@ const OrderSummary = ({
         type="submit"
         className="w-full bg-[#076536] text-white py-3 rounded-[8px] mt-6 font-bold text-sm hover:bg-green-700 transition-colors"
         onClick={handleSubmit}
+        disabled={loader}
       >
+        {loader ? <span className="spinner inline-block mr-2"></span> : ""}
         Place order
       </button>
     </div>

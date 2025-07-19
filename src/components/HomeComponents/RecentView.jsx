@@ -11,7 +11,7 @@ import FillCard from "../ProductCard/FillCard";
 
 const RecentView = ({ title }) => {
   const recent = getRecentItems();
-  return (
+  return recent?.length ? (
     <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto">
       <h3 className="text-2xl font-medium sub-bottom-spacing">
         {title ? title : "Recently Viewed"}
@@ -31,6 +31,8 @@ const RecentView = ({ title }) => {
         <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-10" />
       </Carousel>
     </div>
+  ) : (
+    <></>
   );
 };
 
