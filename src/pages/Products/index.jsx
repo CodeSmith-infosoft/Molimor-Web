@@ -80,7 +80,7 @@ const Products = () => {
       <Banner data={categoryData} filter={filter} />
       <div className="section-top-spacing flex max-md:flex-col max-lg:gap-[22px] gap-10">
         <Filter filter={filter} setFilter={setFilter} data={categoryData} />
-        {loading ? <Loader /> : <ProductList data={data} />}
+        {loading ? <div className="flex-1"><Loader /></div> : <ProductList data={data} />}
       </div>
     </div>
   );

@@ -73,28 +73,18 @@ export default function Footer() {
             </h3>
             <ul className="space-y-[10px]">
               <li>
-                <Link to={"/"} className="text-sm text-[#333333]">
+                <Link to={"/profile"} className="text-sm text-[#333333]">
                   Your Account
                 </Link>
               </li>
               <li>
-                <Link to={"/"} className="text-sm text-[#333333]">
+                <Link to={"/recent-order"} className="text-sm text-[#333333]">
                   Your Orders
                 </Link>
               </li>
               <li>
                 <Link to={"/"} className="text-sm text-[#333333]">
-                  Returns & Replacements
-                </Link>
-              </li>
-              <li>
-                <Link to={"/"} className="text-sm text-[#333333]">
                   Shipping Rates & Policies
-                </Link>
-              </li>
-              <li>
-                <Link to={"/"} className="text-sm text-[#333333]">
-                  Refund and Returns Policy
                 </Link>
               </li>
               <li>
@@ -122,28 +112,13 @@ export default function Footer() {
           <FooterCollapse title={"Let Us Help You"}>
             <ul className="space-y-[10px] grid grid-cols-2">
               <li>
-                <Link to={"/"} className="text-sm text-[#333333]">
+                <Link to={"/profile"} className="text-sm text-[#333333]">
                   Your Account
                 </Link>
               </li>
               <li>
-                <Link to={"/"} className="text-sm text-[#333333]">
+                <Link to={"/recent-order"} className="text-sm text-[#333333]">
                   Your Orders
-                </Link>
-              </li>
-              <li>
-                <Link to={"/"} className="text-sm text-[#333333]">
-                  Returns & Replacements
-                </Link>
-              </li>
-              <li>
-                <Link to={"/"} className="text-sm text-[#333333]">
-                  Shipping Rates & Policies
-                </Link>
-              </li>
-              <li>
-                <Link to={"/"} className="text-sm text-[#333333]">
-                  Refund and Returns Policy
                 </Link>
               </li>
               <li>
@@ -185,11 +160,6 @@ export default function Footer() {
               </li>
               <li>
                 <Link to={"/"} className="text-sm text-[#333333]">
-                  Returns & Replacements
-                </Link>
-              </li>
-              <li>
-                <Link to={"/"} className="text-sm text-[#333333]">
                   Distributor
                 </Link>
               </li>
@@ -207,11 +177,7 @@ export default function Footer() {
                   Career
                 </Link>
               </li>
-              <li>
-                <Link to={"/"} className="text-sm text-[#333333]">
-                  Returns & Replacements
-                </Link>
-              </li>
+              
               <li>
                 <Link to={"/"} className="text-sm text-[#333333]">
                   Distributor

@@ -8,13 +8,14 @@ import {
   TableHead,
   TableCell,
 } from "@/components/ui/table";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAxios from "@/customHook/fetch-hook";
 import { formatCurrency, formatted } from "@/utils";
 import MainContext from "@/context/MainContext";
 import Loader from "@/components/MainLoader/Loader";
 
 export default function RecentOrder() {
+  const navigate = useNavigate();
   const [filterStatus, setFilterStatus] = useState("All");
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -124,37 +125,57 @@ export default function RecentOrder() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {filteredOrders?.map((order, index) => (
-                    <TableRow
-                      key={order.id}
-                      className={
-                        index < filteredOrders.length - 1 ? "!border-b-0" : ""
-                      }
-                    >
-                      {" "}
-                      {/* Subtle border between rows */}
-                      <TableCell className="py-3 px-4 max-lg:pl-5 pl-9 border-b-0 max-mobile:text-sm">
-                        {order?.orderId}
-                      </TableCell>
-                      <TableCell className="py-3 px-4 border-b-0 max-mobile:text-sm">
-                        {formatted(order?.createdAt)}
-                      </TableCell>
-                      <TableCell className="py-3 px-4 border-b-0 max-mobile:text-sm">
-                        {formatCurrency(order?.totalAmount, currency, language)}
-                      </TableCell>
-                      <TableCell className="py-3 px-4 border-b-0 max-mobile:text-sm">
-                        {order.status}
-                      </TableCell>
-                      <TableCell className="text-right py-3 px-4 max-lg:pr-5 pr-9 border-b-0 max-mobile:text-sm">
-                        <Link
-                          to={`/recent-order/${order.orderId}`}
-                          className="text-green"
-                        >
-                          View Details
-                        </Link>
+                  {filteredOrders?.length ? (
+                    filteredOrders?.map((order, index) => (
+                      <TableRow
+                        key={order.id}
+                        className={
+                          index < filteredOrders.length - 1 ? "!border-b-0" : ""
+                        }
+                      >
+                        {" "}
+                        {/* Subtle border between rows */}
+                        <TableCell className="py-3 px-4 max-lg:pl-5 pl-9 border-b-0 max-mobile:text-sm">
+                          {order?.orderId}
+                        </TableCell>
+                        <TableCell className="py-3 px-4 border-b-0 max-mobile:text-sm">
+                          {formatted(order?.createdAt)}
+                        </TableCell>
+                        <TableCell className="py-3 px-4 border-b-0 max-mobile:text-sm">
+                          {formatCurrency(
+                            order?.totalAmount,
+                            currency,
+                            language
+                          )}
+                        </TableCell>
+                        <TableCell className="py-3 px-4 border-b-0 max-mobile:text-sm">
+                          {order.status}
+                        </TableCell>
+                        <TableCell className="text-right py-3 px-4 max-lg:pr-5 pr-9 border-b-0 max-mobile:text-sm">
+                          <Link
+                            to={`/recent-order/${order.orderId}`}
+                            className="text-green"
+                          >
+                            View Details
+                          </Link>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={5}>
+                        <h3 className="text-center pt-8 text-xl font-semibold">
+                          No Any Order{" "}
+                          <span
+                            className="text-green underline cursor-pointer"
+                            onClick={() => navigate("/products")}
+                          >
+                            Go Shopping
+                          </span>
+                        </h3>
                       </TableCell>
                     </TableRow>
-                  ))}
+                  )}
                 </TableBody>
               </Table>
             </div>
