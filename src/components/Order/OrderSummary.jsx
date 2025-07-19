@@ -1,6 +1,7 @@
 import MainContext from "@/context/MainContext";
 import { formatCurrency } from "@/utils";
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 
 const OrderSummary = ({
   cartItems,
@@ -40,7 +41,9 @@ const OrderSummary = ({
           className="flex justify-between items-center mb-[14px]"
         >
           <span className="max-lg:text-xs text-sm max-md:max-w-[200px] max-w-[150px]">
-            {item?.productId?.title}{" "}
+            <Link to={`/products/${item?.productId?._id}`}>
+              {item?.productId?.title}
+            </Link>{" "}
             <span className="font-bold">× {item?.quantity}</span>
           </span>
           <span className="max-lg:text-xs text-sm">
@@ -93,7 +96,9 @@ const OrderSummary = ({
               className="hidden"
             />
 
-            <span className="max-lg:text-xs text-sm font-medium mr-2">Local Pickup</span>
+            <span className="max-lg:text-xs text-sm font-medium mr-2">
+              Local Pickup
+            </span>
             <span
               className={`w-4 h-4 rounded-full border-2 flex items-center justify-center  ${
                 selectedShippingOption === "localPickup"

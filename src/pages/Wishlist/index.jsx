@@ -26,7 +26,7 @@ import {
   isDateNotPast,
 } from "@/utils";
 import useAxios from "@/customHook/fetch-hook";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -164,18 +164,25 @@ const Wishlist = () => {
                     wishlistData?.map((item) => (
                       <TableRow key={item.id}>
                         <TableCell className="flex max-md:w-[280px] whitespace-break-spaces items-center gap-4 py-4">
-                          <img
-                            src={
-                              item?.productId?.mainImage[0] ||
-                              item?.productId?.mainImage ||
-                              "/placeholder.svg"
-                            }
-                            alt={item?.productId?.title}
-                            width={60}
-                            height={50}
-                            className="rounded-md object-cover"
-                          />
-                          <span className="d line-clamp-1">{item?.productId?.title}</span>
+                          <Link
+                            className="flex items-center"
+                            to={`/products/${item?.productId?._id}`}
+                          >
+                            <img
+                              src={
+                                item?.productId?.mainImage[0] ||
+                                item?.productId?.mainImage ||
+                                "/placeholder.svg"
+                              }
+                              alt={item?.productId?.title}
+                              width={60}
+                              height={50}
+                              className="rounded-md object-cover"
+                            />
+                            <span className="d line-clamp-1">
+                              {item?.productId?.title}
+                            </span>
+                          </Link>
                         </TableCell>
                         <TableCell className={"text-[15px] font-medium"}>
                           {formatCurrency(
@@ -271,7 +278,7 @@ const Wishlist = () => {
                   ) : (
                     <TableRow>
                       <TableCell colSpan={4}>
-                        <h3 className="text-center pt-8 text-xl font-semibold">
+                        <h3 className="text-center pt-8 max-md:text-sm text-xl font-semibold">
                           Your Whishlist Is Empty{" "}
                           <span
                             className="text-green underline cursor-pointer"

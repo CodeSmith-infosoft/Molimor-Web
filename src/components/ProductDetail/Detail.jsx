@@ -140,14 +140,37 @@ export default function Detail({ data, getProduct }) {
 
   return (
     <>
-      <div className="grid max-md:grid-cols-1 grid-cols-2 max-lg:gap-5 gap-[100px]">
+      <div className="max-md:flex hidden justify-between items-start gap-x-[35px] mb-[30px]">
+        <h2 className="max-mobile:text-sm text-[18px] font-medium">
+          {data?.title}
+        </h2>
+        <div className="flex items-center">
+          <span className="text-xs font-semibold max-mobile:py-1 max-mobile:px-[6px] py-[6px] px-[7px] rounded-sm mr-[10px] border-[0.5px]">
+            {data?.ratingCount}
+          </span>
+          <div className="flex items-center space-x-0.5">
+            {/* Render stars based on rating */}
+            {[...Array(Number(5))].map((_, i) => (
+              <StarIcon
+                key={i}
+                className={`w-4 h-4 ${
+                  i < Math.floor(Number(data?.ratingCount || 5))
+                    ? "fill-[#FACC15] text-[#FACC15]"
+                    : "fill-[#E5E7EB] text-[#E5E7EB]"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="grid max-md:grid-cols-1 grid-cols-2 max-mobile:gap-[30px] max-md:gap-10 max-lg:gap-5 gap-[100px]">
         <ProductImageSlider data={data} selectedWeight={selectedWeight} />
         <div className="">
           <div className="bg-white">
-            <h1 className="text-[22px] font-medium  mb-[14px]">
+            <h2 className="text-[22px] max-md:hidden font-medium  mb-[14px]">
               {data?.title}
-            </h1>
-            <div className="flex items-center pb-[14px] border-b mb-[14px]">
+            </h2>
+            <div className="flex items-center max-md:hidden pb-[14px] border-b mb-[14px]">
               <span className="text-xs font-semibold py-[6px] px-[7px] rounded-sm mr-[10px] border-[0.5px]">
                 {data?.ratingCount}
               </span>
@@ -167,7 +190,7 @@ export default function Detail({ data, getProduct }) {
             </div>
 
             <div className="mb-[14px]">
-              <p className="text-sm font-bold mb-4">Special Price:-</p>
+              <p className="max-mobile:text-xs text-sm font-bold mb-4">Special Price:-</p>
               <div className="flex items-baseline">
                 <span className="text-3xl font-semibold mr-[6px]">
                   {formatCurrency(
@@ -207,7 +230,7 @@ export default function Detail({ data, getProduct }) {
             )}
 
             <div className="mb-[14px]">
-              <p className="text-sm font-bold mb-4">Weight:-</p>
+              <p className="max-mobile:text-xs text-sm font-bold mb-4">Weight:-</p>
               <div className="flex space-x-4">
                 {data?.variants?.map((weight) => (
                   <Button
@@ -219,8 +242,8 @@ export default function Detail({ data, getProduct }) {
                     }
                     className={
                       selectedWeight?.weight === weight.weight
-                        ? "bg-green text-white hover:bg-green rounded-[6px]"
-                        : " border-0 rounded-[6px]"
+                        ? "bg-green max-mobile:text-xs text-white hover:bg-green rounded-[6px]"
+                        : " border-0 max-mobile:text-xs rounded-[6px]"
                     }
                     onClick={() => setSelectedWeight(weight)}
                   >
@@ -231,17 +254,17 @@ export default function Detail({ data, getProduct }) {
             </div>
 
             <div className="mb-[14px]">
-              <p className="text-sm font-semibold mb-4">Key Benefits:-</p>
+              <p className="text-sm max-mobile:text-xs font-semibold mb-4">Key Benefits:-</p>
               <div className="  ">
                 <ul className="list-disc list-inside space-y-1 grid grid-cols-1 md:grid-cols-2 gap-2">
                   {data?.isFeatured?.map((benefit, index) => (
-                    <li key={`benefit1-${index * 2}`}>{benefit}</li>
+                    <li key={`benefit1-${index * 2}`} className="max-mobile:!text-sm">{benefit}</li>
                   ))}
                 </ul>
               </div>
             </div>
 
-            <div className="flex items-center space-x-4 mb-[14px]">
+            <div className="flex flex-wrap  space-x-4 space-y-4 mb-[14px]">
               <div className="flex items-center py-[7px] px-[14px] border border-gray-300 rounded-md">
                 <Button
                   variant="ghost"
@@ -262,7 +285,7 @@ export default function Detail({ data, getProduct }) {
                 </Button>
               </div>
               <button
-                className=" bg-green cursor-pointer py-[14px] px-[30px] flex hover:bg-green text-white rounded-md"
+                className=" bg-green cursor-pointer py-[14px] max-mobile:text-sm px-[30px] flex hover:bg-green text-white rounded-md"
                 onClick={handleAddToCart}
               >
                 <div className="mt-[2px] mr-2">
@@ -317,7 +340,7 @@ export default function Detail({ data, getProduct }) {
               </button>
             </div>
 
-            <div className="space-y-4 max-md:block max-lg:hidden block mb-[14px]">
+            <div className="space-y-4 max-lg:hidden block mb-[14px]">
               <div className="flex items-center gap-[31px] mb-0 p-[15px] border border-[#E5E7EB]">
                 <svg
                   width="22"
@@ -334,12 +357,8 @@ export default function Detail({ data, getProduct }) {
                 </svg>
 
                 <div>
-                  <p className="font-bold text-sm inline ">
-                    Payment.{" "}
-                  </p>
-                  <p className="text-sm inline ">
-                    {productData.paymentInfo}
-                  </p>
+                  <p className="font-bold text-sm inline ">Payment. </p>
+                  <p className="text-sm inline ">{productData.paymentInfo}</p>
                 </div>
               </div>
               <div className="flex items-center gap-[31px] p-[15px] border border-t-0 border-[#E5E7EB]">
@@ -358,12 +377,8 @@ export default function Detail({ data, getProduct }) {
                 </svg>
 
                 <div>
-                  <p className="font-bold text-sm inline ">
-                    Warranty.{" "}
-                  </p>
-                  <p className="text-sm inline ">
-                    {productData.warrantyInfo}
-                  </p>
+                  <p className="font-bold text-sm inline ">Warranty. </p>
+                  <p className="text-sm inline ">{productData.warrantyInfo}</p>
                 </div>
               </div>
             </div>
@@ -390,7 +405,7 @@ export default function Detail({ data, getProduct }) {
                     />
                   </svg>
                 </div>
-                <span className="text-[16px] font-semibold">
+                <span className="max-md:text-sm text-[16px] font-semibold">
                   Share this Product
                 </span>
               </div>
@@ -468,7 +483,7 @@ export default function Detail({ data, getProduct }) {
           </div>
         </div>
       </div>
-      <div className="mt-5 max-md:hidden hidden max-lg:grid grid-cols-2 gap-5">
+      <div className="max-mobile:mt-[30px] max-md:mt-10 mt-5 hidden max-lg:grid max-md:grid-cols-1 grid-cols-2 gap-5">
         <div className="flex items-center gap-[31px] mb-0 p-[15px] border border-[#E5E7EB]">
           <svg
             width="22"
@@ -486,9 +501,7 @@ export default function Detail({ data, getProduct }) {
 
           <div>
             <p className="font-bold text-sm inline ">Payment. </p>
-            <p className="text-sm inline ">
-              {productData.paymentInfo}
-            </p>
+            <p className="text-sm inline ">{productData.paymentInfo}</p>
           </div>
         </div>
         <div className="flex items-center gap-[31px] p-[15px] border border-[#E5E7EB]">
@@ -508,9 +521,7 @@ export default function Detail({ data, getProduct }) {
 
           <div>
             <p className="font-bold text-sm inline ">Warranty. </p>
-            <p className="text-sm inline ">
-              {productData.warrantyInfo}
-            </p>
+            <p className="text-sm inline ">{productData.warrantyInfo}</p>
           </div>
         </div>
       </div>

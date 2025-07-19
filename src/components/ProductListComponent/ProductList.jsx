@@ -10,7 +10,7 @@ const ProductList = ({ data }) => {
       {data?.products?.length ? (
         data.products.map((product) => <BorderCard product={product} />)
       ) : (
-        <h3 className="text-2xl col-span-4">No Product Found Try With Different Filter.</h3>
+        <h3 className="max-md:text-base text-2xl col-span-4">No Product Found Try With Different Filter.</h3>
       )}
     </div>
   );

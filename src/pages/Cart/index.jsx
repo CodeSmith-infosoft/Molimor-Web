@@ -239,16 +239,18 @@ const Cart = () => {
                         cartData?.map((item) => (
                           <TableRow key={item?._id}>
                             <TableCell className="flex max-lg:max-w-[200px] items-center gap-4 py-4 overflow-hidden">
-                              <img
-                                src={item?.productId?.image}
-                                alt={item?.productId?.title}
-                                width={60}
-                                height={50}
-                                className="rounded-md object-cover"
-                              />
-                              <span className="text-ellipsis line-clamp-1">
-                                {item?.productId?.title}
-                              </span>
+                              <Link className="flex items-center" to={`/products/${item?.productId?._id}`}>
+                                <img
+                                  src={item?.productId?.image}
+                                  alt={item?.productId?.title}
+                                  width={60}
+                                  height={50}
+                                  className="rounded-md object-cover"
+                                />
+                                <span className="text-ellipsis line-clamp-1">
+                                  {item?.productId?.title}
+                                </span>
+                              </Link>
                             </TableCell>
                             <TableCell className={"text-[15px] font-medium"}>
                               {formatCurrency(item?.price, currency, language)}
@@ -357,8 +359,8 @@ const Cart = () => {
                         ))
                       ) : (
                         <TableRow>
-                          <TableCell colSpan={4}>
-                            <h3 className="text-center pt-8 text-xl font-semibold">
+                          <TableCell colSpan={5}>
+                            <h3 className="text-center pt-8 max-md:text-sm text-xl font-semibold">
                               Your Cart Is Empty{" "}
                               <span
                                 className="text-green underline cursor-pointer"

@@ -26,7 +26,7 @@ const RelatedProducts = ({ singleData }) => {
   return (
     <>
       <div className="sub-bottom-spacing">
-        <label className="capitalize max-lg:text-[20px] text-2xl font-medium ">
+        <label className="capitalize max-sm:text-lg max-lg:text-[20px] text-2xl font-medium ">
           Related Products
         </label>
       </div>

@@ -73,22 +73,22 @@ export default function ProductImageSlider({ data, selectedWeight }) {
       <div className="flex flex-col gap-4 w-full">
         <Carousel
           setApi={setMainApi}
-          className="w-full h-full max-lg:!max-h-[438px] !max-h-[660px]  relative"
+          className="w-full h-full  max-mobile:!max-h-[300px] max-md:!max-h-[400px] max-lg:!max-h-[438px] !max-h-[660px]  relative"
         >
           <CarouselContent>
             {data?.image?.map((image, index) => (
               <CarouselItem key={index} className={"w-full"}>
-                <div className="relative w-full flex justify-center aspect-square overflow-hidden">
+                <div className="relative  max-mobile:!max-h-[300px] max-md:!max-h-[400px] max-lg:!max-h-[438px] !max-h-[660px] w-full flex justify-center aspect-square overflow-hidden">
                   <img
                     src={image || "/placeholder.svg"}
                     alt={image}
-                    className="object-cover w-full !h-full"
+                    className="object-cover w-auto !h-full"
                   />
                 </div>
               </CarouselItem>
             ))}
           </CarouselContent>
-          <div className="absolute top-4 left-4 bg-[#DC2626] text-white text-xs font-bold px-2 py-1 rounded-md">
+          <div className="absolute top-4 left-4 bg-[#DC2626] text-white max-mobile:text-[10px] text-xs font-bold px-2 py-1 rounded-md">
             {getPercent([selectedWeight])}%
           </div>
           <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 z-10" />
@@ -145,7 +145,7 @@ export default function ProductImageSlider({ data, selectedWeight }) {
             </div>
           </div>
           {isOpen && (
-            <div className="absolute top-full py-1 left-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-10 min-w-[182px]">
+            <div className="absolute top-full py-1 max-md:-left-37 left-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-10 min-w-[182px]">
               <button
                 onClick={() =>
                   window.open(

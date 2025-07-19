@@ -65,7 +65,7 @@ const StarRatingInput = ({ rating, onRatingChange }) => {
 const ReviewStatistics = ({ stats }) => {
   return (
     <div className="flex flex-col">
-      <h2 className="text-[22px] font-medium">Customer Reviews</h2>
+      <h2 className="max-sm:text-[20px] text-[22px] font-medium">Customer Reviews</h2>
       <p className="text-sm font-medium mb-[30px]">
         Average rating: {stats.averageRating} ({stats.totalReviews})
       </p>
@@ -214,13 +214,13 @@ export default function CustomerReviews() {
   const displayedReviews = showAllReviews ? data : data?.slice(0, 2);
 
   return (
-    <div className="grid grid-cols-3 gap-[64px]">
+    <div className="grid max-md:grid-cols-1 grid-cols-3 max-md:gap-[30px] max-lg:gap-[50px] gap-[64px]">
       {/* Left Section: Review Statistics and Add Review Button */}
       <div className="flex flex-col gap-6">
         <ReviewStatistics stats={reviewStats} />
         <Dialog open={isPopupOpen} onOpenChange={setIsPopupOpen}>
           <DialogTrigger asChild>
-            <button className="w-fit cursor-pointer rounded-[6.62px] bg-[#333333] text-white text-lg py-[15px] px-[30px]">
+            <button className="w-fit cursor-pointer rounded-[6.62px] bg-[#333333] text-white max-md:text-base max-mobile:py-3 text-lg py-[15px] px-[30px]">
               Write A Product Review
             </button>
           </DialogTrigger>
@@ -360,8 +360,8 @@ export default function CustomerReviews() {
       </div>
 
       {/* Right Section: Customer Reviews */}
-      <div className="flex flex-col col-span-2 gap-6">
-        <h2 className="text-[22px] font-medium">Customers say</h2>
+      <div className="flex flex-col max-md:col-span-1 col-span-2 gap-6">
+        <h2 className="max-mobile:text-[20px] text-[22px] font-medium">Customers say</h2>
         <div className="grid gap-8">
           {displayedReviews?.map((review) => (
             <CustomerReviewCard key={review._id} review={review} />

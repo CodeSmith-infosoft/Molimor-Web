@@ -31,27 +31,27 @@ const ProductDetail = () => {
 
   return (
     <>
-      <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto max-lg:py-[50px] py-[70px]">
+      <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto max-mobile:py-[30px] max-md:py-[40px] max-lg:py-[50px] py-[70px]">
         <Detail data={data} getProduct={fetchData} />
         <div className="">
           <BuyMore data={data?.buyItWith} />
         </div>
         <div className="section-top-spacing">
-          <div className="space-y-[30px]">
-            <h1 className="text-[20px] font-bold py-4 inline-block border-b-2 border-[#333333]">
+          <div className="max-mobile:space-y-[21px] space-y-[30px]">
+            <h1 className="max-mobile:text-lg text-[20px] font-bold max-mobile:py-2 py-4 inline-block border-b-2 border-[#333333]">
               Descriptions
             </h1>
 
             {data?.description?.map((desc) => (
               <div className="space-y-[22px]">
-                <h2 className="text-lg font-bold">{desc?.h}</h2>
+                <h2 className="max-mobile:text-base text-lg font-bold">{desc?.h}</h2>
 
-                <p className="text-lg text-justify">{desc?.p}</p>
+                <p className="max-mobile:text-sm text-lg text-justify">{desc?.p}</p>
               </div>
             ))}
 
-            <div className="space-y-[22px]">
-              <h3 className="text-lg font-bold">Key Benefits:-</h3>
+            <div className="max-mobile:space-y-4 space-y-[22px]">
+              <h3 className="max-mobile:text-base text-lg font-bold">Key Benefits:-</h3>
 
               {data?.benefits?.map((benefit) => (
                 <div className="space-y-[20px]">
@@ -62,6 +62,7 @@ const ProductDetail = () => {
                       viewBox="0 0 20 20"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
+                      className="max-mobile:!w-4 max-mobile:!h-4"
                     >
                       <rect width="20" height="20" rx="10" fill="#333333" />
                       <path
@@ -73,14 +74,14 @@ const ProductDetail = () => {
                       />
                     </svg>
 
-                    <p className="text-lg">{benefit}</p>
+                    <p className="max-mobile:text-sm text-lg">{benefit}</p>
                   </div>
                 </div>
               ))}
             </div>
           </div>
         </div>
-        <div className="max-lg:py-[50px] py-[70px]">
+        <div className="max-mobile:py-[30px] max-md:py-[40px] max-lg:py-[50px] py-[70px]">
           <RelatedProducts singleData={data} />
         </div>
         <Testimonial />
