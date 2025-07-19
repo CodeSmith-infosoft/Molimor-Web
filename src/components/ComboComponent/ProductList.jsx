@@ -1,13 +1,7 @@
-import useAxios from "@/customHook/fetch-hook";
 import React, { useEffect, useState } from "react";
 import BorderCard from "../ProductCard/BorderCard";
-import { getParamString } from "@/utils";
 
-const ProductList = ({ filter, category }) => {
-  const { data, fetchData } = useAxios({
-    method: "GET",
-    url: `/product/getBigSalesProducts?${getParamString(filter)}`,
-  });
+const ProductList = ({ category, data }) => {
   const [mainData, setMainData] = useState([]);
 
   useEffect(() => {
@@ -26,12 +20,8 @@ const ProductList = ({ filter, category }) => {
     }
   }, [data, category]);
 
-  useEffect(() => {
-    fetchData();
-  }, [filter]);
-
   return (
-    <div className="grid max-lg:gap-[22px] gap-10 max-lg:grid-cols-3 grid-cols-4 w-full h-fit">
+    <div className="grid max-lg:gap-[22px] gap-10 max-mobile:grid-cols-2 max-lg:grid-cols-3 grid-cols-4 w-full h-fit">
       {mainData?.length ? (
         mainData.map((product) => <BorderCard product={product} />)
       ) : (

@@ -1,3 +1,4 @@
+import Loader from "@/components/MainLoader/Loader";
 import AddressFormSection from "@/components/Order/AddressFormSection";
 import InputGroup from "@/components/Order/InputGroup";
 import OrderSummary from "@/components/Order/OrderSummary";
@@ -51,7 +52,11 @@ export default function Order() {
     url: "/cart/getUserCart",
   });
 
-  const { data: userData, fetchData: getProfile } = useAxios({
+  const {
+    data: userData,
+    fetchData: getProfile,
+    loading,
+  } = useAxios({
     method: "GET",
     url: "/user/profile",
   });
@@ -319,63 +324,69 @@ export default function Order() {
         <div className="max-w-[1576px]  px-10 max-lg:px-5 mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-3 max-md:gap-[0px] max-lg:gap-[20px] gap-[100px]">
             <div className="lg:col-span-2">
-              <h1 className="max-lg:text-[15px] font-bold max-lg:mb-5 mb-6">Billing details</h1>
-              <form>
-                <AddressFormSection
-                  formData={formData}
-                  handleChange={handleChange}
-                  errors={errors}
-                  includeContactFields={true}
-                  setFormData={setFormData}
-                  handleSelect={handleSelect}
-                />
+              <h1 className="max-lg:text-[15px] font-bold max-lg:mb-5 mb-6">
+                Billing details
+              </h1>
+              {loading ? (
+                <Loader />
+              ) : (
+                <form>
+                  <AddressFormSection
+                    formData={formData}
+                    handleChange={handleChange}
+                    errors={errors}
+                    includeContactFields={true}
+                    setFormData={setFormData}
+                    handleSelect={handleSelect}
+                  />
 
-                <div className="mb-6">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      name="shipToDifferentAddress"
-                      checked={formData.shipToDifferentAddress}
-                      onChange={handleChange}
-                      className="peer hidden"
-                    />
-                    <div className="w-4 h-4 rounded-[2.5px] border border-[#333333] flex items-center justify-center peer-checked:bg-[#076536] peer-checked:border-[#076536] transition-colors duration-200">
-                      <img
-                        src={"/images/login/checked.svg"}
-                        className="w-3 h-3"
+                  <div className="mb-6">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="shipToDifferentAddress"
+                        checked={formData.shipToDifferentAddress}
+                        onChange={handleChange}
+                        className="peer hidden"
+                      />
+                      <div className="w-4 h-4 rounded-[2.5px] border border-[#333333] flex items-center justify-center peer-checked:bg-[#076536] peer-checked:border-[#076536] transition-colors duration-200">
+                        <img
+                          src={"/images/login/checked.svg"}
+                          className="w-3 h-3"
+                        />
+                      </div>
+                      <span className="text-[#333333] font-bold text-sm">
+                        Ship to a different address?
+                      </span>
+                    </label>
+                  </div>
+                  {formData.shipToDifferentAddress && (
+                    <div className="mt-8 pt-8 border-t border-[#D1D5DB]">
+                      <AddressFormSection
+                        formData={formData}
+                        handleChange={handleChange}
+                        errors={errors}
+                        title="Shipping details"
+                        prefix="shipping"
+                        includeContactFields={false}
+                        setFormData={setFormData}
+                        handleSelect={handleSelect}
                       />
                     </div>
-                    <span className="text-[#333333] font-bold text-sm">
-                      Ship to a different address?
-                    </span>
-                  </label>
-                </div>
-                {formData.shipToDifferentAddress && (
-                  <div className="mt-8 pt-8 border-t border-[#D1D5DB]">
-                    <AddressFormSection
-                      formData={formData}
-                      handleChange={handleChange}
-                      errors={errors}
-                      title="Shipping details"
-                      prefix="shipping"
-                      includeContactFields={false}
-                      setFormData={setFormData}
-                      handleSelect={handleSelect}
+                  )}
+
+                  <div className="mt-8">
+                    <InputGroup
+                      label="Order notes (optional)"
+                      type="textarea"
+                      name="orderNotes"
+                      value={formData.orderNotes}
+                      onChange={handleChange}
+                      placeholder="Notes about your order, e.g. special notes for delivery."
                     />
                   </div>
-                )}
-
-                <div className="mt-8">
-                  <InputGroup
-                    label="Order notes (optional)"
-                    type="textarea"
-                    name="orderNotes"
-                    value={formData.orderNotes}
-                    onChange={handleChange}
-                    placeholder="Notes about your order, e.g. special notes for delivery."
-                  />
-                </div>
-              </form>
+                </form>
+              )}
             </div>
 
             <div className="lg:col-span-1">

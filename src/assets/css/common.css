@@ -26,3 +26,15 @@
     height: 0;
   }
 }
+
+@media (max-width: 375px) {
+  .small-screen-star {
+    width: 8px !important;
+    height: 8px !important;
+  }
+
+  .small-screen-offerBox {
+    gap: 4px !important;
+    width: 186px !important;
+  }
+}

@@ -94,6 +94,7 @@ export const formatCurrency = (amount, currency = "USD", locale = "en-US") => {
     style: "currency",
     currency,
     numberingSystem: numberingSystem,
+    maximumFractionDigits: 0,
   }).format(isNaN(amount) ? 0 : amount);
 };
 

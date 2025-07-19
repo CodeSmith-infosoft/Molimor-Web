@@ -16,7 +16,7 @@ const HorizontalCard = ({
 
   return (
     <div
-      className={`bg-[#ffff] h-[120px] rounded-[6px] flex items-center group cursor-pointer ${className}`}
+      className={`bg-[#ffff] overflow-hidden h-[120px] rounded-[6px] flex items-center group cursor-pointer ${className}`}
       onClick={() => {
         navigate(`/products/${data._id}`);
       }}

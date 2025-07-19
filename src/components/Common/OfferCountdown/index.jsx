@@ -10,7 +10,7 @@ const OfferCountdown = () => {
   const tablet = useIsMobile(769);
 
   return (
-    <div className="flex items-center px-[11px] max-md:w-[220px] gap-4 max-lg:py-1 max-md:py-2 py-2 border rounded-md border-[#FFEDD5] bg-[#FFF7ED]">
+    <div className="flex items-center px-[11px] max-md:w-[220px] gap-4 max-lg:py-1 max-md:py-2 py-2 border rounded-md border-[#FFEDD5] bg-[#FFF7ED] small-screen-offerBox">
       <label className="text-[#C2410C] text-[10px] font-bold ">
         {laptop && !tablet ? "" : "Special"} Offer :
       </label>

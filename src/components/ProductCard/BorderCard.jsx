@@ -1,13 +1,18 @@
-import { formatCurrency, getPercent, isDateNotPast, isDateNotPastBoolean } from "@/utils";
+import {
+  formatCurrency,
+  getPercent,
+  isDateNotPast,
+  isDateNotPastBoolean,
+} from "@/utils";
 import StarRating from "../Common/StarRating";
 import MainContext from "@/context/MainContext";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 const BorderCard = ({ product }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { language, currency } = useContext(MainContext);
-  let isDeal = isDateNotPastBoolean(product.variants)
+  let isDeal = isDateNotPastBoolean(product.variants);
   return (
     <div
       className="bg-[#FFFFFF] border border-[#E5E7EB] rounded-[10px] max-lg:p-[23px] px-5 py-[27px] group cursor-pointer w-full h-full"
@@ -40,7 +45,7 @@ const BorderCard = ({ product }) => {
           </label>
         </div>
         {isDeal && (
-          <span className="absolute bg-[#DC2626] rounded-full py-[2.5px] px-2 text-white text-xs font-medium top-0 ">
+          <span className="absolute bg-[#DC2626] max-mobile:font-normal rounded-full py-[2.5px] px-2 text-white text-xs font-medium top-0 ">
             {getPercent(product.variants)}%
           </span>
         )}
