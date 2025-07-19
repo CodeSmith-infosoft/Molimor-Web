@@ -58,8 +58,8 @@ const Deals = () => {
         <div className="max-mobile:col-span-full max-md:col-span-2">
           <SubHeader heading={"deal of the day"} />
           <div className="space-y-5">
-            {data?.dealOfTheWeek?.length ? (
-              [...data.dealOfTheWeek, ...data.dealOfTheWeek]
+            {data?.dealOfTheDay?.length ? (
+              data.dealOfTheDay
                 ?.slice(0, 3)
                 ?.map((deal) => (
                   <HorizontalCard

@@ -1,23 +1,32 @@
-import React, { useContext, useEffect } from "react";
-import useAxios from "../../customHook/fetch-hook";
+import React, { useContext } from "react";
 import { useState } from "react";
 import { FilterCollapse } from "../ProductListComponent/FilterCollapse";
 import StarRating from "../Common/StarRating";
 import MainContext from "@/context/MainContext";
 import { formatCurrency } from "@/utils";
-import MobileFilterDrawer from "./MobileFilterDrawer";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../ui/drawer";
+import { Button } from "../ui/button";
 
-const Filter = ({ filter, setFilter }) => {
+const Filter = ({ filter, setFilter, data }) => {
   const [openFilter, setOpenFilter] = useState({
     category: true,
     price: true,
     rating: true,
   });
-  const { language, currency } = useContext(MainContext);
-  const { data, fetchData } = useAxios({
-    method: "GET",
-    url: "/subCategory/getActiveSubCategoryList",
+  const [openTabFilter, setOpenTabFilter] = useState({
+    category: false,
+    price: false,
+    rating: false,
   });
+  const { language, currency } = useContext(MainContext);
+
   const priceRanges = [
     {
       id: "under-50",
@@ -81,9 +90,16 @@ const Filter = ({ filter, setFilter }) => {
     },
   ];
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const clearAll = () => {
+    setFilter({
+      category: "",
+      subcategoryId: "",
+      minPrice: "",
+      maxPrice: "",
+      review: "",
+      search: "",
+    });
+  };
 
   return (
     <>
@@ -251,169 +267,287 @@ const Filter = ({ filter, setFilter }) => {
         </div>
       </div>
       <div className="hidden max-md:flex border border-[#E5E7EB] rounded-[5px]">
-        <MobileFilterDrawer
-          setFilter={setFilter}
-          triggerData={
+        <Drawer open={openTabFilter.category}>
+          <DrawerTrigger asChild>
             <div
               className="flex flex-1 max-mobile:justify-center border-r border-[#E5E7EB] justify-between max-mobile:gap-[10px] gap-10 cursor-pointer items-center py-[14px] px-5 max-mobile:px-[14px]"
-              onClick={() =>
-                setOpenFilter((prev) => ({ ...prev, category: !prev.category }))
-              }
+              onClick={(e) => {
+                e.stopPropagation();
+                setOpenTabFilter((prev) => ({
+                  ...prev,
+                  category: !prev.category,
+                }));
+              }}
             >
-              <h3 className="text-[18px] font-medium ">Category</h3>
+              <h3 className="max-mobile:text-sm font-medium ">Category</h3>
               <img
                 src="/images/common/MdArrowDown.svg"
                 className={`transition-transform duration-700 ${
-                  openFilter.category ? "rotate-180" : "rotate-0"
+                  openTabFilter.category ? "rotate-180" : "rotate-0"
                 }`}
               />
             </div>
-          }
-        >
-          <div
-            className={`space-y-4 transition-all px-10 duration-700 overflow-scroll ${
-              openFilter.category
-                ? "max-h-[1000px] opacity-100"
-                : "max-h-0 opacity-0"
-            }`}
-          >
-            {data?.length ? (
-              data
-                .filter((d) => d.categoryName !== "Combo")
-                .map((category) => (
-                  <div>
-                    <FilterCollapse
-                      data={category}
-                      setFilter={setFilter}
-                      filter={filter}
-                    />
-                  </div>
-                ))
-            ) : (
-              <></>
-            )}
-          </div>
-        </MobileFilterDrawer>
-        <MobileFilterDrawer
-          setFilter={setFilter}
-          triggerData={
+          </DrawerTrigger>
+          <DrawerContent className="rounded-t-2xl max-h-[95vh]">
+            <DrawerHeader className={"flex-row justify-between"}>
+              <DrawerTitle className="text-lg font-bold text-[#333333]">
+                Filters
+              </DrawerTitle>
+              <Button
+                variant="outline"
+                onClick={() =>
+                  setOpenTabFilter((prev) => ({
+                    ...prev,
+                    category: false,
+                  }))
+                }
+                className={" text-[#333333]"}
+              >
+                X
+              </Button>
+            </DrawerHeader>
+            <div
+              className={`space-y-4 transition-all px-10 duration-700 overflow-scroll ${
+                openTabFilter.category
+                  ? "max-h-[1000px] opacity-100"
+                  : "max-h-0 opacity-0"
+              }`}
+            >
+              {data?.length ? (
+                data
+                  .filter((d) => d.categoryName !== "Combo")
+                  .map((category) => (
+                    <div>
+                      <FilterCollapse
+                        data={category}
+                        setFilter={setFilter}
+                        filter={filter}
+                      />
+                    </div>
+                  ))
+              ) : (
+                <></>
+              )}
+            </div>
+            <DrawerFooter className="flex flex-row gap-3 p-4">
+              <Button
+                onClick={() =>
+                  setOpenTabFilter((prev) => ({
+                    ...prev,
+                    category: false,
+                  }))
+                }
+                className={"flex-1 bg-green"}
+              >
+                Apply Filters
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={clearAll}
+                className={"text-[#333333] flex-1"}
+              >
+                Clear All
+              </Button>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
+        <Drawer open={openTabFilter.price}>
+          <DrawerTrigger asChild>
             <div
               className="flex flex-1 border-r border-[#E5E7EB] max-mobile:justify-center justify-between max-mobile:gap-[10px] gap-10 cursor-pointer items-center py-[14px] px-5 max-mobile:px-[14px]"
               onClick={() =>
-                setOpenFilter((prev) => ({ ...prev, rating: !prev.rating }))
+                setOpenTabFilter((prev) => ({ ...prev, price: !prev.price }))
               }
             >
-              <h3 className="text-[18px] font-medium ">Price</h3>
+              <h3 className="max-mobile:text-sm font-medium ">Price</h3>
               <img
                 src="/images/common/MdArrowDown.svg"
                 className={`transition-transform duration-700 ${
-                  openFilter.rating ? "rotate-180" : "rotate-0"
+                  openTabFilter.price ? "rotate-180" : "rotate-0"
                 }`}
               />
             </div>
-          }
-        >
-          <div
-            className={`space-y-4 transition-all duration-700 overflow-scroll px-10 ${
-              openFilter.price
-                ? "max-h-[1000px] opacity-100"
-                : "max-h-0 opacity-0"
-            }`}
-          >
-            {priceRanges?.length ? (
-              priceRanges.map((range) => (
-                <div className="flex justify-between items-center">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={
-                        range?.minPrice === filter.minPrice ||
-                        range?.maxPrice === filter.maxPrice
-                      }
-                      onChange={(e) =>
-                        setFilter((prev) => ({
-                          ...prev,
-                          maxPrice: e.target.checked ? range?.maxPrice : "",
-                          minPrice: e.target.checked ? range?.minPrice : "",
-                        }))
-                      }
-                      className="peer hidden"
-                    />
-                    <div className="w-[16px] h-[16px] rounded-[4px] border border-[#E5E7EB] flex items-center justify-center peer-checked:bg-[#076536] peer-checked:border-[#076536] transition-colors duration-200">
-                      <img
-                        src={"/images/login/checked.svg"}
-                        className="w-[12px] h-[8px]"
+          </DrawerTrigger>
+          <DrawerContent className="rounded-t-2xl max-h-[95vh]">
+            <DrawerHeader className={"flex-row justify-between"}>
+              <DrawerTitle className="text-lg font-bold text-[#333333]">
+                Filters
+              </DrawerTitle>
+              <Button
+                variant="outline"
+                onClick={() =>
+                  setOpenTabFilter((prev) => ({
+                    ...prev,
+                    price: false,
+                  }))
+                }
+                className={" text-[#333333]"}
+              >
+                X
+              </Button>
+            </DrawerHeader>
+            <div
+              className={`space-y-4 transition-all duration-700 overflow-scroll px-10 ${
+                openTabFilter.price
+                  ? "max-h-[1000px] opacity-100"
+                  : "max-h-0 opacity-0"
+              }`}
+            >
+              {priceRanges?.length ? (
+                priceRanges.map((range) => (
+                  <div className="flex justify-between items-center">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={
+                          range?.minPrice === filter.minPrice ||
+                          range?.maxPrice === filter.maxPrice
+                        }
+                        onChange={(e) =>
+                          setFilter((prev) => ({
+                            ...prev,
+                            maxPrice: e.target.checked ? range?.maxPrice : "",
+                            minPrice: e.target.checked ? range?.minPrice : "",
+                          }))
+                        }
+                        className="peer hidden"
                       />
-                    </div>
-                    <span className="text-[#333333] text-sm">
-                      {range?.label}
-                    </span>
-                  </label>
-                </div>
-              ))
-            ) : (
-              <></>
-            )}
-          </div>
-        </MobileFilterDrawer>
-        <MobileFilterDrawer
-          setFilter={setFilter}
-          triggerData={
+                      <div className="w-[16px] h-[16px] rounded-[4px] border border-[#E5E7EB] flex items-center justify-center peer-checked:bg-[#076536] peer-checked:border-[#076536] transition-colors duration-200">
+                        <img
+                          src={"/images/login/checked.svg"}
+                          className="w-[12px] h-[8px]"
+                        />
+                      </div>
+                      <span className="text-[#333333] text-sm">
+                        {range?.label}
+                      </span>
+                    </label>
+                  </div>
+                ))
+              ) : (
+                <></>
+              )}
+            </div>
+            <DrawerFooter className="flex flex-row gap-3 p-4">
+              <Button
+                onClick={() =>
+                  setOpenTabFilter((prev) => ({
+                    ...prev,
+                    price: false,
+                  }))
+                }
+                className={"flex-1 bg-green"}
+              >
+                Apply Filters
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={clearAll}
+                className={"flex-1 text-[#333333]"}
+              >
+                Clear All
+              </Button>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
+        <Drawer open={openTabFilter.rating}>
+          <DrawerTrigger asChild>
             <div
               className="flex flex-1 max-mobile:justify-center justify-between max-mobile:gap-[10px] gap-10 cursor-pointer items-center py-[14px] px-5 max-mobile:px-[14px] "
               onClick={() =>
-                setOpenFilter((prev) => ({ ...prev, price: !prev.price }))
+                setOpenTabFilter((prev) => ({ ...prev, rating: !prev.rating }))
               }
             >
-              <h3 className="text-[18px] font-medium ">Rating</h3>
+              <h3 className="max-mobile:text-sm font-medium ">Rating</h3>
               <img
                 src="/images/common/MdArrowDown.svg"
                 className={`transition-transform duration-700 ${
-                  openFilter.price ? "rotate-180" : "rotate-0"
+                  openTabFilter.rating ? "rotate-180" : "rotate-0"
                 }`}
               />
             </div>
-          }
-        >
-          <div
-            className={`space-y-4 transition-all duration-700 overflow-hidden ${
-              openFilter.rating
-                ? "max-h-[1000px] opacity-100"
-                : "max-h-0 opacity-0"
-            }`}
-          >
-            {starRanges?.length ? (
-              starRanges.map((range) => (
-                <div className="flex justify-between items-center">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={range?.count === filter.review}
-                      onChange={(e) =>
-                        setFilter((prev) => ({
-                          ...prev,
-                          review: e.target.checked ? range?.count : "",
-                        }))
-                      }
-                      className="peer hidden"
-                    />
-                    <div className="w-[16px] h-[16px] rounded-[4px] border border-[#E5E7EB] flex items-center justify-center peer-checked:bg-[#076536] peer-checked:border-[#076536] transition-colors duration-200">
-                      <img
-                        src={"/images/login/checked.svg"}
-                        className="w-[12px] h-[8px]"
+          </DrawerTrigger>
+          <DrawerContent className="rounded-t-2xl max-h-[95vh]">
+            <DrawerHeader className={"flex-row justify-between"}>
+              <DrawerTitle className="text-lg font-bold text-[#333333]">
+                Filters
+              </DrawerTitle>
+              <Button
+                variant="outline"
+                onClick={() =>
+                  setOpenTabFilter((prev) => ({
+                    ...prev,
+                    rating: false,
+                  }))
+                }
+                className={" text-[#333333]"}
+              >
+                X
+              </Button>
+            </DrawerHeader>
+            <div
+              className={`space-y-4 px-10 transition-all duration-700 overflow-hidden ${
+                openTabFilter.rating
+                  ? "max-h-[1000px] opacity-100"
+                  : "max-h-0 opacity-0"
+              }`}
+            >
+              {starRanges?.length ? (
+                starRanges.map((range) => (
+                  <div className="flex justify-between items-center">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={range?.count === filter.review}
+                        onChange={(e) =>
+                          setFilter((prev) => ({
+                            ...prev,
+                            review: e.target.checked ? range?.count : "",
+                          }))
+                        }
+                        className="peer hidden"
                       />
-                    </div>
-                    <span className="text-[#333333] text-sm">
-                      {range?.label}
-                    </span>
-                  </label>
-                </div>
-              ))
-            ) : (
-              <></>
-            )}
-          </div>
-        </MobileFilterDrawer>
+                      <div className="w-[16px] h-[16px] rounded-[4px] border border-[#E5E7EB] flex items-center justify-center peer-checked:bg-[#076536] peer-checked:border-[#076536] transition-colors duration-200">
+                        <img
+                          src={"/images/login/checked.svg"}
+                          className="w-[12px] h-[8px]"
+                        />
+                      </div>
+                      <span className="text-[#333333] text-sm">
+                        {range?.label}
+                      </span>
+                    </label>
+                  </div>
+                ))
+              ) : (
+                <></>
+              )}
+            </div>
+            <DrawerFooter className="flex flex-row gap-3 p-4">
+              <Button
+                onClick={() =>
+                  setOpenTabFilter((prev) => ({
+                    ...prev,
+                    rating: false,
+                  }))
+                }
+                className={"flex-1 bg-green"}
+              >
+                Apply Filters
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={clearAll}
+                className={"text-[#333333] flex-1"}
+              >
+                Clear All
+              </Button>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
       </div>
     </>
   );

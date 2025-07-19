@@ -46,8 +46,8 @@ export default function CountdownTimer({
   }, []);
 
   return (
-    <div className="text-white flex justify-center items-center gap-1">
-      <span className="text-xs opacity-70 font-medium">
+    <div className="text-white flex justify-center items-center gap-1 max-[25rem]:flex-wrap">
+      <span className="text-xs opacity-70 font-medium max-[25rem]:shrink-0 max-[25rem]:w-full">
         Until the end of the sale:
       </span>{" "}
       <span className="text-lg font-bold">{timeLeft.days}</span>{" "}

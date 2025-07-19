@@ -313,6 +313,14 @@ input:focus-visible {
   white-space: nowrap;
 }
 
+@media (max-width: 440px) {
+  .progres__label {
+    white-space: normal;
+    height: 42px;
+    font-size: 10px;
+  }
+}
+
 /* Main Loader */
 
 .main-loader {

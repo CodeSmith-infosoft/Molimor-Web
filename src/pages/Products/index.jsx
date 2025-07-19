@@ -5,6 +5,7 @@ import ProductList from "../../components/ProductListComponent/ProductList";
 import { useSearchParams } from "react-router-dom";
 import useAxios from "@/customHook/fetch-hook";
 import { getParamString } from "@/utils";
+import Loader from "@/components/MainLoader/Loader";
 
 const Products = () => {
   const [searchParams] = useSearchParams();
@@ -19,15 +20,24 @@ const Products = () => {
     maxPrice: "",
     review: "",
     search: "",
+    limit: 30,
   });
 
   const [data, setData] = useState([]);
-  const { fetchData } = useAxios({
+  const { fetchData, loading } = useAxios({
     method: "GET",
     url: "",
   });
+  const { data: categoryData, fetchData: getActiveSubCategoryList } = useAxios({
+    method: "GET",
+    url: "/subCategory/getActiveSubCategoryList",
+  });
 
   const requestCounter = useRef(0);
+
+  useEffect(() => {
+    getActiveSubCategoryList();
+  }, []);
 
   useEffect(() => {
     const requestId = ++requestCounter.current;
@@ -67,10 +77,10 @@ const Products = () => {
 
   return (
     <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto">
-      <Banner />
+      <Banner data={categoryData} filter={filter} />
       <div className="section-top-spacing flex max-md:flex-col max-lg:gap-[22px] gap-10">
-        <Filter filter={filter} setFilter={setFilter} />
-        <ProductList data={data} />
+        <Filter filter={filter} setFilter={setFilter} data={categoryData} />
+        {loading ? <Loader /> : <ProductList data={data} />}
       </div>
     </div>
   );
