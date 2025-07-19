@@ -11,7 +11,7 @@ import RequireAuth from "./routes/RequireAuth";
 
 function App() {
   return (
-    <div>
+    <>
       <MainProvider>
         <ScrollToTopButton />
         <BrowserRouter>
@@ -75,7 +75,7 @@ function App() {
           }}
         />
       </MainProvider>
-    </div>
+    </>
   );
 }
 
