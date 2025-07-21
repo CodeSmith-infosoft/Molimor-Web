@@ -23,7 +23,7 @@ const Deals = () => {
           <SubHeader heading={"crazy deal"} link={"/deals?category=Deals"} />
           <div className="space-y-5 max-mobile:space-y-0 max-mobile:grid max-mobile:grid-cols-2 max-mobile:gap-4">
             {data?.crazyDeal?.length ? (
-              [...data.crazyDeal, ...data.crazyDeal, ...data.crazyDeal]
+              [...data.crazyDeal]
                 ?.slice(0, mobile ? 4 : 3)
                 ?.map((deal) => (
                   <HorizontalCard
@@ -33,7 +33,7 @@ const Deals = () => {
                   />
                 ))
             ) : (
-              <></>
+              <>No Any Product </>
             )}
           </div>
         </div>
@@ -41,7 +41,7 @@ const Deals = () => {
           <SubHeader heading={"Combo"} link={"deals?category=combo"} />
           <div className="gap-5 grid max-mobile:grid-cols-2 max-mobile:gap-4 max-lg:grid-cols-1 grid-cols-2">
             {data?.combo?.length ? (
-              [...data.combo, ...data.combo]
+              [...data.combo]
                 ?.slice(0, mobile ? 4 : laptop ? 3 : 6)
                 ?.map((deal) => (
                   <HorizontalCard
@@ -51,7 +51,7 @@ const Deals = () => {
                   />
                 ))
             ) : (
-              <></>
+              <>No any Product</>
             )}
           </div>
         </div>
@@ -70,7 +70,7 @@ const Deals = () => {
                   />
                 ))
             ) : (
-              <></>
+              <>No Any Product</>
             )}
           </div>
         </div>

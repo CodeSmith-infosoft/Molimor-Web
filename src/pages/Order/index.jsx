@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 export default function Order() {
   const [formData, setFormData] = useState({
     firstName: "",
-    lastName: "",
+    // lastName: "",
     phone: "",
     email: "",
     country: "",
@@ -85,7 +85,7 @@ export default function Order() {
         country: userData?.country || "",
         email: userData?.email || "",
         firstName: userData?.fname || "",
-        lastName: userData?.fname || "",
+        // lastName: userData?.name || "",
         phone: userData?.mobile || "",
         zipCode: userData?.pincode || "",
         state: userData?.state || "",
@@ -196,7 +196,7 @@ export default function Order() {
 
     // --- Validate Billing Details ---
     validateField("firstName", formData.firstName, "First name is required");
-    validateField("lastName", formData.lastName, "Last name is required");
+    // validateField("lastName", formData.lastName, "Last name is required");
 
     validateField("phone", formData.phone, "Phone number is required");
     if (formData.phone && !/^\d{10,15}$/.test(formData.phone)) {
@@ -270,7 +270,7 @@ export default function Order() {
       setLoader(true);
       const submissionData = {
         fname: formData.firstName,
-        lname: formData.lastName,
+        // lname: formData.lastName,
         cartItems: cartData.map((cart) => {
           const item = {
             productId: cart.productId._id,

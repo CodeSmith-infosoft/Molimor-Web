@@ -172,15 +172,16 @@ const AddressFormSection = ({
             onChange={handleChange}
             error={errors[getFieldName("firstName")]}
             placeholder={"Your first name"}
+            className="col-span-2"
           />
-          <InputGroup
+          {/* <InputGroup
             label="Last name*"
             name={getFieldName("lastName")}
             value={formData[getFieldName("lastName")] || ""}
             onChange={handleChange}
             error={errors[getFieldName("lastName")]}
             placeholder={"Your last name"}
-          />
+          /> */}
           <InputGroup
             label="Phone*"
             type="tel"

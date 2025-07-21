@@ -1,4 +1,3 @@
-import { Collapsible } from "@radix-ui/react-collapsible";
 import { Link } from "react-router-dom";
 import FooterCollapse from "./FooterCollapse";
 
@@ -88,12 +87,18 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to={"/"} className="text-sm text-[#333333]">
+                <Link
+                  to={"https://molimor.co/privacy-policy"}
+                  className="text-sm text-[#333333]"
+                >
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link to={"/"} className="text-sm text-[#333333]">
+                <Link
+                  to={"https://molimor.co/terms_service"}
+                  className="text-sm text-[#333333]"
+                >
                   Terms and Conditions
                 </Link>
               </li>
@@ -117,12 +122,18 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to={"/"} className="text-sm text-[#333333]">
+                <Link
+                  to={"https://molimor.co/privacy-policy"}
+                  className="text-sm text-[#333333]"
+                >
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link to={"/"} className="text-sm text-[#333333]">
+                <Link
+                  to={"https://molimor.co/terms_service"}
+                  className="text-sm text-[#333333]"
+                >
                   Terms and Conditions
                 </Link>
               </li>
@@ -139,17 +150,27 @@ export default function Footer() {
             <h3 className="text-lg font-bold text-[#333333]">Get to Know Us</h3>
             <ul className="space-y-[10px]">
               <li>
-                <Link to={"/"} className="text-sm text-[#333333]">
+                <Link
+                  to={"https://molimor.co/about-us"}
+                  className="text-sm text-[#333333]"
+                >
                   About Us
                 </Link>
               </li>
               <li>
-                <Link to={"/"} className="text-sm text-[#333333]">
+                <Link
+                  to={"https://molimor.co/careers"}
+                  className="text-sm text-[#333333]"
+                >
                   Career
                 </Link>
               </li>
               <li>
-                <Link to={"/"} className="text-sm text-[#333333]">
+                <Link
+                  to={"https://molimor.co/distributor"}
+                  target="_blank"
+                  className="text-sm text-[#333333]"
+                >
                   Distributor
                 </Link>
               </li>
@@ -158,18 +179,27 @@ export default function Footer() {
           <FooterCollapse title={"Get to Know Us"}>
             <ul className="space-y-[10px] grid grid-cols-2">
               <li>
-                <Link to={"/"} className="text-sm text-[#333333]">
+                <Link
+                  to={"https://molimor.co/about-us"}
+                  className="text-sm text-[#333333]"
+                >
                   About Us
                 </Link>
               </li>
               <li>
-                <Link to={"/"} className="text-sm text-[#333333]">
+                <Link
+                  to={"https://molimor.co/careers"}
+                  className="text-sm text-[#333333]"
+                >
                   Career
                 </Link>
               </li>
-              
+
               <li>
-                <Link to={"/"} className="text-sm text-[#333333]">
+                <Link
+                  to={"https://molimor.co/distributor"}
+                  className="text-sm text-[#333333]"
+                >
                   Distributor
                 </Link>
               </li>
@@ -204,9 +234,12 @@ export default function Footer() {
                   <p className="text-xs mb-[1px] text-[#333333] opacity-60">
                     Monday-Friday, 08am-5pm
                   </p>
-                  <p className="text-[20px] font-bold text-[#333333]">
-                    0 800 300-353
-                  </p>
+                  <a
+                    href="tel:0800300353"
+                    className="text-[20px] font-bold text-[#333333]"
+                  >
+                    91 90811 11299
+                  </a>
                 </div>
               </div>
               <div className="flex items-center space-x-[22px]">
@@ -227,9 +260,12 @@ export default function Footer() {
                   <p className="text-xs mb-[1px] text-[#333333] opacity-60">
                     Need help with your order?
                   </p>
-                  <p className="text-sm font-semibold text-[#333333]">
-                    info@example.com
-                  </p>
+                  <a
+                    href="mailto:Info@molimor.co"
+                    className="text-sm font-semibold text-[#333333]"
+                  >
+                    Info@molimor.co
+                  </a>
                 </div>
               </div>
             </div>

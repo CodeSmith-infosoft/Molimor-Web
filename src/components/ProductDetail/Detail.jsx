@@ -18,27 +18,6 @@ import ProductImageSlider from "./ProductImageSlider";
 export default function Detail({ data, getProduct }) {
   const { language, currency, setCartCount, cartCount } =
     useContext(MainContext);
-  const productData = {
-    title:
-      "MOLIMOR Detox Green Tea for Weight Loss, Immunity & Metabolism Boost – 30 Tea Bags per Box (Pack of 3)",
-    rating: 4.5,
-    originalPrice: 1.99,
-    specialPrice: 0.89,
-    countdown: { hours: 16, minutes: 6, seconds: 50 }, // Static for now, can be dynamic later
-    weights: ["250Gm", "500Gm", "1Kg"],
-    keyBenefits: [
-      "100% Pure Gound nut",
-      "28 GM PROTEIN",
-      "rich in vitamin B",
-      "Healthy & Tasty",
-      "Aids Weight loss",
-      "Energy booster",
-    ],
-    paymentInfo:
-      "Payment upon receipt of goods, Payment by card in the department, Google Pay, Online card, -5% discount in case of payment",
-    warrantyInfo:
-      "The Consumer Protection Act does not provide for the return of this product of proper quality.",
-  };
   const navigate = useNavigate();
   const { fetchData: addToCart } = useAxios({
     method: "POST",
@@ -190,7 +169,9 @@ export default function Detail({ data, getProduct }) {
             </div>
 
             <div className="mb-[14px]">
-              <p className="max-mobile:text-xs text-sm font-bold mb-4">Special Price:-</p>
+              <p className="max-mobile:text-xs text-sm font-bold mb-4">
+                Special Price:-
+              </p>
               <div className="flex items-baseline">
                 <span className="text-3xl font-semibold mr-[6px]">
                   {formatCurrency(
@@ -228,37 +209,49 @@ export default function Detail({ data, getProduct }) {
                 </span>
               </div>
             )}
-
-            <div className="mb-[14px]">
-              <p className="max-mobile:text-xs text-sm font-bold mb-4">Weight:-</p>
-              <div className="flex space-x-4">
-                {data?.variants?.map((weight) => (
-                  <Button
-                    key={weight.weight}
-                    variant={
-                      selectedWeight?.weight === weight.weight
-                        ? "default"
-                        : "outline"
-                    }
-                    className={
-                      selectedWeight?.weight === weight.weight
-                        ? "bg-green max-mobile:text-xs text-white hover:bg-green rounded-[6px]"
-                        : " border-0 max-mobile:text-xs rounded-[6px]"
-                    }
-                    onClick={() => setSelectedWeight(weight)}
-                  >
-                    {weight.weight}
-                  </Button>
-                ))}
+            {data?.variants?.length > 1 ? (
+              <div className="mb-[14px]">
+                <p className="max-mobile:text-xs text-sm font-bold mb-4">
+                  Weight:-
+                </p>
+                <div className="flex space-x-4">
+                  {data?.variants?.map((weight) => (
+                    <Button
+                      key={weight.weight}
+                      variant={
+                        selectedWeight?.weight === weight.weight
+                          ? "default"
+                          : "outline"
+                      }
+                      className={
+                        selectedWeight?.weight === weight.weight
+                          ? "bg-green max-mobile:text-xs text-white hover:bg-green rounded-[6px]"
+                          : " border-0 max-mobile:text-xs rounded-[6px]"
+                      }
+                      onClick={() => setSelectedWeight(weight)}
+                    >
+                      {weight.weight}
+                    </Button>
+                  ))}
+                </div>
               </div>
-            </div>
+            ) : (
+              ""
+            )}
 
             <div className="mb-[14px]">
-              <p className="text-sm max-mobile:text-xs font-semibold mb-4">Key Benefits:-</p>
+              <p className="text-sm max-mobile:text-xs font-semibold mb-4">
+                Key Benefits:-
+              </p>
               <div className="  ">
                 <ul className="list-disc list-inside space-y-1 grid grid-cols-1 md:grid-cols-2 gap-2">
                   {data?.isFeatured?.map((benefit, index) => (
-                    <li key={`benefit1-${index * 2}`} className="max-mobile:!text-sm">{benefit}</li>
+                    <li
+                      key={`benefit1-${index * 2}`}
+                      className="max-mobile:!text-sm"
+                    >
+                      {benefit}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -340,7 +333,7 @@ export default function Detail({ data, getProduct }) {
               </button>
             </div>
 
-            <div className="space-y-4 max-lg:hidden block mb-[14px]">
+            {/* <div className="space-y-4 max-lg:hidden block mb-[14px]">
               <div className="flex items-center gap-[31px] mb-0 p-[15px] border border-[#E5E7EB]">
                 <svg
                   width="22"
@@ -381,7 +374,7 @@ export default function Detail({ data, getProduct }) {
                   <p className="text-sm inline ">{productData.warrantyInfo}</p>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <div
               className="flex items-center text-sm   cursor-pointer relative"
@@ -483,7 +476,7 @@ export default function Detail({ data, getProduct }) {
           </div>
         </div>
       </div>
-      <div className="max-mobile:mt-[30px] max-md:mt-10 mt-5 hidden max-lg:grid max-md:grid-cols-1 grid-cols-2 gap-5">
+      {/* <div className="max-mobile:mt-[30px] max-md:mt-10 mt-5 hidden max-lg:grid max-md:grid-cols-1 grid-cols-2 gap-5">
         <div className="flex items-center gap-[31px] mb-0 p-[15px] border border-[#E5E7EB]">
           <svg
             width="22"
@@ -524,7 +517,7 @@ export default function Detail({ data, getProduct }) {
             <p className="text-sm inline ">{productData.warrantyInfo}</p>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

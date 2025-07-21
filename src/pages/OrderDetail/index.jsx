@@ -23,6 +23,8 @@ export default function OrderDetail() {
     getAllUserOrders();
   }, []);
 
+  const shippingCharges = orderList?.totalAmount * 0.2;
+
   const orderStatuses = [
     { name: "Order received", key: "Order received" },
     { name: "Processing", key: "Processing" },
@@ -164,18 +166,14 @@ export default function OrderDetail() {
                 <div className="flex justify-between py-3 border-b">
                   <span className="opacity-50">Shipping</span>
                   <span className="font-medium">
-                    {formatCurrency(
-                      orderList?.shippingCharge,
-                      currency,
-                      language
-                    )}
+                    {formatCurrency(shippingCharges, currency, language)}
                   </span>
                 </div>
                 <div className="flex justify-between mt-3">
                   <span className="">Total</span>
                   <span className="font-bold text-green text-[16px]">
                     {formatCurrency(
-                      Number(orderList?.shippingCharge) +
+                      shippingCharges +
                         Number(orderList?.totalAmount),
                       currency,
                       language

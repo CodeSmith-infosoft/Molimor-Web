@@ -7,7 +7,7 @@ import "react-phone-input-2/lib/style.css";
 export default function AccountForm({ userData, getProfile }) {
   const [formData, setFormData] = useState({
     firstName: "",
-    lastName: "",
+    // lastName: "",
     email: "",
     phoneNumber: "",
   });
@@ -22,7 +22,7 @@ export default function AccountForm({ userData, getProfile }) {
       setFormData({
         email: userData?.email || "",
         firstName: userData?.fname || "",
-        lastName: userData?.lname || "",
+        // lastName: userData?.lname || "",
         phoneNumber: userData?.mobile || "",
       });
       setProfileImage(userData?.profilePhoto || "");
@@ -62,13 +62,13 @@ export default function AccountForm({ userData, getProfile }) {
     }
 
     // Last Name validation
-    if (!formData.lastName.trim()) {
-      newErrors.lastName = "Last name is required";
-    } else if (formData.lastName.trim().length < 2) {
-      newErrors.lastName = "Last name must be at least 2 characters";
-    } else if (!/^[a-zA-Z\s]+$/.test(formData.lastName.trim())) {
-      newErrors.lastName = "Last name can only contain letters and spaces";
-    }
+    // if (!formData.lastName.trim()) {
+    //   newErrors.lastName = "Last name is required";
+    // } else if (formData.lastName.trim().length < 2) {
+    //   newErrors.lastName = "Last name must be at least 2 characters";
+    // } else if (!/^[a-zA-Z\s]+$/.test(formData.lastName.trim())) {
+    //   newErrors.lastName = "Last name can only contain letters and spaces";
+    // }
 
     // Phone Number validation
     if (!formData.phoneNumber.trim()) {
@@ -86,7 +86,7 @@ export default function AccountForm({ userData, getProfile }) {
       // Simulate API call
       const payloadData = new FormData();
       payloadData.append("fname", formData.firstName);
-      payloadData.append("lname", formData.lastName);
+      // payloadData.append("lname", formData.lastName);
       payloadData.append("mobile", formData.phoneNumber);
       updateProfile({ data: payloadData }).then((res) => {
         const toast2 = res.success ? toast.success : toast.error;
@@ -120,13 +120,13 @@ export default function AccountForm({ userData, getProfile }) {
 
       <div className="flex max-md:flex-col-reverse max-md:py-5 max-md:px-[15px] py-6 px-[50px] gap-8">
         {/* Left side - Form */}
-        <div className="max-md:w-full w-1/2">
+        <div className="max-md:w-full w-full">
           {/* First Name */}
           <div className="max-lg:mb-[20px] mb-[22px] group">
             <label
               className={`block max-lg:text-[13px] text-sm pb-2 transition-opacity duration-300  `}
             >
-              First Name
+              Full Name
             </label>
             <input
               type="text"
@@ -142,7 +142,7 @@ export default function AccountForm({ userData, getProfile }) {
           </div>
 
           {/* Last Name */}
-          <div className="max-lg:mb-[20px] mb-[22px] group">
+          {/* <div className="max-lg:mb-[20px] mb-[22px] group">
             <label
               className={`block max-lg:text-[13px] text-sm pb-2 transition-opacity duration-300 `}
             >
@@ -159,7 +159,7 @@ export default function AccountForm({ userData, getProfile }) {
               }`}
             />
             {errors.lastName && <ErrorComponent message={errors.lastName} />}
-          </div>
+          </div> */}
 
           {/* Email */}
           <div className="mb-[22px] group">

@@ -2,7 +2,7 @@ import { object, string, number, ref, boolean } from "yup";
 
 export let userSchema = object({
   firstName: string().required("First name is required"),
-  lastName: string().required("Last name is required"),
+  // lastName: string().required("Last name is required"),
   address: string().required("Address is required"),
   country: string().required("Country is required"),
   state: string().required("State is required"),
