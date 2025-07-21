@@ -5,8 +5,6 @@ import { Link } from "react-router-dom";
 
 const OrderSummary = ({
   cartItems,
-  selectedShippingOption,
-  handleShippingChange,
   selectedPaymentMethod,
   handlePaymentChange,
   couponCode,
@@ -64,31 +62,9 @@ const OrderSummary = ({
       <div className="flex justify-between items-center mb-[14px]">
         <span className="max-lg:text-xs text-sm font-medium">Shipping:</span>
         <div className="flex flex-col items-end">
-          <label className="flex items-center mb-1 cursor-pointer">
-            <input
-              type="radio"
-              name="shipping"
-              value="flatRate"
-              checked={selectedShippingOption === "flatRate"}
-              onChange={handleShippingChange}
-              className="hidden max-lg:text-xs text-sm font-medium"
-            />
-            <span className="max-lg:text-xs text-sm font-medium mr-2">
-              Delivery Charges:{" "}
-              {formatCurrency(calculatedDeliveryCharges, currency, language)}
-            </span>
-            <span
-              className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
-                selectedShippingOption === "flatRate"
-                  ? "border-[#166534]"
-                  : "border-gray-400"
-              }`}
-            >
-              {selectedShippingOption === "flatRate" && (
-                <span className="w-2 h-2 bg-[#166534] rounded-full"></span>
-              )}
-            </span>
-          </label>
+          <span className="max-lg:text-xs text-sm font-medium mr-2">
+            {formatCurrency(calculatedDeliveryCharges, currency, language)}
+          </span>
           {/* <label className="flex items-center cursor-pointer">
             <input
               type="radio"

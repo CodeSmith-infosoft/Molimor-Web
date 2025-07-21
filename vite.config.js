@@ -12,7 +12,7 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     host: true,
-    port: 1200,
+    port: 1500,
   },
   resolve: {
     alias: {

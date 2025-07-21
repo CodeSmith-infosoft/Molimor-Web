@@ -20,8 +20,15 @@ const Combo = () => {
     method: "GET",
     url: `/product/getBigSalesProducts?${getParamString(filter)}`,
   });
-
+  const { data: categoryData, fetchData: getActiveSubCategoryList } = useAxios({
+    method: "GET",
+    url: "/subCategory/getActiveSubCategoryList",
+  });
   const [category, setCategory] = useState([]);
+
+  useEffect(() => {
+    getActiveSubCategoryList();
+  }, []);
 
   useEffect(() => {
     if (categoryQuery) {
@@ -39,7 +46,7 @@ const Combo = () => {
 
   return (
     <div className="max-w-[1576px]  px-10 max-lg:px-5 mx-auto">
-      <Banner />
+      <Banner data={categoryData} />
       {loading ? (
         <Loader />
       ) : (

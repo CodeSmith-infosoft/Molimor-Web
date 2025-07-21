@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import {
   Table,
   TableBody,
@@ -31,6 +31,7 @@ const Cart = () => {
     method: "GET",
     url: "/cart/getUserCart",
   });
+  const apiCall = useRef(0);
 
   const { fetchData: removeCart } = useAxios({
     method: "DELETE",
@@ -54,6 +55,7 @@ const Cart = () => {
 
   function getCartData() {
     if (token) {
+      apiCall.current = apiCall.current + 1;
       fetchData();
     } else {
       const localCartData = JSON.parse(localStorage.getItem("cartData"));
@@ -213,7 +215,7 @@ const Cart = () => {
                   </CardContent>
                 </Card>
               </div>
-              {loading ? (
+              {loading && apiCall.current < 2 ? (
                 <Loader />
               ) : (
                 <div className="max-md:col-span-1 max-md:order-1 col-span-2">
@@ -265,37 +267,6 @@ const Cart = () => {
                                   currency,
                                   language
                                 )}
-                              </TableCell>
-                              <TableCell>
-                                <div className="flex items-center justify-center w-fit py-[3px] px-1 border border-gray-300 rounded-md">
-                                  <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    className="text-[16px] cursor-pointer"
-                                    disabled={
-                                      buttonLoader === item?.productId?._id
-                                    }
-                                    onClick={() =>
-                                      handleDecrement(
-                                        item.weight,
-                                        item.quantity,
-                                        item._id,
-                                        item.price,
-                                        item.mrp,
-                                        item.productId
-                                      )
-                                    }
-                                  >
-                                    -
-                                  </Button>
-                                  {buttonLoader === item?.productId?._id ? (
-                                    <span className="w-4 h-4 block border-2 border-green border-t-transparent rounded-full animate-spin"></span>
-                                  ) : (
-                                    <span className="w-[20px] text-center text-sm font-semibold">
-                                      {item.quantity}
-                                    </span>
-                                  )}
-                                </div>
                               </TableCell>
                               <TableCell>
                                 <div className="flex items-center justify-center w-fit py-[3px] px-1 border border-gray-300 rounded-md">

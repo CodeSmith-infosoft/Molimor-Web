@@ -3,14 +3,19 @@ import { ChevronRight } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import Marquee from "react-fast-marquee";
 import { useNavigate } from "react-router-dom";
+import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
-const Banner = () => {
+const Banner = ({ bannerData = [] }) => {
   const navigate = useNavigate();
   const [expandedCategory, setExpandedCategory] = useState(null);
   const { data, fetchData } = useAxios({
     method: "GET",
     url: "/subCategory/getActiveSubCategoryList",
   });
+  const plugin = React.useRef(
+    Autoplay({ delay: 3000, stopOnInteraction: true })
+  );
 
   useEffect(() => {
     fetchData();
@@ -109,12 +114,37 @@ const Banner = () => {
             </div>
           </div>
         </div>
-        <img
-          src="/images/dummy/homeMainBanner.svg"
-          className="h-[580px] max-md:h-auto object-cover"
-        />
+        <div className="shrink-0">
+          <Carousel
+            opts={{ loop: true }}
+            plugins={[plugin.current]}
+            className="w-full"
+            onMouseEnter={() => plugin.current.stop()}
+            onMouseLeave={() => plugin.current.play()}
+          >
+            <CarouselContent>
+              {bannerData?.mainBanner?.map((banner, index) => {
+                return (
+                  <CarouselItem
+                    key={index}
+                    className={
+                      "shrink-0 w-full h-[580px] max-md:h-auto object-cover"
+                    }
+                  >
+                    <img
+                      src={banner.image}
+                      className="w-full h-[580px] max-md:h-auto object-cover"
+                    />
+                  </CarouselItem>
+                );
+              })}
+            </CarouselContent>
+          </Carousel>
+        </div>
       </div>
       <div className="section-top-spacing grid max-lg:hidden grid-cols-3 max-lg:gap-[20px] gap-[70px] overflow-hidden">
+        {/* {bannerData?.mainBanner?.map((banner, index) => (
+          <> */}
         <img
           src="/images/dummy/Rectangle1442.svg"
           className="max-h-[200px] w-auto"
@@ -127,6 +157,8 @@ const Banner = () => {
           src="/images/dummy/Rectangle1444.svg"
           className="max-h-[200px] w-auto"
         />
+        {/* </>
+        ))} */}
       </div>
       <Marquee
         pauseOnHover={true}

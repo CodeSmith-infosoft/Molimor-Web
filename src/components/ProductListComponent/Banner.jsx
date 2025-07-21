@@ -1,12 +1,12 @@
 import Autoplay from "embla-carousel-autoplay";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 
 const Banner = ({ data, filter }) => {
   const plugin = React.useRef(
     Autoplay({ delay: 3000, stopOnInteraction: true })
   );
-  const currentBanners = useRef([]);
+  const [currentBanners, setCurrentBanners] = useState([]);
 
   useEffect(() => {
     if (data?.length) {
@@ -29,23 +29,23 @@ const Banner = ({ data, filter }) => {
           }
         });
       }
-      console.log(currentItems);
       if (currentItems.length) {
-        currentBanners.current = currentItems;
+        setCurrentBanners(currentItems);
       }
     }
   }, [filter, data]);
 
-  return currentBanners.current?.length ? (
+  return currentBanners?.length ? (
     <div>
       <Carousel
+        opts={{ loop: true }}
         plugins={[plugin.current]}
         className="w-full"
         onMouseEnter={() => plugin.current.stop()}
         onMouseLeave={() => plugin.current.play()}
       >
         <CarouselContent>
-          {currentBanners.current.map((img, index) => {
+          {currentBanners.map((img, index) => {
             return (
               <CarouselItem
                 key={index}
