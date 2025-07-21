@@ -99,11 +99,6 @@ export default function Footer() {
               </li>
               <li>
                 <Link to={"/"} className="text-sm text-[#333333]">
-                  Cookie Settings
-                </Link>
-              </li>
-              <li>
-                <Link to={"/"} className="text-sm text-[#333333]">
                   Help Center
                 </Link>
               </li>
@@ -129,11 +124,6 @@ export default function Footer() {
               <li>
                 <Link to={"/"} className="text-sm text-[#333333]">
                   Terms and Conditions
-                </Link>
-              </li>
-              <li>
-                <Link to={"/"} className="text-sm text-[#333333]">
-                  Cookie Settings
                 </Link>
               </li>
               <li>
