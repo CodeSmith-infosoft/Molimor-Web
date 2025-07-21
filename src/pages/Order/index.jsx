@@ -52,6 +52,10 @@ export default function Order() {
     method: "GET",
     url: "/cart/getUserCart",
   });
+  const { fetchData: updateProfile } = useAxios({
+    method: "PUT",
+    url: "/user/updateProfile",
+  });
 
   const {
     data: userData,
@@ -321,6 +325,14 @@ export default function Order() {
         .finally(() => {
           setLoader(false);
         });
+      const payloadData = new FormData();
+      payloadData.append("streetAddress[0]", formData.streetAddress);
+      payloadData.append("streetAddress[1]", formData.apartment);
+      payloadData.append("pincode", formData.zipCode);
+      payloadData.append("state", formData.state);
+      payloadData.append("country", formData.country);
+      payloadData.append("city", formData.city);
+      updateProfile({ data: payloadData });
     }
   };
 

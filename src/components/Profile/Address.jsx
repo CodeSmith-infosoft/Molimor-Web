@@ -316,7 +316,6 @@ export default function Address({ userData, getProfile }) {
       const payloadData = new FormData();
       payloadData.append("streetAddress[0]", formData.streetAddress);
       payloadData.append("streetAddress[1]", formData.apartment);
-      payloadData.append("streetAddress", formData.address1);
       payloadData.append("pincode", formData.zipCode);
       payloadData.append("state", formData.state);
       payloadData.append("country", formData.country);
