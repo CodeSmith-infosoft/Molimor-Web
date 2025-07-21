@@ -37,7 +37,7 @@ const BestSeller = ({ bannerData }) => {
   return molimor?.products?.length ||
     homeCare?.products?.length ||
     homeKitchen?.products?.length ? (
-    <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto section-top-spacing">
+    <div className="max-w-[1616px] px-10 max-lg:px-5 mx-auto section-top-spacing">
       <SubHeader heading={"best seller product"} link={"/products"} />
       <div className={`flex gap-5 mb-5`}>
         <Carousel className="w-full relative">

@@ -59,7 +59,7 @@ export default function RecentOrder() {
   ];
 
   return (
-    <div className="flex max-w-[1576px] max-mobile:py-[30px] max-md:py-[40px] max-lg:py-[50px] py-[70px] max-lg:px-5 px-10 mx-auto items-start justify-center">
+    <div className="flex max-w-[1616px] max-mobile:py-[30px] max-md:py-[40px] max-lg:py-[50px] py-[70px] max-lg:px-5 px-10 mx-auto items-start justify-center">
       {loading ? (
         <Loader />
       ) : (

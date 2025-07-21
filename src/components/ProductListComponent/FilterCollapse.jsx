@@ -33,6 +33,7 @@ export function FilterCollapse({ data, filter, setFilter }) {
                     ...filter,
                     category: e.target.checked ? data?.categoryName : "",
                     subcategoryId: "",
+                    page: 1,
                   });
                 }}
                 onClick={(e) => {
@@ -70,6 +71,7 @@ export function FilterCollapse({ data, filter, setFilter }) {
                       ...filter,
                       subcategoryId: e.target.checked ? sub?._id : "",
                       category: "",
+                      page: 1,
                     });
                   }}
                   className="peer hidden"

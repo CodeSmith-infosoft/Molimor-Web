@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { FilterCollapse } from "../ProductListComponent/FilterCollapse";
 import StarRating from "../Common/StarRating";
@@ -13,8 +13,11 @@ import {
   DrawerTrigger,
 } from "../ui/drawer";
 import { Button } from "../ui/button";
+import useAxios from "@/customHook/fetch-hook";
+import { useNavigate } from "react-router-dom";
 
 const Filter = ({ filter, setFilter, data }) => {
+  const navigate = useNavigate();
   const [openFilter, setOpenFilter] = useState({
     category: true,
     price: true,
@@ -26,6 +29,10 @@ const Filter = ({ filter, setFilter, data }) => {
     rating: false,
   });
   const { language, currency } = useContext(MainContext);
+  const { data: bannerData, fetchData } = useAxios({
+    method: "GET",
+    url: "/banner/getAllBanner",
+  });
 
   const priceRanges = [
     {
@@ -90,6 +97,10 @@ const Filter = ({ filter, setFilter, data }) => {
     },
   ];
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const clearAll = () => {
     setFilter({
       category: "",
@@ -98,6 +109,8 @@ const Filter = ({ filter, setFilter, data }) => {
       maxPrice: "",
       review: "",
       search: "",
+      limit: 20,
+      page: 1,
     });
   };
 
@@ -180,6 +193,7 @@ const Filter = ({ filter, setFilter, data }) => {
                           ...prev,
                           maxPrice: e.target.checked ? range?.maxPrice : "",
                           minPrice: e.target.checked ? range?.minPrice : "",
+                          page: 1,
                         }))
                       }
                       className="peer hidden"
@@ -234,6 +248,7 @@ const Filter = ({ filter, setFilter, data }) => {
                         setFilter((prev) => ({
                           ...prev,
                           review: e.target.checked ? range?.count : "",
+                          page: 1,
                         }))
                       }
                       className="peer hidden"
@@ -255,16 +270,13 @@ const Filter = ({ filter, setFilter, data }) => {
             )}
           </div>
         </div>
-        <div className="h-[350px] w-full rounded-[5px] bg-[#FAE7C8] p-[30px]">
-          <div className="">
-            <p className="text-[22px] font-semibold mb-[34px]">
-              Our Top Most Products Check It Now
-            </p>
-            <button className="bg-white px-4 py-2 text-sm font-medium rounded-[5px]">
-              Shop Now
-            </button>
-          </div>
-        </div>
+        <img
+          src={bannerData?.filterBanner?.[0]?.image}
+          className="rounded-[5px] max-w-[376px]"
+          onClick={() =>
+            navigate(`/products/${bannerData?.filterBanner?.[0]?.productId}`)
+          }
+        />
       </div>
       <div className="hidden max-md:flex border border-[#E5E7EB] rounded-[5px]">
         <Drawer open={openTabFilter.category}>
@@ -409,6 +421,7 @@ const Filter = ({ filter, setFilter, data }) => {
                             ...prev,
                             maxPrice: e.target.checked ? range?.maxPrice : "",
                             minPrice: e.target.checked ? range?.minPrice : "",
+                            page: 1,
                           }))
                         }
                         className="peer hidden"
@@ -505,6 +518,7 @@ const Filter = ({ filter, setFilter, data }) => {
                           setFilter((prev) => ({
                             ...prev,
                             review: e.target.checked ? range?.count : "",
+                            page: 1,
                           }))
                         }
                         className="peer hidden"

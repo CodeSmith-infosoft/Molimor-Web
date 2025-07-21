@@ -101,11 +101,11 @@ const Banner = ({ bannerData }) => {
   };
 
   return (
-    <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto">
+    <div className="max-w-[1616px] px-10 max-lg:px-5 mx-auto">
       <div className="grid max-md:grid-cols-1 grid-cols-[auto_auto] gap-[32px] ">
         <div className="max-md:hidden">
           <div
-            className={`hide-scrollbar h-[580px] mt-[1px] bg-white max-lg:max-w-[250px] max-w-[298px] z-20 w-80 overflow-y-auto transition-all duration-300 ease-in-out transform opacity-100 scale-100 translate-y-0`}
+            className={`hide-scrollbar h-[600px] mt-[1px] bg-white max-lg:max-w-[250px] max-w-[298px] z-20 w-80 overflow-y-auto transition-all duration-300 ease-in-out transform opacity-100 scale-100 translate-y-0`}
           >
             <div className="py-2">
               {data
@@ -128,12 +128,12 @@ const Banner = ({ bannerData }) => {
                   <CarouselItem
                     key={index}
                     className={
-                      "shrink-0 w-full h-[580px] max-md:h-auto object-cover"
+                      "shrink-0 w-full h-[600px] max-md:h-auto object-cover"
                     }
                   >
                     <img
                       src={banner.image}
-                      className="w-full h-[580px] max-md:h-auto object-cover cursor-pointer"
+                      className="w-full h-[600px] max-md:h-auto object-cover cursor-pointer"
                       onClick={() => navigate(`/products/${banner.productId}`)}
                     />
                   </CarouselItem>

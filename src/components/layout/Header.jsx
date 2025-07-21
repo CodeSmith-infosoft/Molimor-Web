@@ -166,7 +166,7 @@ export default function Header() {
 
       {/* Top navigation bar */}
       <div className="bg-white mt-5 max-md:hidden">
-        <div className="max-w-[1576px] max-lg:px-5 px-10 mx-auto flex justify-between items-center text-sm">
+        <div className="max-w-[1616px] max-lg:px-5 px-10 mx-auto flex justify-between items-center text-sm">
           <div className="flex items-center gap-5">
             <Link to={"/profile"} className="text-xs font-medium">
               My Account
@@ -195,7 +195,7 @@ export default function Header() {
 
       {/* Main header */}
       <div className="mt-5 max-mobile:mt-4">
-        <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto max-lg:gap-6 max-main:gap-10 flex items-center justify-between">
+        <div className="max-w-[1616px] px-10 max-lg:px-5 mx-auto max-lg:gap-6 max-main:gap-10 flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
             <img

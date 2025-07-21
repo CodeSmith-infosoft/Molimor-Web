@@ -28,7 +28,7 @@ const CategoryProduct = ({ bannerData }) => {
   }, []);
 
   return (
-    <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto">
+    <div className="max-w-[1616px] px-10 max-lg:px-5 mx-auto">
       <h3 className="max-mobile:text-lg max-lg:text-[20px] text-2xl font-medium section-top-spacing sub-bottom-spacing">
         Category Product
       </h3>

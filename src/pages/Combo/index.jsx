@@ -14,7 +14,8 @@ const Combo = () => {
     minPrice: "",
     maxPrice: "",
     review: "",
-    limit: 30,
+    limit: 20,
+    page: 1,
   });
   const { data, fetchData, loading } = useAxios({
     method: "GET",
@@ -45,21 +46,21 @@ const Combo = () => {
   }, [filter]);
 
   return (
-    <div className="max-w-[1576px]  px-10 max-lg:px-5 mx-auto">
+    <div className="max-w-[1616px]  px-10 max-lg:px-5 mx-auto">
       <Banner data={categoryData} />
-      {loading ? (
-        <Loader />
-      ) : (
-        <div className="section-top-spacing max-md:flex-col flex max-lg:gap-[22px] gap-10">
-          <Filter
-            filter={filter}
-            setFilter={setFilter}
-            categoryFilter={category}
-            setCategory={setCategory}
-          />
-          <ProductList category={category} data={data} />
-        </div>
-      )}
+      <div className="section-top-spacing max-md:flex-col flex max-lg:gap-[22px] gap-10">
+        <Filter
+          filter={filter}
+          setFilter={setFilter}
+          categoryFilter={category}
+          setCategory={setCategory}
+        />
+        {loading ? (
+          <Loader />
+        ) : (
+          <ProductList category={category} data={data} setFilter={setFilter} />
+        )}
+      </div>
     </div>
   );
 };

@@ -25,7 +25,7 @@ const Profile = () => {
         {loading ? (
           <Loader />
         ) : (
-          <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto">
+          <div className="max-w-[1616px] px-10 max-lg:px-5 mx-auto">
             <AccountForm userData={userData} getProfile={getProfile} />
             <div className="max-mobile:py-[30px] max-md:py-[40px] max-lg:py-[50px] py-[70px]">
               <Address userData={userData} getProfile={getProfile} />

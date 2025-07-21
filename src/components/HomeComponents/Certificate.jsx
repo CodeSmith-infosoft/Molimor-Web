@@ -8,7 +8,7 @@ const Certificate = () => {
   );
 
   return (
-    <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto section-top-spacing">
+    <div className="max-w-[1616px] px-10 max-lg:px-5 mx-auto section-top-spacing">
       <h3 className="text-2xl font-medium sub-bottom-spacing text-center">
         Certificate
       </h3>

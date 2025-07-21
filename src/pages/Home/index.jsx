@@ -20,14 +20,13 @@ const Home = () => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 1000);
     fetchData();
   }, []);
-  return loading ? (
-    <SkeletonLoader />
-  ) : (
+  return (
     <>
-      <div className="bg-[#F3F4F6] pb-[32px]">
+      {loading && <SkeletonLoader />}
+      <div className={`bg-[#F3F4F6] pb-[32px] ${loading ? "hidden" : "block"}`}>
         <Banner bannerData={data} />
         <Deals />
         <CategoryProduct bannerData={data} />

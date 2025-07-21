@@ -17,7 +17,7 @@ const Deals = () => {
   }, []);
 
   return (
-    <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto section-top-spacing">
+    <div className="max-w-[1616px] px-10 max-lg:px-5 mx-auto section-top-spacing">
       <div className="grid max-mobile:grid-cols-1 max-md:grid-cols-2 max-lg:grid-cols-3 grid-cols-4 max-mobile:gap-[30px] gap-5 ">
         <div className="max-mobile:col-span-full">
           <SubHeader heading={"crazy deal"} link={"/deals?category=Deals"} />

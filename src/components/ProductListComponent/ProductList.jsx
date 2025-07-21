@@ -1,4 +1,3 @@
-import { useState, useMemo } from "react";
 import {
   Pagination,
   PaginationContent,
@@ -11,30 +10,16 @@ import BorderCard from "../ProductCard/BorderCard";
 
 const ITEMS_PER_PAGE = 20;
 
-const ProductList = ({ data }) => {
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const totalPages = useMemo(() => {
-    if (!data?.products?.length) return 0;
-    return Math.ceil(data.products.length / ITEMS_PER_PAGE);
-  }, [data?.products?.length]);
-
-  const currentProducts = useMemo(() => {
-    if (!data?.products) return [];
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const endIndex = startIndex + ITEMS_PER_PAGE;
-    return data.products.slice(startIndex, endIndex);
-  }, [currentPage, data?.products]);
-
+const ProductList = ({ data, setFilter }) => {
   const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+    setFilter((prev) => ({ ...prev, page: pageNumber }));
   };
 
   return (
     <div className="flex flex-col items-center gap-10 w-full h-fit">
       <div className="grid max-lg:gap-[22px] gap-10 max-mobile:grid-cols-2 max-lg:grid-cols-3 grid-cols-4 w-full">
-        {currentProducts.length ? (
-          currentProducts.map((product) => (
+        {data?.products?.length ? (
+          data?.products.map((product) => (
             <BorderCard key={product.id} product={product} />
           ))
         ) : (
@@ -44,24 +29,24 @@ const ProductList = ({ data }) => {
         )}
       </div>
 
-      {totalPages > 1 && (
+      {data?.totalPages > 1 && (
         <Pagination className="mt-8">
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
                 href="#"
-                onClick={() => handlePageChange(currentPage - 1)}
+                onClick={() => handlePageChange(data?.page - 1)}
                 className={
-                  currentPage === 1 ? "pointer-events-none opacity-50" : ""
+                  data?.page === 1 ? "pointer-events-none opacity-50" : ""
                 }
               />
             </PaginationItem>
-            {[...Array(totalPages)].map((_, index) => (
+            {[...Array(data?.totalPages)].map((_, index) => (
               <PaginationItem key={index}>
                 <PaginationLink
                   href="#"
                   onClick={() => handlePageChange(index + 1)}
-                  isActive={currentPage === index + 1}
+                  isActive={data?.page === index + 1}
                 >
                   {index + 1}
                 </PaginationLink>
@@ -70,9 +55,9 @@ const ProductList = ({ data }) => {
             <PaginationItem>
               <PaginationNext
                 href="#"
-                onClick={() => handlePageChange(currentPage + 1)}
+                onClick={() => handlePageChange(data?.page + 1)}
                 className={
-                  currentPage === totalPages
+                  data?.page === data?.totalPages
                     ? "pointer-events-none opacity-50"
                     : ""
                 }

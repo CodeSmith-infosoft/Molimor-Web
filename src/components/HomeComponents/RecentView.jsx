@@ -12,7 +12,7 @@ import FillCard from "../ProductCard/FillCard";
 const RecentView = ({ title }) => {
   const recent = getRecentItems();
   return recent?.length ? (
-    <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto">
+    <div className="max-w-[1616px] px-10 max-lg:px-5 mx-auto">
       <h3 className="text-2xl font-medium sub-bottom-spacing">
         {title ? title : "Recently Viewed"}
       </h3>

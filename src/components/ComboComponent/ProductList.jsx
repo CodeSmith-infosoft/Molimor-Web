@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import BorderCard from "../ProductCard/BorderCard";
 import {
   Pagination,
@@ -9,10 +9,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-const ITEMS_PER_PAGE = 1;
-
-const ProductList = ({ category, data }) => {
-  const [currentPage, setCurrentPage] = useState(1);
+const ProductList = ({ category, data, setFilter }) => {
   const [mainData, setMainData] = useState([]);
 
   useEffect(() => {
@@ -28,33 +25,18 @@ const ProductList = ({ category, data }) => {
         }
       });
       setMainData(result);
-      setCurrentPage(1);
     }
   }, [data, category]);
 
-  // Calculate total pages
-  const totalPages = useMemo(() => {
-    return Math.ceil(mainData.length / ITEMS_PER_PAGE);
-  }, [mainData]);
-
-  // Get paginated products
-  const currentProducts = useMemo(() => {
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const endIndex = startIndex + ITEMS_PER_PAGE;
-    return mainData.slice(startIndex, endIndex);
-  }, [currentPage, mainData]);
-
   const handlePageChange = (pageNumber) => {
-    if (pageNumber >= 1 && pageNumber <= totalPages) {
-      setCurrentPage(pageNumber);
-    }
+    setFilter((prev) => ({ ...prev, page: pageNumber }));
   };
 
   return (
     <div className="flex flex-col items-center gap-10 w-full h-fit">
       <div className="grid max-lg:gap-[22px] gap-10 max-mobile:grid-cols-2 max-lg:grid-cols-3 grid-cols-4 w-full h-fit">
-        {currentProducts.length > 0 ? (
-          currentProducts.map((product) => (
+        {mainData ?.length > 0 ? (
+          mainData  .map((product) => (
             <BorderCard
               key={product.id || product.slug || product.name}
               product={product}
@@ -66,7 +48,7 @@ const ProductList = ({ category, data }) => {
           </div>
         )}
       </div>
-      {totalPages > 1 && (
+      {data?.totalPages > 1 && (
         <Pagination className="mt-8 justify-center">
           <PaginationContent>
             <PaginationItem>
@@ -74,14 +56,14 @@ const ProductList = ({ category, data }) => {
                 href="#"
                 onClick={(e) => {
                   e.preventDefault();
-                  handlePageChange(currentPage - 1);
+                  handlePageChange(data?.page - 1);
                 }}
                 className={
-                  currentPage === 1 ? "pointer-events-none opacity-50" : ""
+                  data?.page === 1 ? "pointer-events-none opacity-50" : ""
                 }
               />
             </PaginationItem>
-            {[...Array(totalPages)].map((_, index) => {
+            {[...Array(data?.totalPages)].map((_, index) => {
               const pageNumber = index + 1;
               return (
                 <PaginationItem key={pageNumber}>
@@ -91,7 +73,7 @@ const ProductList = ({ category, data }) => {
                       e.preventDefault();
                       handlePageChange(pageNumber);
                     }}
-                    isActive={currentPage === pageNumber}
+                    isActive={data?.page === pageNumber}
                   >
                     {pageNumber}
                   </PaginationLink>
@@ -103,10 +85,10 @@ const ProductList = ({ category, data }) => {
                 href="#"
                 onClick={(e) => {
                   e.preventDefault();
-                  handlePageChange(currentPage + 1);
+                  handlePageChange(data?.page + 1);
                 }}
                 className={
-                  currentPage === totalPages
+                  data?.page === data?.totalPages
                     ? "pointer-events-none opacity-50"
                     : ""
                 }

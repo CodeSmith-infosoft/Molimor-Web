@@ -35,7 +35,7 @@ const ProductDetail = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto max-mobile:py-[30px] max-md:py-[40px] max-lg:py-[50px] py-[70px]">
+        <div className="max-w-[1616px] px-10 max-lg:px-5 mx-auto max-mobile:py-[30px] max-md:py-[40px] max-lg:py-[50px] py-[70px]">
           <Detail data={data} getProduct={fetchData} />
           <div className="">
             <BuyMore data={data?.buyItWith} />

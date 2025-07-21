@@ -179,7 +179,7 @@ const Cart = () => {
     <>
       <div className="bg-[#f3f4f6] max-mobile:py-[30px] max-md:py-[40px] max-lg:py-[50px] py-[70px]">
         <div className="bg-white max-lg:py-[30px] py-[50px]">
-          <div className="max-w-[1576px]  px-10 max-lg:px-5 mx-auto">
+          <div className="max-w-[1616px]  px-10 max-lg:px-5 mx-auto">
             <div className="grid max-md:grid-cols-1 grid-cols-3 max-md:gap-[30px] max-lg:gap-5 gap-[100px]">
               <div className="max-md:order-2">
                 <Card className="w-full p-[22px] gap-0 !shadow-none !rounded-[5px] !border-[#E5E7EB]">

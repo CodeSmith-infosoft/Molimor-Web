@@ -141,7 +141,7 @@ const Wishlist = () => {
     <>
       <section className="py-[70px] max-md:py-[40px] max-mobile:py-[30px] max-lg:py-[50px] bg-[#f3f4f6]">
         <div className="bg-white max-lg:py-[30px] py-[50px]">
-          <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto">
+          <div className="max-w-[1616px] px-10 max-lg:px-5 mx-auto">
             {loading ? (
               <Loader />
             ) : (

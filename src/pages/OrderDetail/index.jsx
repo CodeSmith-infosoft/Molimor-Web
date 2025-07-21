@@ -35,7 +35,7 @@ export default function OrderDetail() {
   );
 
   return (
-    <div className="max-w-[1576px] px-10 max-lg:px-5 max-mobile:py-[30px] max-md:py-[40px] max-lg:py-[50px] py-[70px] mx-auto">
+    <div className="max-w-[1616px] px-10 max-lg:px-5 max-mobile:py-[30px] max-md:py-[40px] max-lg:py-[50px] py-[70px] mx-auto">
       {loading ? (
         <Loader />
       ) : (

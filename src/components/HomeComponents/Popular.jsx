@@ -24,7 +24,7 @@ const Popular = ({ bannerData }) => {
     <>
       {" "}
       {data?.length ? (
-        <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto section-top-spacing">
+        <div className="max-w-[1616px] px-10 max-lg:px-5 mx-auto section-top-spacing">
           <SubHeader heading={"Popular Product"} link={"/products"} />
           <div className={`flex gap-5`}>
             <Carousel className="w-full relative">

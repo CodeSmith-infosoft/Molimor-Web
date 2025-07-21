@@ -20,7 +20,8 @@ const Products = () => {
     maxPrice: "",
     review: "",
     search: "",
-    limit: 30,
+    limit: 20,
+    page: 1,
   });
 
   const [data, setData] = useState([]);
@@ -76,11 +77,17 @@ const Products = () => {
   }, [categoryQuery, subcategoryIdQuery, searchQuery]);
 
   return (
-    <div className="max-w-[1576px] px-10 max-lg:px-5 mx-auto">
+    <div className="max-w-[1616px] px-10 max-lg:px-5 mx-auto">
       <Banner data={categoryData} filter={filter} />
       <div className="section-top-spacing flex max-md:flex-col max-lg:gap-[22px] gap-10">
         <Filter filter={filter} setFilter={setFilter} data={categoryData} />
-        {loading ? <div className="flex-1"><Loader /></div> : <ProductList data={data} />}
+        {loading ? (
+          <div className="flex-1">
+            <Loader />
+          </div>
+        ) : (
+          <ProductList data={data} setFilter={setFilter} />
+        )}
       </div>
     </div>
   );
