@@ -30,9 +30,9 @@ const Home = () => {
       <div className="bg-[#F3F4F6] pb-[32px]">
         <Banner bannerData={data} />
         <Deals />
-        <CategoryProduct />
-        <Popular />
-        <BestSeller />
+        <CategoryProduct bannerData={data} />
+        <Popular bannerData={data} />
+        <BestSeller bannerData={data} />
       </div>
       <div className="mt-[38px]">
         <RecentView />

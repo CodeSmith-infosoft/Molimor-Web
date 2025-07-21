@@ -9,8 +9,10 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../ui/carousel";
+import { useNavigate } from "react-router-dom";
 
-const BestSeller = () => {
+const BestSeller = ({ bannerData }) => {
+  const navigate = useNavigate();
   const { data: molimor, fetchData: fetchMolimor } = useAxios({
     method: "GET",
     url: `/product/getAllProductsList?brand=Molimor`,
@@ -54,8 +56,13 @@ const BestSeller = () => {
               }
             >
               <img
-                src="/images/dummy/Frame19.svg"
-                className="max-lg:min-w-[257px] max-main:min-w-[320px] w-full shrink-0"
+                src={bannerData?.sellerBanner?.[0]?.image}
+                className="max-lg:min-w-[257px] max-main:min-w-[320px] w-full shrink-0 cursor-pointer"
+                onClick={() =>
+                  navigate(
+                    `/products/${bannerData?.sellerBanner?.[0]?.productId}`
+                  )
+                }
               />
             </CarouselItem>
             {molimor?.products?.slice(2, 4)?.map((deal, i) => (
@@ -88,8 +95,13 @@ const BestSeller = () => {
               }
             >
               <img
-                src="/images/dummy/Frame19.svg"
-                className="max-lg:min-w-[257px] max-main:min-w-[320px] w-full shrink-0"
+                src={bannerData?.sellerBanner?.[1]?.image}
+                className="max-lg:min-w-[257px] max-main:min-w-[320px] w-full shrink-0 cursor-pointer"
+                onClick={() =>
+                  navigate(
+                    `/products/${bannerData?.sellerBanner?.[1]?.productId}`
+                  )
+                }
               />
             </CarouselItem>
             {homeCare?.products.slice(0, 2)?.map((deal, i) => (

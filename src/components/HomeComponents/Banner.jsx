@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 
-const Banner = ({ bannerData = [] }) => {
+const Banner = ({ bannerData }) => {
   const navigate = useNavigate();
   const [expandedCategory, setExpandedCategory] = useState(null);
   const { data, fetchData } = useAxios({
@@ -133,7 +133,8 @@ const Banner = ({ bannerData = [] }) => {
                   >
                     <img
                       src={banner.image}
-                      className="w-full h-[580px] max-md:h-auto object-cover"
+                      className="w-full h-[580px] max-md:h-auto object-cover cursor-pointer"
+                      onClick={() => navigate(`/products/${banner.productId}`)}
                     />
                   </CarouselItem>
                 );
@@ -143,40 +144,26 @@ const Banner = ({ bannerData = [] }) => {
         </div>
       </div>
       <div className="section-top-spacing grid max-lg:hidden grid-cols-3 max-lg:gap-[20px] gap-[70px] overflow-hidden">
-        {/* {bannerData?.mainBanner?.map((banner, index) => (
-          <> */}
-        <img
-          src="/images/dummy/Rectangle1442.svg"
-          className="max-h-[200px] w-auto"
-        />
-        <img
-          src="/images/dummy/Rectangle1443.svg"
-          className="max-h-[200px] w-auto"
-        />
-        <img
-          src="/images/dummy/Rectangle1444.svg"
-          className="max-h-[200px] w-auto"
-        />
-        {/* </>
-        ))} */}
+        {bannerData?.homeSub?.map((banner) => (
+          <img
+            src={banner.image}
+            className="max-h-[200px] w-auto cursor-pointer"
+            onClick={() => navigate(`/products/${banner.productId}`)}
+          />
+        ))}
       </div>
       <Marquee
         pauseOnHover={true}
         className="max-mobile:!hidden max-lg:!flex !hidden certificate-marquee section-top-spacing"
         duration={15000}
       >
-        <img
-          src="/images/dummy/Rectangle1442.svg"
-          className="max-h-[200px] ml-5 w-auto"
-        />
-        <img
-          src="/images/dummy/Rectangle1443.svg"
-          className="max-h-[200px] ml-5 w-auto"
-        />
-        <img
-          src="/images/dummy/Rectangle1444.svg"
-          className="max-h-[200px] ml-5 w-auto"
-        />
+        {bannerData?.homeSub?.map((banner) => (
+          <img
+            src={banner.image}
+            className="max-h-[200px] ml-5 w-auto cursor-pointer"
+            onClick={() => navigate(`/products/${banner.productId}`)}
+          />
+        ))}
       </Marquee>
     </div>
   );

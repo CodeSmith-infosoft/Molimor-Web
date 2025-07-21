@@ -8,8 +8,10 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../ui/carousel";
+import { useNavigate } from "react-router-dom";
 
-const CategoryProduct = () => {
+const CategoryProduct = ({ bannerData }) => {
+  const navigate = useNavigate();
   const { data: molimor, fetchData: fetchMolimor } = useAxios({
     method: "GET",
     url: `/product/getAllProductsList?brand=Molimor`,
@@ -32,7 +34,7 @@ const CategoryProduct = () => {
       </h3>
       <div className="grid max-mobile:grid-cols-1 grid-cols-2 gap-5">
         <div>
-          <img src="/images/dummy/76.svg" className="mb-5" />
+          <img src={bannerData?.homeCategory?.[0]?.image} className="mb-5" />
           <div className="flex gap-[10px]">
             {molimor?.products?.length ? (
               <Carousel className="w-full relative">
@@ -55,7 +57,7 @@ const CategoryProduct = () => {
           </div>
         </div>
         <div>
-          <img src="/images/dummy/76.svg" className="mb-5" />
+          <img src={bannerData?.homeCategory?.[1]?.image} className="mb-5" />
           <div className="flex gap-[10px]">
             {girnes?.products?.length ? (
               <Carousel className="w-full relative">
@@ -79,8 +81,16 @@ const CategoryProduct = () => {
         </div>
       </div>
       <div className="grid max-mobile:hidden grid-cols-[auto_auto] justify-center max-lg:gap-10 max-lg:px-[50px] gap-[60px] section-top-spacing">
-        <img src="/images/dummy/Bannar.svg" />
-        <img src="/images/dummy/Bannar1.svg" />
+        <img
+          src={bannerData?.combo?.[0]?.image}
+          onClick={() => navigate(`/deals?category=combo`)}
+          className="cursor-pointer"
+        />
+        <img
+          src={bannerData?.combo?.[1]?.image}
+          onClick={() => navigate(`/deals?category=Deals`)}
+          className="cursor-pointer"
+        />
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ import {
   CarouselPrevious,
 } from "../ui/carousel";
 
-const Popular = () => {
+const Popular = ({ bannerData }) => {
   const { data, fetchData } = useAxios({
     method: "GET",
     url: "/product/getPopularProductList",
@@ -48,7 +48,7 @@ const Popular = () => {
       )}
       <div className="section-top-spacing px-10">
         <img
-          src="/images/dummy/Frame1.svg"
+          src={bannerData?.staticBanner?.[0]?.image}
           className="mx-auto max-lg:max-w-[643px] max-w-[959px] w-full"
         />
       </div>
