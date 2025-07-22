@@ -43,6 +43,7 @@ export default function Detail({ data, getProduct }) {
   const token = localStorage.getItem("token");
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef();
+  
 
   useEffect(() => {
     const handleClickOutside = (event) => {
