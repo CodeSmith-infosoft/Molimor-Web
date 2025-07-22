@@ -188,7 +188,7 @@ export function getPercent(items) {
   if (targetDate.getTime() > now.getTime() && saleItem?.saleStatus) {
     return Math.round((saleItem?.discountPrice * 100) / saleItem?.mrp);
   }
-  return (items?.[0]?.price * 100) / items?.[0]?.mrp;
+  return Math.round((items?.[0]?.price * 100) / items?.[0]?.mrp);
 }
 
 export function addRecentItems(newItems) {
