@@ -1,7 +1,6 @@
 import {
   formatCurrency,
   getPercent,
-  isDateNotPast,
   isDateNotPastBoolean,
 } from "@/utils";
 import StarRating from "../Common/StarRating";
@@ -85,7 +84,7 @@ const SelectCard = ({ product, isSelected, onSelect }) => {
           <StarRating rating={Number(product?.ratingCount || 5)} />
           <label className="max-md:text-base text-lg font-bold">
             {formatCurrency(
-              isDateNotPast(product.variants),
+              product?.buyItWithPrice,
               currency,
               language
             )}{" "}

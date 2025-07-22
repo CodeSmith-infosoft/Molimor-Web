@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { formatCurrency, isDateNotPast } from "@/utils";
+import { formatCurrency } from "@/utils";
 import MainContext from "@/context/MainContext";
 import { ShoppingCart } from "lucide-react";
 import SelectCard from "./SelectCard";
@@ -18,13 +18,13 @@ const BuyMore = ({ data = [] }) => {
   };
   const calculateTotal = () => {
     return selectedProducts.reduce((total, product) => {
-      return total + isDateNotPast(product.variants);
+      return total + product?.buyItWithPrice;
     }, 0);
   };
   const calculateSavings = () => {
     return selectedProducts.reduce((total, product) => {
       return (
-        total + (product.variants[0].mrp - isDateNotPast(product.variants))
+        total + (product.variants[0].mrp - product?.buyItWithPrice)
       );
     }, 0);
   };
@@ -80,7 +80,7 @@ const BuyMore = ({ data = [] }) => {
                           </div>
                           <span className="font-bold text-sm">
                             {formatCurrency(
-                              isDateNotPast(product.variants),
+                              product?.buyItWithPrice,
                               currency,
                               language
                             )}
