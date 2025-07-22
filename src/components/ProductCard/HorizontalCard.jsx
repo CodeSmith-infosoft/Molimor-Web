@@ -22,7 +22,7 @@ const HorizontalCard = ({
       }}
     >
       <img
-        src={data.mainImage?.[0] || data.mainImage}
+        src={data.mainImage}
         className={`w-[102px] max-h-[120px] rounded-l-[6px] object-contain group-hover:scale-[1.05] transition-transform duration-300 ease-in-out ${imgClass}`}
       />
       <div className="space-y-[10px] max-mobile:space-y-[6px] px-3">

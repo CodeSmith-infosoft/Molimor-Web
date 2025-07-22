@@ -55,8 +55,7 @@ const SelectCard = ({ product, isSelected, onSelect }) => {
         >
           <img
             src={
-              product?.mainImage ||
-              "/placeholder.svg?height=220&width=200&query=product+image"
+              product?.mainImage
             }
             alt={product?.title}
             className={`

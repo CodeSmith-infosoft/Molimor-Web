@@ -203,9 +203,7 @@ export default function OrderDetail() {
                     <td className="py-4 px-4 flex items-center max-mobile:w-[250px]">
                       <img
                         src={
-                          product.productId.mainImage[0] ||
-                          product.productId.mainImage ||
-                          "/placeholder.svg"
+                          product.productId.mainImage 
                         }
                         alt={product.productId.title}
                         className="h-[70px] object-cover rounded-md mr-3"

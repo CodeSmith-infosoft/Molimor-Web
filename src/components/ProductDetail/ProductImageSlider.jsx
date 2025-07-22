@@ -77,7 +77,7 @@ export default function ProductImageSlider({ data, selectedWeight }) {
         >
           <CarouselContent>
             {data?.image?.map((image, index) => (
-              <CarouselItem key={index} className={"w-full"}>
+              <CarouselItem key={index} className={"w-full shrink-0"}>
                 <div className="relative  max-mobile:!max-h-[300px] max-md:!max-h-[400px] max-lg:!max-h-[438px] !max-h-[660px] w-full flex justify-center aspect-square overflow-hidden">
                   <img
                     src={image || "/placeholder.svg"}

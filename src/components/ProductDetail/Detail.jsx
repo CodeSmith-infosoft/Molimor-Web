@@ -210,7 +210,7 @@ export default function Detail({ data, getProduct }) {
                 </span>
               </div>
             )}
-            {data?.variants?.length > 1 ? (
+            {data?.variants?.length > 0 ? (
               <div className="mb-[14px]">
                 <p className="max-mobile:text-xs text-sm font-bold mb-4">
                   Weight:-

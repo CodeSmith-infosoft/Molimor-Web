@@ -173,11 +173,7 @@ const Wishlist = () => {
                               to={`/products/${item?.productId?._id}`}
                             >
                               <img
-                                src={
-                                  item?.productId?.mainImage[0] ||
-                                  item?.productId?.mainImage ||
-                                  "/placeholder.svg"
-                                }
+                                src={item?.productId?.mainImage}
                                 alt={item?.productId?.title}
                                 width={60}
                                 height={50}

@@ -84,7 +84,7 @@ const BestSeller = ({ bannerData }) => {
             {homeKitchen?.products.slice(0, 2)?.map((deal, i) => (
               <CarouselItem
                 key={i}
-                className="max-mobile:max-w-[195px] max-md:max-w-[220px] max-lg:max-w-[243px] max-main:max-w-[250px] max-w-[276px] w-full shrink-0"
+                className="max-mobile:max-w-[195px] max-md:max-w-[220px] max-lg:max-w-[243px] max-main:max-w-[250px] max-w-[276px] w-auto shrink-0"
               >
                 <FillCard data={deal} />
               </CarouselItem>
@@ -96,7 +96,7 @@ const BestSeller = ({ bannerData }) => {
             >
               <img
                 src={bannerData?.sellerBanner?.[1]?.image}
-                className="max-lg:min-w-[257px] max-main:min-w-[320px] w-full shrink-0 cursor-pointer"
+                className="max-lg:min-w-[257px] max-main:min-w-[320px] w-auto shrink-0 cursor-pointer"
                 onClick={() =>
                   navigate(
                     `/products/${bannerData?.sellerBanner?.[1]?.productId}`

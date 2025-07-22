@@ -14,7 +14,7 @@ const FillCard = ({ data }) => {
     >
       <div className="max-w-[200px] max-lg:max-w-[172px] mx-auto relative">
         <img
-          src="/images/dummy/khichadi.png"
+          src={data.mainImage}
           className="w-auto max-mobile:max-h-[150px] mx-auto max-lg:max-h-[170px] max-h-[220px] mb-4 group-hover:scale-[1.05] transition-transform duration-300 ease-in-out"
         />
         <div className="space-y-[10px] max-mobile:px-4 px-2">
