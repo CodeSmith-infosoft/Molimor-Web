@@ -4,12 +4,10 @@ import { toast } from "react-hot-toast";
 import { ValidationError } from "yup";
 import { loginSchema } from "@/utils/yupSchema";
 import ErrorComponent from "../Common/ErrorComponent";
-import { addToCart } from "@/service/action/cart.action";
 import {
   removeCartFromLocalstorage,
   removeWishlistFromLocalstorage,
 } from "@/utils";
-import { addWishlist } from "@/service/action/wishlist.action";
 import MainContext from "../../context/MainContext";
 import useAxios from "../../customHook/fetch-hook";
 
@@ -31,6 +29,10 @@ const Login = () => {
     method: "POST",
     url: "/user/login",
   });
+  const { fetchData: addToCart } = useAxios({
+    method: "POST",
+    url: `/cart/addToCart`,
+  });
   const { fetchData: getGoogleLogin } = useAxios({
     method: "POST",
     url: "/user/googleOAuthLogin",
@@ -38,6 +40,10 @@ const Login = () => {
   const { fetchData: getGoogleURL } = useAxios({
     method: "GET",
     url: "/user/getGoogleOAuthUrl",
+  });
+  const { fetchData: addWishlist } = useAxios({
+    method: "POST",
+    url: `/wishlist/addWishlist`,
   });
 
   useEffect(() => {
