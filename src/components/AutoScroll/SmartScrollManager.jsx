@@ -1,21 +1,12 @@
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import { useLocation, useNavigationType } from 'react-router-dom';
 
-interface ScrollPosition {
-  x: number;
-  y: number;
-}
-
-interface ScrollPositions {
-  [key: string]: ScrollPosition;
-}
-
-const SmartScrollManager: React.FC = () => {
+const SmartScrollManager = () => {
   const location = useLocation();
   const navigationType = useNavigationType();
-  const scrollPositions = useRef<ScrollPositions>({});
+  const scrollPositions = useRef({});
   const isRestoring = useRef(false);
-  const previousPath = useRef<string>(location.pathname);
+  const previousPath = useRef(location.pathname);
 
   // Debug logging
   useEffect(() => {
@@ -33,7 +24,7 @@ const SmartScrollManager: React.FC = () => {
 
   // Save scroll position when user scrolls
   useEffect(() => {
-    const handleScroll = (): void => {
+    const handleScroll = () => {
       if (!isRestoring.current) {
         const newPosition = {
           x: window.scrollX,
@@ -81,7 +72,7 @@ const SmartScrollManager: React.FC = () => {
         window.scrollTo(0, 0);
 
         // Then restore position after a short delay
-        const restorePosition = (): void => {
+        const restorePosition = () => {
           const maxScrollY = Math.max(
             document.body.scrollHeight - window.innerHeight,
             document.documentElement.scrollHeight - window.innerHeight,
@@ -114,7 +105,7 @@ const SmartScrollManager: React.FC = () => {
         };
 
         // Try to restore position with multiple attempts
-        const attemptRestore = (attempt: number = 0): void => {
+        const attemptRestore = (attempt = 0) => {
           const maxAttempts = 5;
           const delays = [50, 150, 300, 500, 1000];
 
