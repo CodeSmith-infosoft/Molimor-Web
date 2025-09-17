@@ -14,6 +14,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import useAxios from "@/customHook/fetch-hook";
 import ProductImageSlider from "./ProductImageSlider";
+import BuyMore from "./BuyMore";
 
 export default function Detail({ data, getProduct }) {
   const { language, currency, setCartCount, cartCount } =
@@ -43,7 +44,6 @@ export default function Detail({ data, getProduct }) {
   const token = localStorage.getItem("token");
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef();
-  
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -279,7 +279,7 @@ export default function Detail({ data, getProduct }) {
                 </Button>
               </div>
               <button
-                className=" bg-green cursor-pointer py-[14px] max-mobile:text-sm px-[30px] flex hover:bg-green text-white rounded-md"
+                className=" bg-green h-[52px] cursor-pointer py-[14px] max-mobile:text-sm px-[30px] flex hover:bg-green text-white rounded-md"
                 onClick={handleAddToCart}
               >
                 <div className="mt-[2px] mr-2">
@@ -298,7 +298,7 @@ export default function Detail({ data, getProduct }) {
                 </div>
                 Add to cart
               </button>
-              <button
+              {/* <button
                 className=" h-[52px] w-[52px] flex justify-center items-center border-[1.3px] cursor-pointer border-[#E5E7EB] rounded-[6.62px] bg-transparent"
                 onClick={handleAddToWishlist}
               >
@@ -331,7 +331,7 @@ export default function Detail({ data, getProduct }) {
                     />
                   </svg>
                 )}
-              </button>
+              </button> */}
             </div>
 
             {/* <div className="space-y-4 max-lg:hidden block mb-[14px]">
@@ -519,6 +519,13 @@ export default function Detail({ data, getProduct }) {
           </div>
         </div>
       </div> */}
+      {data?.buyItWith.length ? (
+        <div className="">
+          <BuyMore data={[data, ...data.buyItWith]} variant={selectedWeight} />
+        </div>
+      ) : (
+        <></>
+      )}
     </>
   );
 }

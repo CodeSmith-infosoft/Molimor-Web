@@ -17,9 +17,11 @@ import {
   deleteCartItemFromLocalstorage,
   editCartItemFromLocalstorage,
   formatCurrency,
+  isDateNotPast,
 } from "@/utils";
 import RecentView from "@/components/HomeComponents/RecentView";
 import Loader from "@/components/MainLoader/Loader";
+import Dropdown from "@/components/HeaderComponents/Dropdown";
 
 const Cart = () => {
   const { setCartCount, currency, language } = useContext(MainContext);
@@ -32,7 +34,6 @@ const Cart = () => {
     url: "/cart/getUserCart",
   });
   const apiCall = useRef(0);
-
   const { fetchData: removeCart } = useAxios({
     method: "DELETE",
     url: `/cart/deleteCartByProductId`,
@@ -141,6 +142,36 @@ const Cart = () => {
     }
   };
 
+  const handleAddToCart = (val, item) => {
+    const currentWeight = item.productId.variants.find((d) => d.weight === val);
+    if (item?._id) {
+      if (token) {
+        updateCart({
+          data: {
+            quantity: item.quantity,
+            weight: val,
+            price: isDateNotPast([currentWeight]),
+            mrp: currentWeight.mrp,
+          },
+          url: `/cart/updateCartByProductId/${item.productId._id}`,
+        }).then((res) => {
+          if (res.success) {
+            getCartData();
+          }
+        });
+      } else {
+        editCartItemFromLocalstorage({
+          quantity: item.quantity,
+          weight: val,
+          price: isDateNotPast([currentWeight]),
+          mrp: currentWeight.mrp,
+          productId: item.productId,
+        });
+        getCartData();
+      }
+    }
+  };
+
   const { subTotal, deliveryCharges, totalAmount } = useMemo(() => {
     if (cartData?.length) {
       const calculatedSubTotal = cartData.reduce((sum, item) => {
@@ -181,40 +212,6 @@ const Cart = () => {
         <div className="bg-white max-lg:py-[30px] py-[50px]">
           <div className="max-w-[1616px]  px-10 max-lg:px-5 mx-auto">
             <div className="grid max-md:grid-cols-1 grid-cols-3 max-md:gap-[30px] max-lg:gap-5 gap-[100px]">
-              <div className="max-md:order-2">
-                <Card className="w-full p-[22px] gap-0 !shadow-none !rounded-[5px] !border-[#E5E7EB]">
-                  <CardHeader className="border-b gap-0 px-0">
-                    <CardTitle className="text-[20px] mb-[10px] font-bold">
-                      Summary
-                    </CardTitle>
-                    <p className="text-[16px] font-light">Estimate Shipping</p>
-                  </CardHeader>
-                  <CardContent className="space-y-6 px-0">
-                    <div className="space-y-2 pt-4">
-                      <div className="flex justify-between mb-4">
-                        <span className="text-sm">Sub-Total</span>
-                        <span className="text-sm font-medium">
-                          {formatCurrency(subTotal, currency, language)}
-                        </span>
-                      </div>
-                      <div className="flex justify-between pb-[20px]">
-                        <span className="text-sm">Delivery Charges</span>
-                        <span className="text-sm font-medium">
-                          {formatCurrency(deliveryCharges, currency, language)}
-                        </span>
-                      </div>
-                      <div className="flex justify-between pt-[20px] border-t border-gray-200 dark:border-gray-700">
-                        <span className="text-base font-semibold">
-                          Total Amount
-                        </span>
-                        <span className="text-base font-semibold">
-                          {formatCurrency(totalAmount, currency, language)}
-                        </span>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
               {loading && apiCall.current < 2 ? (
                 <Loader />
               ) : (
@@ -231,6 +228,9 @@ const Cart = () => {
                           </TableHead>
                           <TableHead className="w-[20%] text-[15px] font-medium">
                             Quantity
+                          </TableHead>
+                          <TableHead className="w-[20%] text-[15px] font-medium">
+                            Weight
                           </TableHead>
                           <TableHead className="w-[15%] text-[15px] font-medium">
                             Total
@@ -256,7 +256,7 @@ const Cart = () => {
                                     height={50}
                                     className="rounded-md object-cover"
                                   />
-                                  <span className="text-ellipsis line-clamp-1">
+                                  <span className="text-ellipsis line-clamp-1 max-w-[200px]">
                                     {item?.productId?.title}
                                   </span>
                                 </Link>
@@ -318,6 +318,19 @@ const Cart = () => {
                                     +
                                   </Button>
                                 </div>
+                              </TableCell>
+                              <TableCell>
+                                {item.productId.variants.length > 1 ? (
+                                  <Dropdown
+                                    options={item.productId.variants.map(d => d.weight)}
+                                    defaultValue={item.weight}
+                                    onChange={(val) =>
+                                      handleAddToCart(val, item)
+                                    }
+                                  />
+                                ) : (
+                                  <span>{item.weight}</span>
+                                )}
                               </TableCell>
                               <TableCell className={"text-[15px] font-medium"}>
                                 {formatCurrency(
@@ -392,21 +405,55 @@ const Cart = () => {
                     <Link to={"/products"} className=" text-sm underline">
                       Continue Shopping
                     </Link>
-                    {cartData?.length ? (
-                      <div>
-                        <button
-                          className="underline cursor-pointer text-[15px] font-medium py-[10px] px-5 bg-green rounded-[5px] text-white"
-                          onClick={handleCheckOut}
-                        >
-                          Check Out
-                        </button>
-                      </div>
-                    ) : (
-                      ""
-                    )}
                   </div>
                 </div>
               )}
+              <div className="max-md:order-2">
+                <Card className="w-full p-[22px] gap-0 !shadow-none !rounded-[5px] !border-[#E5E7EB]">
+                  <CardHeader className="border-b gap-0 px-0">
+                    <CardTitle className="text-[20px] mb-[10px] font-bold">
+                      Summary
+                    </CardTitle>
+                    <p className="text-[16px] font-light">Estimate Shipping</p>
+                  </CardHeader>
+                  <CardContent className="space-y-6 px-0">
+                    <div className="pt-4">
+                      <div className="flex justify-between mb-4">
+                        <span className="text-sm">Sub-Total</span>
+                        <span className="text-sm font-medium">
+                          {formatCurrency(subTotal, currency, language)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between pb-[20px]">
+                        <span className="text-sm">Delivery Charges</span>
+                        <span className="text-sm font-medium">
+                          {formatCurrency(deliveryCharges, currency, language)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between py-[20px] border-t border-gray-200 dark:border-gray-700">
+                        <span className="text-base font-semibold">
+                          Total Amount
+                        </span>
+                        <span className="text-base font-semibold">
+                          {formatCurrency(totalAmount, currency, language)}
+                        </span>
+                      </div>
+                      {cartData?.length ? (
+                        <div className="flex justify-end border-t border-gray-200 dark:border-gray-700 pt-5">
+                          <button
+                            className="underline cursor-pointer text-[15px] font-medium py-[10px] px-5 bg-green rounded-[5px] text-white"
+                            onClick={handleCheckOut}
+                          >
+                            Check Out
+                          </button>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </div>
         </div>

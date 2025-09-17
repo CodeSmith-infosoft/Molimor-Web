@@ -171,9 +171,9 @@ export default function Header() {
             <Link to={"/profile"} className="text-xs font-medium">
               My Account
             </Link>
-            <Link to={"/wishlist"} className="text-xs font-medium">
+            {/* <Link to={"/wishlist"} className="text-xs font-medium">
               Wishlist
-            </Link>
+            </Link> */}
             <span className="text-xs border-l pl-5 border-[#E5E7EB]">
               We deliver to you every day from{" "}
               <span className="font-bold">7:00 to 23:00</span>
@@ -315,13 +315,13 @@ export default function Header() {
                         >
                           <FaList size={14} /> Orders
                         </Link>
-                        <Link
+                        {/* <Link
                           to={"/wishlist"}
                           className="flex gap-2 cursor-pointer items-center border-b pb-1"
                         >
                           <GoHeartFill />
                           Wishlist
-                        </Link>
+                        </Link> */}
                         <button
                           className="flex gap-2 cursor-pointer items-center"
                           onClick={handleLogout}
@@ -335,7 +335,7 @@ export default function Header() {
                 </div>
               </div>
 
-              <div className="relative">
+              {/* <div className="relative">
                 <Link to={"/wishlist"}>
                   <svg
                     width="33"
@@ -355,7 +355,7 @@ export default function Header() {
                     {activeCart.wishlist}
                   </span>
                 </Link>
-              </div>
+              </div> */}
 
               <div className="relative">
                 <Link to={"/cart"}>

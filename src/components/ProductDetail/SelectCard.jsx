@@ -6,10 +6,11 @@ import {
 import StarRating from "../Common/StarRating";
 import MainContext from "@/context/MainContext";
 import { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Check } from "lucide-react";
 
-const SelectCard = ({ product, isSelected, onSelect }) => {
+const SelectCard = ({ product, isSelected, onSelect, variant }) => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const { language, currency } = useContext(MainContext);
   let isDeal = isDateNotPastBoolean(product.variants);
@@ -24,7 +25,7 @@ const SelectCard = ({ product, isSelected, onSelect }) => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative max-md:max-w-none max-w-[260px]">
       <div
         className={`
           bg-white border relative rounded-[10px] group cursor-pointer w-full h-full transition-all duration-300
@@ -83,7 +84,7 @@ const SelectCard = ({ product, isSelected, onSelect }) => {
           <StarRating rating={Number(product?.ratingCount || 5)} />
           <label className="max-md:text-base text-lg font-bold">
             {formatCurrency(
-              product?.buyItWithPrice,
+              product?._id !== id ? product?.buyItWithPrice : variant?.price,
               currency,
               language
             )}{" "}

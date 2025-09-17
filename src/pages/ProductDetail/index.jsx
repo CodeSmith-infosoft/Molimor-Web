@@ -37,9 +37,6 @@ const ProductDetail = () => {
       ) : (
         <div className="max-w-[1616px] px-10 max-lg:px-5 mx-auto max-mobile:py-[30px] max-md:py-[40px] max-lg:py-[50px] py-[70px]">
           <Detail data={data} getProduct={fetchData} />
-          <div className="">
-            <BuyMore data={data?.buyItWith} />
-          </div>
           <div className="section-top-spacing">
             <div className="max-mobile:space-y-[21px] space-y-[30px]">
               <h1 className="max-mobile:text-lg text-[20px] font-bold max-mobile:py-2 py-4 inline-block border-b-2 border-[#333333]">
